@@ -8,7 +8,7 @@ The app opens directly to a responsive library finder, with a filter sidebar on 
 
 Library listings, search, sign-in, and saved libraries are not active yet. Their controls are disabled, and the results area clearly shows that listings are unavailable.
 
-The local backend connects to a database. Automated checks cover that connection, page routing, and the separation between profile preferences and search filters.
+The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
 ## Built with
 
@@ -26,6 +26,7 @@ Use Node.js 24 and npm.
 npm ci
 npm run dev:setup
 npm run types:cloudflare
+npm run db:migrate
 npm run dev:pages
 ```
 
@@ -35,6 +36,8 @@ For automatic frontend updates while developing, leave the local server running 
 
 The setup command creates `.dev.vars` with a random local secret and preserves an existing file. `.dev.vars.example` lists the available settings without secret values. Secrets, dependencies, build output, and local database files are excluded from Git. The database configuration in `wrangler.jsonc` is for local use only.
 
+`npm run db:seed` loads clearly labelled fictional examples into the local database for testing. These are not real library listings, and public data reads exclude them by default.
+
 ## Checks and commands
 
 | Command | Purpose |
@@ -42,6 +45,8 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run dev` | Start frontend development with automatic updates |
 | `npm run dev:pages` | Build and run the app with its local backend |
 | `npm run build` | Create a production build |
+| `npm run db:migrate` | Apply database changes locally |
+| `npm run db:seed` | Load fictional local test data |
 | `npm run typecheck` | Check TypeScript types |
 | `npm run lint` | Check code quality |
 | `npm test` | Run unit tests |
@@ -49,7 +54,7 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run test:runtime` | Verify the built app and local backend; run after building |
 | `npm run types:cloudflare` | Update types after changing server settings |
 
-Runtime checks verify database connectivity, basic account infrastructure, routing, and file delivery. They do not verify a complete sign-in flow.
+Runtime checks use a separate local database to verify migrations, repeatable fixtures, published/draft separation, data relationships, basic account infrastructure, routing, and file delivery. They do not verify a complete sign-in flow.
 
 ## Project structure
 
@@ -58,4 +63,6 @@ Runtime checks verify database connectivity, basic account infrastructure, routi
 - `src/domain/` — profile and search-filter logic, with unit tests
 - `functions/api/` — backend endpoints
 - `server/` — database and account infrastructure
+- `migrations/` — versioned database changes
+- `tests/` — fictional fixtures and database integration checks
 - `scripts/` — local setup and runtime checks

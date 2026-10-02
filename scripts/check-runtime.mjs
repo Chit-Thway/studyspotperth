@@ -5,6 +5,7 @@ import { createServer } from 'node:net';
 import { spawn, execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
+import { createFixtureSql } from '../tests/fixtures/libraries.ts';
 
 const portServer = createServer();
 await new Promise((resolvePort, reject) => {
@@ -20,6 +21,10 @@ await mkdir(resolve('.runtime-check'), { recursive: true });
 const workDir = await mkdtemp(resolve('.runtime-check/run-'));
 await cp(resolve('functions'), `${workDir}/functions`, { recursive: true });
 await cp(resolve('server'), `${workDir}/server`, { recursive: true });
+await cp(resolve('src/domain'), `${workDir}/src/domain`, { recursive: true });
+await cp(resolve('tests/fixtures'), `${workDir}/tests/fixtures`, { recursive: true });
+await cp(resolve('migrations'), `${workDir}/migrations`, { recursive: true });
+await cp(resolve('tests/runtime/library-data-check.ts'), `${workDir}/functions/api/_data-check.ts`);
 await cp(resolve('dist'), `${workDir}/dist`, { recursive: true });
 await writeFile(`${workDir}/package.json`, JSON.stringify({ name: 'studyspotperth-runtime-check', private: true, type: 'module' }));
 const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
@@ -27,12 +32,22 @@ config.pages_build_output_dir = './dist';
 config.vars.AUTH_BASE_URL = origin;
 await writeFile(`${workDir}/wrangler.jsonc`, JSON.stringify(config));
 await writeFile(`${workDir}/.dev.vars`, `AUTH_SECRET=${randomBytes(32).toString('hex')}\nGOOGLE_CLIENT_ID=\nGOOGLE_CLIENT_SECRET=\n`, { mode: 0o600 });
+await writeFile(`${workDir}/fixtures.sql`, createFixtureSql());
+const wranglerPath = resolve('node_modules/wrangler/bin/wrangler.js');
+const runtimeEnv = { ...process.env, WRANGLER_SEND_METRICS: 'false', BROWSER: 'none', CI: '1' };
+// Run twice to prove migration replay and deterministic fixture loading are safe.
+for (let replay = 0; replay < 2; replay++) {
+  execFileSync(process.execPath, [wranglerPath, 'd1', 'migrations', 'apply', 'studyspotperth', '--local', '--persist-to', `${workDir}/state`],
+    { cwd: workDir, env: runtimeEnv, stdio: 'pipe' });
+  execFileSync(process.execPath, [wranglerPath, 'd1', 'execute', 'studyspotperth', '--local', '--persist-to', `${workDir}/state`, '--file', 'fixtures.sql', '--yes'],
+    { cwd: workDir, env: runtimeEnv, stdio: 'pipe' });
+}
 
 const child = spawn(process.execPath, [
-  resolve('node_modules/wrangler/bin/wrangler.js'), 'pages', 'dev', 'dist',
+  wranglerPath, 'pages', 'dev', 'dist',
   '--ip', '127.0.0.1', '--port', String(port),
   '--persist-to', `${workDir}/state`,
-], { cwd: workDir, env: { ...process.env, WRANGLER_SEND_METRICS: 'false', BROWSER: 'none' }, stdio: ['ignore', 'pipe', 'pipe'] });
+], { cwd: workDir, env: runtimeEnv, stdio: ['ignore', 'pipe', 'pipe'] });
 let output = '';
 child.stdout.on('data', (chunk) => { output += String(chunk); });
 child.stderr.on('data', (chunk) => { output += String(chunk); });
@@ -72,7 +87,9 @@ try {
   const assetPath = html.match(/src="([^"]+\.js)"/)?.[1];
   assert(assetPath, 'Built app script was not included.');
   assert.equal((await fetch(`${origin}${assetPath}`)).status, 200);
-  console.log('Passed: Pages → Drizzle → local D1; method handling; Better Auth runtime initialisation; inactive account endpoints; SPA fallback and built asset delivery.');
+  const dataCheck = await fetch(`${origin}/api/_data-check`);
+  assert.equal(dataCheck.status, 200, await dataCheck.text());
+  console.log('Passed: local migrations and fixture replay; schema agreement; published/draft isolation; immutable snapshots; profile relations; atomic rollback; Pages/D1/auth runtime; SPA and assets.');
 } catch (error) {
   // Wrangler masks secret values in its binding output; never print .dev.vars.
   console.error(output.slice(-6000));
