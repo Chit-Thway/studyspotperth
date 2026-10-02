@@ -46,6 +46,11 @@ export function createLibraryRepository(env: Env) {
     return row ? canonicalRecord(row) : null;
   }
 
+  async function listSuburbs(options: ReadOptions = {}) {
+    return database.select({ id: suburbs.id, name: suburbs.name, latitude: suburbs.latitude, longitude: suburbs.longitude })
+      .from(suburbs).where(options.includeFixtures ? undefined : eq(suburbs.isFixture, false)).orderBy(asc(suburbs.name)).all();
+  }
+
   async function getLatestDraft(libraryId: string): Promise<LibraryRecord | null> {
     const row = await selectRecords().where(and(eq(libraries.id, libraryId), eq(libraryRevisions.status, 'draft')))
       .orderBy(desc(libraryRevisions.createdAt), desc(libraryRevisions.id)).get();
@@ -95,5 +100,5 @@ export function createLibraryRepository(env: Env) {
       .where(and(eq(libraryRevisions.libraryId, libraryId), eq(libraryRevisions.status, 'published'))).run();
   }
 
-  return { listPublished, getPublishedBySlug, getLatestDraft, createLibrary, createDraft, publishDraft, unpublish };
+  return { listPublished, getPublishedBySlug, listSuburbs, getLatestDraft, createLibrary, createDraft, publishDraft, unpublish };
 }

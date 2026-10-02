@@ -6,9 +6,11 @@ StudySpot Perth is a web project for finding study-friendly libraries around Per
 
 The app opens directly to a responsive library finder, with a filter sidebar on desktop and expandable filters on mobile. The interface uses a quiet sage-and-ivory palette, labelled controls, and keyboard navigation.
 
-Library listings, search, sign-in, and saved libraries are not active yet. Their controls are disabled, and the results area clearly shows that listings are unavailable.
+Library listings and search are not connected to the interface yet. Sign-in and saved libraries are also inactive. Their controls are disabled, and the results area clearly shows that listings are unavailable.
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
+
+The search backend evaluates Perth opening hours, entry rules, 24/7 access, Wi-Fi, and distance. Declared university cards personalise ranking and requirement labels; only selected filters restrict results. An optional end time shows session shortfalls without hiding libraries.
 
 ## Built with
 
@@ -54,13 +56,25 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run test:runtime` | Verify the built app and local backend; run after building |
 | `npm run types:cloudflare` | Update types after changing server settings |
 
-Runtime checks use a separate local database to verify migrations, repeatable fixtures, published/draft separation, data relationships, basic account infrastructure, routing, and file delivery. They do not verify a complete sign-in flow.
+Runtime checks use a separate local database to verify search and detail APIs, migrations, repeatable fixtures, published/draft separation, data relationships, basic account infrastructure, routing, and file delivery. They do not verify a complete sign-in flow.
+
+## Library API
+
+- `GET /api/libraries` searches published libraries. No account is needed.
+- `GET /api/libraries/:slug` returns a published library and its opening/access explanations, including when closed.
+- `GET /api/suburbs` lists available search origins; Perth CBD is the default.
+
+Search and detail accept `start` and optional `end` in Perth local time (`YYYY-MM-DDTHH:mm`), `suburb`, and comma-separated `cards` and `institutions`. Supported university codes are `uwa`, `curtin`, `ecu`, and `murdoch`; institutions also allow `public`. Omitting `start` uses the current time. Sessions can span up to 31 days.
+
+Search switches are `open24Hours`, `usableWifi`, `quietStudy`, `groupStudy`, and `wheelchairAccess`; each accepts `true` or `false` and defaults to off. `limit` (1–100, default 50) and `offset` paginate the ranked results. For example: `/api/libraries?cards=uwa&open24Hours=true&start=2026-10-02T14:00`.
+
+Responses keep building hours, personal access, and Wi-Fi separate. A 24/7 explanation covers seven consecutive local dates starting on the search date; closures or restricted periods can prevent qualification. Continuous windows are bounded to 32 local dates and identify a closure, unknown hours, or the evaluation limit. Profile matches remain self-reported and do not guarantee entry or working credentials. Invalid searches return a clear validation error; empty searches keep the selected filters.
 
 ## Project structure
 
 - `src/app/` — app routing and shared styles
 - `src/features/finder/` — the library finder interface
-- `src/domain/` — profile and search-filter logic, with unit tests
+- `src/domain/` — schedules, access, Wi-Fi, filtering and ranking, with unit tests
 - `functions/api/` — backend endpoints
 - `server/` — database and account infrastructure
 - `migrations/` — versioned database changes

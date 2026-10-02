@@ -25,6 +25,7 @@ await cp(resolve('src/domain'), `${workDir}/src/domain`, { recursive: true });
 await cp(resolve('tests/fixtures'), `${workDir}/tests/fixtures`, { recursive: true });
 await cp(resolve('migrations'), `${workDir}/migrations`, { recursive: true });
 await cp(resolve('tests/runtime/library-data-check.ts'), `${workDir}/functions/api/_data-check.ts`);
+await cp(resolve('tests/runtime/library-search-check.ts'), `${workDir}/functions/api/_search-check.ts`);
 await cp(resolve('dist'), `${workDir}/dist`, { recursive: true });
 await writeFile(`${workDir}/package.json`, JSON.stringify({ name: 'studyspotperth-runtime-check', private: true, type: 'module' }));
 const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
@@ -87,9 +88,19 @@ try {
   const assetPath = html.match(/src="([^"]+\.js)"/)?.[1];
   assert(assetPath, 'Built app script was not included.');
   assert.equal((await fetch(`${origin}${assetPath}`)).status, 200);
+  for (const path of ['/api/libraries?start=2026-10-02T14:00', '/api/suburbs']) {
+    const response = await fetch(`${origin}${path}`);
+    assert.equal(response.status, 200, `Public route failed: ${path}`);
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+  }
+  assert.equal((await fetch(`${origin}/api/libraries/fictional-uwa-24-hours`)).status, 404, 'Public route exposed a fictional record.');
+  assert.equal((await fetch(`${origin}/api/libraries?start=bad`)).status, 400);
+  assert.equal((await fetch(`${origin}/api/libraries`, { method: 'POST' })).status, 405);
+  const searchCheck = await fetch(`${origin}/api/_search-check`);
+  assert.equal(searchCheck.status, 200, await searchCheck.text());
   const dataCheck = await fetch(`${origin}/api/_data-check`);
   assert.equal(dataCheck.status, 200, await dataCheck.text());
-  console.log('Passed: local migrations and fixture replay; schema agreement; published/draft isolation; immutable snapshots; profile relations; atomic rollback; Pages/D1/auth runtime; SPA and assets.');
+  console.log('Passed: search/detail API regression matrix; validated filters and ranking; fixture exclusion; local migrations and fixture replay; schema agreement; published/draft isolation; immutable snapshots; profile relations; atomic rollback; Pages/D1/auth runtime; SPA and assets.');
 } catch (error) {
   // Wrangler masks secret values in its binding output; never print .dev.vars.
   console.error(output.slice(-6000));
