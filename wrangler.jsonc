@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "studyspotperth",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-10-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "send_metrics": false,
+  "vars": { "AUTH_BASE_URL": "http://localhost:8788" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "studyspotperth",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

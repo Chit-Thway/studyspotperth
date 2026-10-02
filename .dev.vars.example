@@ -1,0 +1,6 @@
+# Copy to .dev.vars and replace AUTH_SECRET with a random value of at least 32 characters.
+# Generate locally: node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+AUTH_SECRET=
+# Optional. Set both to enable Google's provider in the auth integration.
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
