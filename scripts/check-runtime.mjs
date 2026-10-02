@@ -78,7 +78,7 @@ try {
   const inactiveAuth = await fetch(`${origin}/api/auth/sign-in/social`, { method: 'POST' });
   assert.equal(inactiveAuth.status, 404, 'Account endpoints must remain disabled.');
 
-  for (const path of ['/', '/a-page-that-does-not-exist']) {
+  for (const path of ['/', '/libraries/fictional-uwa-24-hours', '/a-page-that-does-not-exist']) {
     const page = await fetch(`${origin}${path}`);
     assert.equal(page.status, 200, `SPA fallback failed for ${path}.`);
     assert.match(await page.text(), /<title>StudySpot Perth<\/title>/);

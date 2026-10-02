@@ -4,9 +4,11 @@ StudySpot Perth is a web project for finding study-friendly libraries around Per
 
 ## Current status
 
-The app opens directly to a responsive library finder, with a filter sidebar on desktop and expandable filters on mobile. The interface uses a quiet sage-and-ivory palette, labelled controls, and keyboard navigation.
+The app opens directly to a responsive library finder, with a filter sidebar on desktop and a filter drawer on mobile. The interface uses a quiet sage-and-ivory palette, labelled controls, and keyboard navigation.
 
-Library listings and search are not connected to the interface yet. Sign-in and saved libraries are also inactive. Their controls are disabled, and the results area clearly shows that listings are unavailable.
+Guest search is connected to the backend. Visitors can choose a suburb and study time, filter for 24/7 access and facilities, and declare university cards to personalise results. Library details show opening and entry hours, Wi-Fi requirements, sources, and directions. Selections stay in the URL when moving between the finder and a library.
+
+Verified library listings and photos have not been added yet, so the public finder currently shows an empty state. Sign-in and saved libraries remain inactive, with their controls disabled.
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
@@ -74,6 +76,7 @@ Responses keep building hours, personal access, and Wi-Fi separate. A 24/7 expla
 
 - `src/app/` — app routing and shared styles
 - `src/features/finder/` — the library finder interface
+- `src/features/libraries/` — library cards, details, and shared presentation
 - `src/domain/` — schedules, access, Wi-Fi, filtering and ranking, with unit tests
 - `functions/api/` — backend endpoints
 - `server/` — database and account infrastructure
