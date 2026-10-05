@@ -10,14 +10,14 @@ import type { OriginsResponse, SearchResponse } from '../libraries/api';
 import { LibraryApiError } from '../libraries/api';
 import { useLibraryApi } from '../libraries/use-library-api';
 import { FilterPanel } from './FilterPanel';
-import { finderUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
+import { queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 import styles from './FinderPage.module.css';
 
 export function FinderPage() {
   const [rawParams, setParams] = useSearchParams();
   const { account } = useAccount();
   const params = profileFinderParams(rawParams, account?.preferences);
-  const resource = useLibraryApi<SearchResponse>(finderUrl(params, '/api/libraries'), !params.has('start'));
+  const resource = useLibraryApi<SearchResponse>(queryUrl(params, '/api/libraries'), !params.has('start'));
   const locations = useLibraryApi<OriginsResponse>('/api/suburbs');
   const origins = locations.data?.origins ?? [DEFAULT_ORIGIN];
   const [cardsExpanded, setCardsExpanded] = useState(false);

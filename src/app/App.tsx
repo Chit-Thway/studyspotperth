@@ -7,6 +7,7 @@ import { SignInPage } from '../features/account/SignInPage';
 import { ProfilePage } from '../features/account/ProfilePage';
 import { SavedPage } from '../features/account/SavedPage';
 import { internalReturnTo } from '../domain/account';
+import { finderUrl } from '../features/finder/finder-state';
 import { AdminDashboard, AdminNewPage, AdminEditPage } from '../features/admin/AdminPages';
 import styles from './App.module.css';
 
@@ -26,7 +27,7 @@ export function App() {
   const previousPath = useRef(location.pathname);
   const main = useRef<HTMLElement>(null);
   const query = location.pathname === '/sign-in' ? new URL(internalReturnTo(new URLSearchParams(location.search).get('returnTo')), window.location.origin).search : location.search;
-  const finder = `/${query}`;
+  const finder = finderUrl(new URLSearchParams(query));
   useEffect(() => {
     if (previousPath.current !== location.pathname) {
       main.current?.focus();

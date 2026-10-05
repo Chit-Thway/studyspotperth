@@ -1,4 +1,13 @@
+import { FINDER_QUERY_FIELDS } from '../../domain/search-request';
+
 const restrictiveFields = ['institutions', 'open24Hours', 'usableWifi', 'quietStudy', 'groupStudy', 'wheelchairAccess', 'start', 'end', 'offset', 'limit'];
+
+/** Carry finder selections across public pages, excluding route-specific state.
+ * Keep values and duplicates intact so API validation remains authoritative.
+ */
+function publicFinderParams(params: URLSearchParams) {
+  return new URLSearchParams([...params].filter(([field]) => FINDER_QUERY_FIELDS.includes(field)));
+}
 
 export function updateFinderParam(params: URLSearchParams, field: string, value: string | null) {
   const next = new URLSearchParams(params);
@@ -14,11 +23,15 @@ export function toggleFinderSelection(params: URLSearchParams, field: 'cards' | 
   return updated;
 }
 export function resetFinderFilters(params: URLSearchParams) {
-  const next = new URLSearchParams(params);
+  const next = publicFinderParams(params);
   restrictiveFields.forEach((field) => next.delete(field));
   return next;
 }
 export function finderUrl(params: URLSearchParams, path = '/') {
+  return queryUrl(publicFinderParams(params), path);
+}
+/** API requests retain the original parameters for authoritative validation. */
+export function queryUrl(params: URLSearchParams, path: string) {
   const query = params.toString();
   return `${path}${query ? `?${query}` : ''}`;
 }

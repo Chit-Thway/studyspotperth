@@ -6,7 +6,7 @@ import { perthMidnight, shiftDate } from '../../domain/perth-time';
 import type { DetailResponse } from './api';
 import { LibraryApiError } from './api';
 import { useLibraryApi } from './use-library-api';
-import { finderUrl } from '../finder/finder-state';
+import { finderUrl, queryUrl } from '../finder/finder-state';
 import { LibraryPhoto } from './LibraryPhoto';
 import { LibraryFacts, RequirementLabel } from './LibraryFacts';
 import { Icon } from './Icon';
@@ -34,7 +34,7 @@ export function LibraryDetailPage() {
   const [params] = useSearchParams();
   const { account } = useAccount();
   const effective = profileFinderParams(params, account?.preferences);
-  const resource = useLibraryApi<DetailResponse>(finderUrl(effective, `/api/libraries/${encodeURIComponent(slug)}`), !effective.has('start'));
+  const resource = useLibraryApi<DetailResponse>(queryUrl(effective, `/api/libraries/${encodeURIComponent(slug)}`), !effective.has('start'));
   const result = resource.data?.result;
   useEffect(() => { document.title = result ? `${result.library.content.name} · StudySpot Perth` : 'Library details · StudySpot Perth'; }, [result]);
   const back = finderUrl(params);

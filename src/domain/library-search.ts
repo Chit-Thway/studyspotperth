@@ -3,7 +3,7 @@ import type { SearchRequest } from './search-request';
 import type { UniversityCard } from './search-context';
 import { calendarTimeline, continuousWindow, intersectIntervals, intervalAt, mergeTimeIntervals } from './availability';
 import type { ContinuousWindow } from './availability';
-import { DAY_MS, formatPerthTime, MINUTE_MS, perthMidnight } from './perth-time';
+import { formatPerthTime, MINUTE_MS, perthMidnight, shiftDate } from './perth-time';
 import { evaluateWifi } from './wifi';
 import type { RequirementMatch } from './wifi';
 
@@ -65,7 +65,7 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
     : intervalAt(uncertainIntervals, request.start) || !entries.length ? 'unknown'
     : entries.some(({ match, intervals }) => match === 'not-in-profile' && intervalAt(intervals, request.start)) ? 'unmatched' : 'unavailable';
   const weekStart = perthMidnight(date);
-  const weekEnd = weekStart + 7 * DAY_MS;
+  const weekEnd = perthMidnight(shiftDate(date, 7));
   const publicIntervals = mergeTimeIntervals(entries.filter(({ entry }) => entry.group === 'public').flatMap(({ intervals }) => intervals));
   const publicWeek = intervalAt(publicIntervals, weekStart);
   const public24Hours = publicWeek !== undefined && publicWeek.end >= weekEnd;

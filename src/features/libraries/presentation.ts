@@ -3,7 +3,7 @@ import type { Institution } from '../../domain/search-context';
 import type { MinuteInterval } from '../../domain/schedule';
 import type { RequirementMatch } from '../../domain/wifi';
 import type { ScheduleTimeline } from '../../domain/availability';
-import { MINUTE_MS } from '../../domain/perth-time';
+import { formatPerthTime, perthCalendarMinute } from '../../domain/perth-time';
 
 export const INSTITUTION_LABELS: Record<Institution, string> = { public: 'Public libraries', uwa: 'UWA', curtin: 'Curtin', ecu: 'ECU', murdoch: 'Murdoch' };
 export const UNIVERSITY_CARDS = ['uwa', 'curtin', 'ecu', 'murdoch'] as const;
@@ -55,8 +55,9 @@ export function intervalLabel(interval: MinuteInterval) {
 }
 export function dayHoursLabel(timeline: Pick<ScheduleTimeline, 'intervals' | 'unknown'>, midnight: number) {
   if (!timeline.intervals.length) return timeline.unknown.length ? 'Unknown' : 'Closed';
+  const date = formatPerthTime(midnight).slice(0, 10);
   const hours = timeline.intervals.map((interval) => intervalLabel({
-    startMinute: (interval.start - midnight) / MINUTE_MS, endMinute: (interval.end - midnight) / MINUTE_MS,
+    startMinute: perthCalendarMinute(interval.start, date), endMinute: perthCalendarMinute(interval.end, date),
   })).join(', ');
   return timeline.unknown.length ? `${hours} · remaining hours unknown` : hours;
 }

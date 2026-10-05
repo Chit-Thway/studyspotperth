@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import type { LibrarySearchResult } from '../../domain/library-search';
 import { profileFinderParams } from '../../domain/account';
-import { finderUrl } from '../finder/finder-state';
+import { finderUrl, queryUrl } from '../finder/finder-state';
 import { LibraryCard } from '../libraries/LibraryCard';
 import { useLibraryApi } from '../libraries/use-library-api';
 import { AccountGate } from './AccountGate';
@@ -15,7 +15,7 @@ function SavedLibraries() {
   const [raw] = useSearchParams();
   const effective = profileFinderParams(raw, account?.preferences);
   const { params, refreshNow } = savedQuery(effective);
-  const resource = useLibraryApi<{ results: LibrarySearchResult[] }>(finderUrl(params, '/api/account/favourites'), refreshNow);
+  const resource = useLibraryApi<{ results: LibrarySearchResult[] }>(queryUrl(params, '/api/account/favourites'), refreshNow);
   const results = resource.data?.results.filter((result) => account?.favouriteIds.includes(result.library.id));
   return <section className={styles.savedPage}><Link className={styles.back} to={finderUrl(raw)}>← Libraries</Link><h1>Saved libraries</h1>
     {resource.loading && <p role="status">Loading saved libraries…</p>}

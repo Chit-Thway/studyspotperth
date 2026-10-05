@@ -33,6 +33,15 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
     assert.equal(response.headers.get('cache-control'), 'no-store');
     assert.deepEqual(await json(response), canonicalJson({ ...searchLibraries(records, parsed), request: parsed, timeZone: 'Australia/Perth' }), `Domain/API mismatch: ${query}`);
   }
+  // Supported historical form inputs must resolve to the real Perth offset in workerd too.
+  const historical = await handleLibraryRequest(request('start=2007-01-01T12:00'), env, 'search', undefined, clock, options);
+  assert.equal(historical.status, 200);
+  const historicalBody = await historical.json<{ request: { start: number }; results: { evaluatedAt: string }[] }>();
+  assert.equal(historicalBody.request.start, Date.parse('2007-01-01T03:00:00Z'));
+  assert(historicalBody.results.length > 0);
+  assert(historicalBody.results.every((result) => result.evaluatedAt === '2007-01-01T12:00:00+09:00'));
+  assert.equal((await handleLibraryRequest(request('start=2006-12-03T02:30'), env, 'search', undefined, clock, options)).status, 400);
+  assert.equal((await handleLibraryRequest(request('after=beasley-law-library'), env, 'search', undefined, clock, options)).status, 400);
   const params = new URLSearchParams(`cards=uwa&suburb=${origin.id}&start=2026-10-15T14:00`);
   const semester = records.find((record) => record.id === 'fixture-semester')!;
   const detail = await handleLibraryRequest(request(params.toString()), env, 'detail', semester.slug, clock, options);

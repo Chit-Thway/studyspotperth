@@ -1,6 +1,6 @@
 import type { CalendarSchedule, ScheduleOverride } from './schedule';
 import { selectScheduleForDate } from './schedule';
-import { DAY_MS, formatPerthTime, MINUTE_MS, perthMidnight, shiftDate } from './perth-time';
+import { formatPerthTime, perthMidnight, perthScheduleTime, shiftDate } from './perth-time';
 
 export interface TimeInterval { start: number; end: number }
 export interface ScheduleTimeline {
@@ -44,28 +44,29 @@ export function intersectIntervals(a: readonly TimeInterval[], b: readonly TimeI
 export function calendarTimeline(schedule: CalendarSchedule, startDate: string, days = 32): ScheduleTimeline {
   if (!Number.isInteger(days) || days < 1 || days > 32) throw new Error('Evaluation window must be 1–32 days.');
   const start = perthMidnight(startDate);
-  const end = start + days * DAY_MS;
+  const end = perthMidnight(shiftDate(startDate, days));
   const intervals: TimeInterval[] = [];
   const unknown: TimeInterval[] = [];
   let previous = selectScheduleForDate(schedule, shiftDate(startDate, -1));
   for (let day = 0; day < days; day++) {
     const date = shiftDate(startDate, day);
-    const midnight = start + day * DAY_MS;
+    const midnight = perthMidnight(date);
+    const nextMidnight = perthMidnight(shiftDate(date, 1));
     const selected = selectScheduleForDate(schedule, date);
     const carry = previous.status === 'known' ? previous.intervals.filter((interval) => interval.endMinute > 1440)
-      .map((interval) => ({ start: midnight, end: midnight + (interval.endMinute - 1440) * MINUTE_MS })) : [];
+      .map((interval) => ({ start: midnight, end: perthScheduleTime(date, interval.endMinute - 1440, 'end') })) : [];
     if (selected.status === 'unknown') {
       // An unknown ordinary baseline does not erase a confirmed overnight end.
       // Explicit receiving-day overrides remain authoritative.
       const confirmed = selected.overrideId === null ? carry : [];
       intervals.push(...confirmed);
       const unknownFrom = Math.max(midnight, ...confirmed.map((interval) => interval.end));
-      if (unknownFrom < midnight + DAY_MS) unknown.push({ start: unknownFrom, end: midnight + DAY_MS });
+      if (unknownFrom < nextMidnight) unknown.push({ start: unknownFrom, end: nextMidnight });
     }
     if (selected.status === 'known') {
       const current = selected.intervals.map((interval) => ({
-        start: midnight + interval.startMinute * MINUTE_MS,
-        end: midnight + Math.min(1440, interval.endMinute) * MINUTE_MS,
+        start: perthScheduleTime(date, interval.startMinute, 'start'),
+        end: perthScheduleTime(date, Math.min(1440, interval.endMinute), 'end'),
       }));
       const preservesCarry = selected.overrideId === null || selected.overrideId === previous.overrideId;
       intervals.push(...current, ...(preservesCarry ? carry : intersectIntervals(carry, current)));

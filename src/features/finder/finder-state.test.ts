@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { finderUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
+import { finderUrl, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 
 describe('guest finder selections', () => {
   it('reset retains cards and origin while removing restrictions, end time and pagination', () => {
@@ -21,5 +21,31 @@ describe('guest finder selections', () => {
     expect(detail.searchParams.toString()).toBe(selected.toString());
     expect(finderUrl(detail.searchParams)).toBe(`/?${selected.toString()}`);
     expect(updateFinderParam(selected, 'open24Hours', null).get('cards')).toBe('uwa');
+  });
+  it('public navigation excludes admin cursors without dropping supported selections', () => {
+    const params = new URLSearchParams('after=beasley-law-library&cards=uwa&institutions=curtin&open24Hours=true&start=2007-01-01T12:00&offset=50');
+    const url = new URL(finderUrl(params), 'https://example.invalid');
+    expect(url.searchParams.has('after')).toBe(false);
+    expect(url.searchParams.get('cards')).toBe('uwa');
+    expect(url.searchParams.get('institutions')).toBe('curtin');
+    expect(url.searchParams.get('open24Hours')).toBe('true');
+    expect(url.searchParams.get('start')).toBe('2007-01-01T12:00');
+    expect(url.searchParams.get('offset')).toBe('50');
+    expect(params.get('after')).toBe('beasley-law-library');
+    expect(new URL(finderUrl(params, '/profile'), 'https://example.invalid').searchParams.has('after')).toBe(false);
+    expect(new URL(finderUrl(params, '/saved'), 'https://example.invalid').searchParams.has('after')).toBe(false);
+  });
+  it('keeps invalid supported values and duplicates for API validation', () => {
+    expect(finderUrl(new URLSearchParams('after=x&cards=&start=invalid&start=duplicate')))
+      .toBe('/?cards=&start=invalid&start=duplicate');
+  });
+  it('Clear all recovers from an unsupported query parameter and retains profile declarations', () => {
+    expect(resetFinderFilters(new URLSearchParams('after=x&unexpected=y&cards=&suburb=perth-cbd&open24Hours=true')).toString())
+      .toBe('cards=&suburb=perth-cbd');
+  });
+  it('API URLs retain unsupported keys and duplicates for validation', () => {
+    const params = new URLSearchParams('after=x&start=invalid&start=duplicate');
+    expect(queryUrl(params, '/api/libraries')).toBe('/api/libraries?after=x&start=invalid&start=duplicate');
+    expect(queryUrl(params, '/api/libraries/example')).toBe('/api/libraries/example?after=x&start=invalid&start=duplicate');
   });
 });

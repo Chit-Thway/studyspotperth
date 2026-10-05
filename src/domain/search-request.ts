@@ -21,13 +21,14 @@ export function isUniversityCard(value: string): value is UniversityCard {
 }
 export function isInstitution(value: string): value is Institution { return value === 'public' || isUniversityCard(value); }
 
+export const FINDER_QUERY_FIELDS: readonly string[] = ['start', 'end', 'suburb', 'cards', 'institutions', 'open24Hours', 'usableWifi',
+  'quietStudy', 'groupStudy', 'wheelchairAccess', 'limit', 'offset'];
+
 /** Cards are session declarations, never institution selections or proof of entry. */
 export function parseSearchRequest(params: URLSearchParams, clock: number, origin = DEFAULT_ORIGIN): SearchRequest {
-  const allowed = ['start', 'end', 'suburb', 'cards', 'institutions', 'open24Hours', 'usableWifi',
-    'quietStudy', 'groupStudy', 'wheelchairAccess', 'limit', 'offset'];
   if (params.toString().length > 2048) throw new SearchValidationError('query', 'Search parameters are too long.');
   for (const [key] of params) {
-    if (!allowed.includes(key)) throw new SearchValidationError(key, 'Unknown search parameter.');
+    if (!FINDER_QUERY_FIELDS.includes(key)) throw new SearchValidationError(key, 'Unknown search parameter.');
     if (params.getAll(key).length !== 1) throw new SearchValidationError(key, 'Supply this parameter once.');
   }
   const time = (field: 'start' | 'end') => {
