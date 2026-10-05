@@ -3,7 +3,6 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import type { CalendarSchedule } from '../../domain/schedule';
 import { calendarTimeline } from '../../domain/availability';
 import { perthMidnight, shiftDate } from '../../domain/perth-time';
-import { selectScheduleForDate } from '../../domain/schedule';
 import type { DetailResponse } from './api';
 import { LibraryApiError } from './api';
 import { useLibraryApi } from './use-library-api';
@@ -11,7 +10,7 @@ import { finderUrl } from '../finder/finder-state';
 import { LibraryPhoto } from './LibraryPhoto';
 import { LibraryFacts, RequirementLabel } from './LibraryFacts';
 import { Icon } from './Icon';
-import { directionsUrl, institutionCategory, INSTITUTION_LABELS, intervalLabel, matchLabel, readableDate } from './presentation';
+import { dayHoursLabel, directionsUrl, institutionCategory, INSTITUTION_LABELS, matchLabel, readableDate } from './presentation';
 import styles from './Libraries.module.css';
 import { profileFinderParams } from '../../domain/account';
 import { useAccount } from '../account/use-account';
@@ -24,9 +23,8 @@ function HoursTable({ schedule, date, label }: { schedule: CalendarSchedule; dat
       const current = shiftDate(date, day);
       const timeline = calendarTimeline(schedule, current, 1);
       const midnight = perthMidnight(current);
-      const status = selectScheduleForDate(schedule, current).status;
       return <tr key={current}><th scope="row">{new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Perth', weekday: 'short', day: 'numeric', month: 'short' }).format(new Date(`${current}T12:00:00+08:00`))}</th>
-        <td>{status === 'unknown' ? 'Unknown' : timeline.intervals.length ? timeline.intervals.map((interval) => intervalLabel({ startMinute: (interval.start - midnight) / 60000, endMinute: (interval.end - midnight) / 60000 })).join(', ') : 'Closed'}</td></tr>;
+        <td>{dayHoursLabel(timeline, midnight)}</td></tr>;
     })}
   </tbody></table>;
 }

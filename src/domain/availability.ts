@@ -52,14 +52,21 @@ export function calendarTimeline(schedule: CalendarSchedule, startDate: string, 
     const date = shiftDate(startDate, day);
     const midnight = start + day * DAY_MS;
     const selected = selectScheduleForDate(schedule, date);
-    if (selected.status === 'unknown') unknown.push({ start: midnight, end: midnight + DAY_MS });
+    const carry = previous.status === 'known' ? previous.intervals.filter((interval) => interval.endMinute > 1440)
+      .map((interval) => ({ start: midnight, end: midnight + (interval.endMinute - 1440) * MINUTE_MS })) : [];
+    if (selected.status === 'unknown') {
+      // An unknown ordinary baseline does not erase a confirmed overnight end.
+      // Explicit receiving-day overrides remain authoritative.
+      const confirmed = selected.overrideId === null ? carry : [];
+      intervals.push(...confirmed);
+      const unknownFrom = Math.max(midnight, ...confirmed.map((interval) => interval.end));
+      if (unknownFrom < midnight + DAY_MS) unknown.push({ start: unknownFrom, end: midnight + DAY_MS });
+    }
     if (selected.status === 'known') {
       const current = selected.intervals.map((interval) => ({
         start: midnight + interval.startMinute * MINUTE_MS,
         end: midnight + Math.min(1440, interval.endMinute) * MINUTE_MS,
       }));
-      const carry = previous.status === 'known' ? previous.intervals.filter((interval) => interval.endMinute > 1440)
-        .map((interval) => ({ start: midnight, end: midnight + (interval.endMinute - 1440) * MINUTE_MS })) : [];
       const preservesCarry = selected.overrideId === null || selected.overrideId === previous.overrideId;
       intervals.push(...current, ...(preservesCarry ? carry : intersectIntervals(carry, current)));
     }

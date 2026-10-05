@@ -100,5 +100,43 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   assert.deepEqual(await json(overnightDetail), canonicalJson({ result: overnightResult, request: overnightRequest, timeZone: 'Australia/Perth' }));
   assert.equal((await handleLibraryRequest(request(), env, 'detail', 'fictional-overnight-exception', clock)).status, 404);
   await repository.unpublish(overnightRecord.libraryId);
-  return Response.json({ status: 'ok', cases: matrix.length + 1, checks: ['search', 'detail', 'filters', 'ranking', 'validation', 'publication', 'fixture-exclusion', 'overnight-exceptions'] });
+  for (const kind of ['date', 'period'] as const) {
+    const unknownBaseline = structuredClone(overnight);
+    for (const schedule of [unknownBaseline.schedule.building, unknownBaseline.schedule.access[0]]) {
+      schedule.status = 'unknown';
+      schedule.sourceId = null;
+      schedule.recurring = [];
+      schedule.overrides[0].kind = kind;
+      schedule.overrides[0].startDate = kind === 'date' ? '2026-10-02' : '2026-10-01';
+    }
+    const slug = `fictional-overnight-unknown-${kind}`;
+    const createdUnknown = await repository.createLibrary({ slug, institution: 'public', isFixture: true }, unknownBaseline);
+    await repository.publishDraft(createdUnknown.revisionId);
+    const persisted = await repository.getPublishedBySlug(slug, options);
+    assert(persisted);
+    for (const start of ['2026-10-02T22:00', '2026-10-03T01:00', '2026-10-03T06:00']) {
+      const query = new URLSearchParams({ start, end: '2026-10-03T07:00', suburb: origin.id });
+      if (!start.endsWith('06:00')) query.set('end', '2026-10-03T05:00');
+      const parsed = parseSearchRequest(query, clock, origin);
+      const expected = evaluateLibrary(persisted, parsed);
+      if (start.endsWith('06:00')) assert.equal(expected.opening.status, 'unknown');
+      else {
+        assert.equal(expected.opening.window?.until, '2026-10-03T06:00:00+08:00');
+        assert.equal(expected.opening.window.endReason, 'unknown');
+        assert.equal(expected.access.window?.until, '2026-10-03T06:00:00+08:00');
+        assert.equal(expected.coverage.status, 'covered');
+      }
+      const detailResponse = await handleLibraryRequest(request(query.toString()), env, 'detail', slug, clock, options);
+      assert.equal(detailResponse.status, 200);
+      assert.deepEqual(await json(detailResponse), canonicalJson({ result: expected, request: parsed, timeZone: 'Australia/Perth' }));
+      const expectedSearch = searchLibraries(await repository.listPublished(options), parsed);
+      assert.equal(expectedSearch.results.some((result) => result.library.id === createdUnknown.libraryId), !start.endsWith('06:00'));
+      const searchResponse = await handleLibraryRequest(request(query.toString()), env, 'search', undefined, clock, options);
+      assert.equal(searchResponse.status, 200);
+      assert.deepEqual(await json(searchResponse), canonicalJson({ ...expectedSearch, request: parsed, timeZone: 'Australia/Perth' }));
+    }
+    assert.equal((await handleLibraryRequest(request(), env, 'detail', slug, clock)).status, 404);
+    await repository.unpublish(createdUnknown.libraryId);
+  }
+  return Response.json({ status: 'ok', cases: matrix.length + 3, checks: ['search', 'detail', 'filters', 'ranking', 'validation', 'publication', 'fixture-exclusion', 'overnight-exceptions', 'unknown-baseline-overnight'] });
 };

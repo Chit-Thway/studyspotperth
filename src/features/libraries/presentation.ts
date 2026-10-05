@@ -2,6 +2,8 @@ import type { LibrarySearchResult } from '../../domain/library-search';
 import type { Institution } from '../../domain/search-context';
 import type { MinuteInterval } from '../../domain/schedule';
 import type { RequirementMatch } from '../../domain/wifi';
+import type { ScheduleTimeline } from '../../domain/availability';
+import { MINUTE_MS } from '../../domain/perth-time';
 
 export const INSTITUTION_LABELS: Record<Institution, string> = { public: 'Public libraries', uwa: 'UWA', curtin: 'Curtin', ecu: 'ECU', murdoch: 'Murdoch' };
 export const UNIVERSITY_CARDS = ['uwa', 'curtin', 'ecu', 'murdoch'] as const;
@@ -50,6 +52,13 @@ export function minuteTime(minute: number) {
 export function intervalLabel(interval: MinuteInterval) {
   return interval.startMinute === 0 && interval.endMinute === 1440 ? '24 hours'
     : `${minuteTime(interval.startMinute)}–${minuteTime(interval.endMinute)}${interval.endMinute > 1440 ? ' next day' : interval.endMinute === 1440 ? ' midnight' : ''}`;
+}
+export function dayHoursLabel(timeline: Pick<ScheduleTimeline, 'intervals' | 'unknown'>, midnight: number) {
+  if (!timeline.intervals.length) return timeline.unknown.length ? 'Unknown' : 'Closed';
+  const hours = timeline.intervals.map((interval) => intervalLabel({
+    startMinute: (interval.start - midnight) / MINUTE_MS, endMinute: (interval.end - midnight) / MINUTE_MS,
+  })).join(', ');
+  return timeline.unknown.length ? `${hours} · remaining hours unknown` : hours;
 }
 export function directionsUrl(result: LibrarySearchResult) {
   const { latitude, longitude, address, name } = result.library.content;

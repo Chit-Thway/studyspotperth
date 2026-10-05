@@ -2,8 +2,10 @@ import { describe, expect, it } from 'vitest';
 import { libraryFixtures } from '../../../tests/fixtures/libraries';
 import { evaluateLibrary } from '../../domain/library-search';
 import { parseSearchRequest } from '../../domain/search-request';
-import { parsePerthTime } from '../../domain/perth-time';
-import { availabilityLabel, coverageLabel, intervalLabel, directionsUrl } from './presentation';
+import { parsePerthTime, perthMidnight } from '../../domain/perth-time';
+import { calendarTimeline } from '../../domain/availability';
+import type { CalendarSchedule } from '../../domain/schedule';
+import { availabilityLabel, coverageLabel, dayHoursLabel, intervalLabel, directionsUrl } from './presentation';
 
 const clock = parsePerthTime('2026-10-02T18:00');
 function result(id: string, query = '') {
@@ -32,5 +34,17 @@ describe('library explanations in the interface', () => {
   it('makes overnight minutes explicit and directions use destination coordinates', () => {
     expect(intervalLabel({ startMinute: 1200, endMinute: 1800 })).toBe('20:00–06:00 next day');
     expect(new URL(directionsUrl(result('uwa'))).searchParams.get('destination')).toBe('-31.95,115.86');
+  });
+  it('shows confirmed overnight hours alongside the unknown remainder', () => {
+    const schedule: CalendarSchedule = { status: 'unknown', sourceId: null, recurring: [], overrides: [
+      { id: 'exam-night', kind: 'date', startDate: '2026-10-09', endDate: '2026-10-09', status: 'hours',
+        intervals: [{ weekday: 5, startMinute: 1200, endMinute: 1800 }], sourceId: 'source' },
+    ] };
+    expect(dayHoursLabel(calendarTimeline(schedule, '2026-10-10', 1), perthMidnight('2026-10-10')))
+      .toBe('00:00–06:00 · remaining hours unknown');
+    expect(dayHoursLabel(calendarTimeline(schedule, '2026-10-11', 1), perthMidnight('2026-10-11'))).toBe('Unknown');
+    schedule.overrides.push({ id: 'closure', kind: 'date', startDate: '2026-10-10', endDate: '2026-10-10',
+      status: 'closed', intervals: [], sourceId: 'source' });
+    expect(dayHoursLabel(calendarTimeline(schedule, '2026-10-10', 1), perthMidnight('2026-10-10'))).toBe('Closed');
   });
 });
