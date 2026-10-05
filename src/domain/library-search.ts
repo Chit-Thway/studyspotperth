@@ -49,13 +49,15 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
   const entries = library.content.schedule.access.map((entry) => {
     const timeline = calendarTimeline(entry, date);
     const intervals = intersectIntervals(building.intervals, timeline.intervals);
-    const unknown = mergeTimeIntervals([...intersectIntervals(building.intervals, timeline.unknown), ...building.unknown]);
+    // Availability is uncertain only where neither schedule definitely forbids entry.
+    const unknown = mergeTimeIntervals([...intersectIntervals(building.intervals, timeline.unknown),
+      ...intersectIntervals(building.unknown, [...timeline.intervals, ...timeline.unknown])]);
     const match = entryMatch(entry, request.cards);
     return { entry, timeline, intervals, unknown, match };
   });
   const matched = entries.filter(({ match }) => match === 'public' || match === 'matches-profile');
   const personalIntervals = mergeTimeIntervals(matched.flatMap(({ intervals }) => intervals));
-  const uncertainIntervals = mergeTimeIntervals([...building.unknown, ...entries.flatMap(({ entry, timeline, unknown, match }) =>
+  const uncertainIntervals = mergeTimeIntervals([...(!entries.length ? building.unknown : []), ...entries.flatMap(({ entry, timeline, unknown, match }) =>
     entry.group === 'unknown' ? [...unknown, ...intersectIntervals(building.intervals, timeline.intervals)] : match === 'public' || match === 'matches-profile' ? unknown : [])]);
   const personalWindow = continuousWindow(personalIntervals, request.start, building.end, uncertainIntervals);
   const personalStatus: PersonalAccessStatus = openingStatus !== 'open' ? openingStatus === 'unknown' ? 'unknown' : 'unavailable'

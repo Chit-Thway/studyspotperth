@@ -8,14 +8,14 @@ import { useLibraryApi } from '../libraries/use-library-api';
 import { AccountGate } from './AccountGate';
 import { useAccount } from './use-account';
 import styles from './AccountPages.module.css';
+import { savedQuery } from './saved-query';
 
 function SavedLibraries() {
   const { account } = useAccount();
   const [raw] = useSearchParams();
   const effective = profileFinderParams(raw, account?.preferences);
-  const params = new URLSearchParams();
-  for (const field of ['cards', 'suburb']) if (effective.has(field)) params.set(field, effective.get(field)!);
-  const resource = useLibraryApi<{ results: LibrarySearchResult[] }>(finderUrl(params, '/api/account/favourites'), true);
+  const { params, refreshNow } = savedQuery(effective);
+  const resource = useLibraryApi<{ results: LibrarySearchResult[] }>(finderUrl(params, '/api/account/favourites'), refreshNow);
   const results = resource.data?.results.filter((result) => account?.favouriteIds.includes(result.library.id));
   return <section className={styles.savedPage}><Link className={styles.back} to={finderUrl(raw)}>← Libraries</Link><h1>Saved libraries</h1>
     {resource.loading && <p role="status">Loading saved libraries…</p>}

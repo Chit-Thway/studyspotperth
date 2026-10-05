@@ -67,6 +67,13 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   assert.equal(savedPayload.results.length, 1, 'Saved libraries must not disappear under finder restrictions.');
   assert.equal(savedPayload.results[0].library.id, libraryId);
   assert.equal(savedPayload.results[0].opening.status, 'closed', 'Closed saved libraries must remain visible.');
+  const sessionSaved = await call(alice.cookie, 'saved', 'GET', undefined, undefined, origin,
+    '?start=2026-10-02T14:00&end=2026-10-02T16:00&institutions=uwa&open24Hours=true');
+  assert.equal(sessionSaved.status, 200);
+  const sessionPayload = await sessionSaved.json<{ results: LibrarySearchResult[] }>();
+  assert.equal(sessionPayload.results.length, 1, 'Finder restrictions must not remove saved records from the selected session.');
+  assert.equal(sessionPayload.results[0].evaluatedAt, '2026-10-02T14:00:00+08:00');
+  assert.equal(sessionPayload.results[0].coverage.status, 'covered');
   const publicSaved = await handleAccountRequest(new Request(`${origin}/api/account/favourites`, { headers: { Cookie: alice.cookie } }), env, 'saved');
   assert.deepEqual(await publicSaved.json(), { results: [] }, 'Public account routes must also exclude fictional records.');
   assert.equal((await call(alice.cookie, 'favourite', 'PUT', undefined, 'missing-library')).status, 404);

@@ -19,7 +19,7 @@ export function AccountNavigation() {
       <Link to={`/profile${search}`} onClick={() => { menu.current?.removeAttribute('open'); }}>Your profile</Link><Link to={`/saved${search}`} onClick={() => { menu.current?.removeAttribute('open'); }}>Saved libraries</Link>
       {state.account.isAdmin && <Link to="/admin" onClick={() => { menu.current?.removeAttribute('open'); }}>Manage libraries</Link>}
       <button type="button" disabled={state.busy} onClick={() => {
-        setError(''); void state.signOut().then(() => { menu.current?.removeAttribute('open'); void navigate(`/${search}`); }).catch((failure: unknown) => setError(failure instanceof Error ? failure.message : 'Couldn’t sign out.'));
+        setError(''); void state.signOut(() => { menu.current?.removeAttribute('open'); void navigate(`/${search}`); }).catch((failure: unknown) => setError(failure instanceof Error ? failure.message : 'Couldn’t sign out.'));
       }}>Sign out</button>{error && <p role="alert">{error}</p>}
     </div></details> : <Link className={styles.signIn} to={`/sign-in?${new URLSearchParams({ returnTo: target })}`}>Sign in</Link>}
   </div>;

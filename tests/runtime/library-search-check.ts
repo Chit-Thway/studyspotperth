@@ -138,5 +138,22 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
     assert.equal((await handleLibraryRequest(request(), env, 'detail', slug, clock)).status, 404);
     await repository.unpublish(createdUnknown.libraryId);
   }
-  return Response.json({ status: 'ok', cases: matrix.length + 3, checks: ['search', 'detail', 'filters', 'ranking', 'validation', 'publication', 'fixture-exclusion', 'overnight-exceptions', 'unknown-baseline-overnight'] });
+  const entryClosure = structuredClone(overnight);
+  entryClosure.schedule.building = { status: 'unknown', sourceId: null, recurring: [], overrides: [
+    { id: 'monday-only', kind: 'date', startDate: '2026-10-05', endDate: '2026-10-05', status: 'hours',
+      intervals: [{ weekday: 1, startMinute: 0, endMinute: 1440 }], sourceId: 'fictional-source' },
+  ] };
+  entryClosure.schedule.access = [{ group: 'public', requirement: 'Public entry', needsActiveCredentials: false,
+    status: 'known', sourceId: 'fictional-source', recurring: [{ weekday: 1, startMinute: 0, endMinute: 1440 }], overrides: [] }];
+  const closureRecord = await repository.createLibrary({ slug: 'fictional-definite-entry-closure', institution: 'public', isFixture: true }, entryClosure);
+  await repository.publishDraft(closureRecord.revisionId);
+  const closureQuery = new URLSearchParams('start=2026-10-05T23:00&end=2026-10-06T01:00');
+  const closureResponse = await handleLibraryRequest(request(closureQuery.toString()), env, 'detail', 'fictional-definite-entry-closure', clock, options);
+  assert.equal(closureResponse.status, 200);
+  const closureResult = (await closureResponse.json<{ result: ReturnType<typeof evaluateLibrary> }>()).result;
+  assert.equal(closureResult.opening.window?.endReason, 'unknown');
+  assert.equal(closureResult.access.window?.endReason, 'closes');
+  assert.deepEqual(closureResult.coverage, { status: 'shortfall', shortfallMinutes: 60 });
+  await repository.unpublish(closureRecord.libraryId);
+  return Response.json({ status: 'ok', cases: matrix.length + 4, checks: ['search', 'detail', 'filters', 'ranking', 'validation', 'publication', 'fixture-exclusion', 'overnight-exceptions', 'unknown-baseline-overnight', 'definite-entry-shortfall'] });
 };

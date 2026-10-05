@@ -9,7 +9,8 @@ const account: AccountState['account'] = { user: { id: 'synthetic', name: 'Test 
   preferences: { suburbId: null, cards: [] }, favouriteIds: [], isAdmin: true };
 function render(changes: Partial<AccountState> = {}) {
   const state: AccountState = { account, googleEnabled: false, loading: false, busy: false, error: null,
-    refresh: () => undefined, signOut: () => Promise.resolve(), savePreferences: () => Promise.resolve(), setFavourite: () => Promise.resolve(), ...changes };
+    refresh: () => undefined, signOut: () => Promise.resolve(), registerSignOutGuard: () => () => undefined,
+    savePreferences: () => Promise.resolve(), setFavourite: () => Promise.resolve(), ...changes };
   return renderToStaticMarkup(createElement(MemoryRouter, null, createElement(AccountContext, { value: state },
     createElement(AccountGate, { children: createElement('input', { 'aria-label': 'Unsaved editor', defaultValue: 'Unsaved value' }) }))));
 }
