@@ -36,4 +36,9 @@
 .listItem > div { flex: 1 1 20rem; min-width: 0; overflow-wrap: anywhere; }
 .listItem p { color: var(--color-muted); margin: 0; font-size: .85rem; }
 .preview { border: 2px dashed var(--color-border); border-radius: var(--radius-card); padding: var(--space-6); }
+.confirmation { width: min(30rem, calc(100% - 2rem)); border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: var(--space-6); background: var(--color-surface); color: var(--color-text); }
+.confirmation::backdrop { background: rgb(0 0 0 / .35); }
+.confirmation h2 { margin-top: 0; font-family: var(--font-heading); }
+.confirmation .button { background: var(--color-action); color: var(--color-surface); border-color: var(--color-action); }
+.confirmation .actions { margin-bottom: 0; }
 @media (max-width: 48rem) { .section, .listItem, .preview { padding: var(--space-4); } .section .section { padding: var(--space-3); } }

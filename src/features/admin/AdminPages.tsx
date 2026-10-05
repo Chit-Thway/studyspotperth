@@ -15,6 +15,7 @@ import { LibraryApiError } from '../libraries/api';
 import { INSTITUTION_LABELS } from '../libraries/presentation';
 import { Field, Choice } from './Fields';
 import { ContentEditor } from './ContentEditor';
+import { UnsavedChangesDialog } from './UnsavedChangesDialog';
 import styles from './Admin.module.css';
 
 function AccessFailure({ error, retry }: { error: Error | null; retry: () => void }) {
@@ -51,9 +52,10 @@ function LibraryEditor({ initial }: { initial?: AdminLibrary }) {
   const [at, setAt] = useState(formatPerthTime(Date.now()).slice(0, 16));
   const [cards, setCards] = useState('');
   const errorPanel = useRef<HTMLParagraphElement>(null);
+  const createdAndSaved = useRef(false);
   const dirty = !saved || JSON.stringify(content) !== JSON.stringify(saved.record.content);
   useEffect(() => {
-    const warn = (event: BeforeUnloadEvent) => { if (dirty) { event.preventDefault(); event.returnValue = ''; } };
+    const warn = (event: BeforeUnloadEvent) => { if (dirty && !createdAndSaved.current) { event.preventDefault(); event.returnValue = ''; } };
     window.addEventListener('beforeunload', warn); return () => window.removeEventListener('beforeunload', warn);
   }, [dirty]);
   useEffect(() => { if (error) errorPanel.current?.focus(); }, [error]);
@@ -67,6 +69,7 @@ function LibraryEditor({ initial }: { initial?: AdminLibrary }) {
         const canonical = parseAdminContent(content);
         if (!saved) {
           payload = await accountRequest<AdminLibrary>('/api/admin/libraries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, institution, content: canonical }) });
+          createdAndSaved.current = true;
           void navigate(`/admin/libraries/${payload.record.id}`, { replace: true }); return;
         }
         payload = await accountRequest<AdminLibrary>(`/api/admin/libraries/${saved.record.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ baseRevisionId: saved.record.revisionId, content: canonical }) });
@@ -91,7 +94,8 @@ function LibraryEditor({ initial }: { initial?: AdminLibrary }) {
     } finally { setBusy(false); }
   }
   return <section className={styles.page}>
-    <Link to="/admin" className={styles.back} onClick={(event) => { if (dirty && !window.confirm('Leave without saving your changes?')) event.preventDefault(); }}>← Manage libraries</Link>
+    <UnsavedChangesDialog shouldBlock={() => dirty && !createdAndSaved.current} />
+    <Link to="/admin" className={styles.back}>← Manage libraries</Link>
     <div className={styles.heading}><h1>{saved ? 'Edit library' : 'Add library'}</h1><span className={styles.badge}>{saved?.publishedRevisionId ? 'Published' : 'Unpublished'}{dirty && ' · unsaved changes'}</span></div>
     {error && <p ref={errorPanel} tabIndex={-1} className={styles.error} role="alert">{error}</p>}{status && <p role="status" className={styles.status}>{status}</p>}
     <form className={styles.form} onSubmit={(event) => { event.preventDefault(); void run('save'); }}>
