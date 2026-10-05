@@ -8,7 +8,7 @@ The app opens directly to a responsive library finder, with a filter sidebar on 
 
 Guest search is connected to the backend. Visitors can choose a suburb and study time, filter for 24/7 access and facilities, and declare university cards to personalise results. Library details show opening and entry hours, Wi-Fi requirements, sources, and directions. Selections stay in the URL when moving between the finder and a library.
 
-Verified library listings and photos have not been added yet, so the public finder currently shows an empty state. Sign-in and saved libraries remain inactive, with their controls disabled.
+Google sign-in lets visitors save libraries and keep a starting suburb and declared university cards in their profile. Saved cards personalise results without automatically restricting the finder. Verified library listings and photos have not been added yet, so the public finder currently shows an empty state.
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
@@ -36,7 +36,7 @@ npm run dev:pages
 
 Open **http://localhost:8788**. The app and database run locally; a Cloudflare account is not required. Restart this command after changing frontend files.
 
-For automatic frontend updates while developing, leave the local server running and run `npm run dev` in another terminal. Open the URL it prints.
+For automatic frontend updates while developing, leave the local server running and run `npm run dev` in another terminal. Open **http://localhost:5173**. Use `localhost` consistently when testing sign-in so the session cookie works on both local ports.
 
 The setup command creates `.dev.vars` with a random local secret and preserves an existing file. `.dev.vars.example` lists the available settings without secret values. Secrets, dependencies, build output, and local database files are excluded from Git. The database configuration in `wrangler.jsonc` is for local use only.
 
@@ -58,7 +58,21 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run test:runtime` | Verify the built app and local backend; run after building |
 | `npm run types:cloudflare` | Update types after changing server settings |
 
-Runtime checks use a separate local database to verify search and detail APIs, migrations, repeatable fixtures, published/draft separation, data relationships, basic account infrastructure, routing, and file delivery. They do not verify a complete sign-in flow.
+Runtime checks use a separate local database to verify search and detail APIs, migrations, repeatable fixtures, published/draft separation, account ownership, preferences, favourites, session expiry and sign-out, routing, and file delivery. The Google browser sign-in flow is checked separately with real OAuth credentials.
+
+## Google sign-in
+
+Create a Google OAuth client of type **Web application** and register this local redirect URI:
+
+```text
+http://localhost:8788/api/auth/callback/google
+```
+
+Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in the ignored `.dev.vars` file, keeping the generated `AUTH_SECRET`. Add your Google account as a test user while the Google app is in testing mode. Restart the local server after changing credentials. Browsing works without them; Google sign-in stays unavailable until configured.
+
+For deployment, use the site's HTTPS origin as `AUTH_BASE_URL`, register its matching Google callback, and configure separate production secrets and a D1 database. Local configuration does not deploy the app.
+
+Sessions use server-managed cookies. Profile preferences and favourites belong to the signed-in account; card declarations are self-reported and never verify university membership. An administrator role is stored on the server and cannot be granted through a profile request.
 
 ## Library API
 

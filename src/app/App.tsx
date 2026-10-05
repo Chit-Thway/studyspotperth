@@ -2,6 +2,11 @@ import { useEffect, useRef } from 'react';
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import { FinderPage } from '../features/finder/FinderPage';
 import { LibraryDetailPage } from '../features/libraries/LibraryDetailPage';
+import { AccountNavigation } from '../features/account/AccountNavigation';
+import { SignInPage } from '../features/account/SignInPage';
+import { ProfilePage } from '../features/account/ProfilePage';
+import { SavedPage } from '../features/account/SavedPage';
+import { internalReturnTo } from '../domain/account';
 import styles from './App.module.css';
 
 function NotFound() {
@@ -19,7 +24,8 @@ export function App() {
   const location = useLocation();
   const previousPath = useRef(location.pathname);
   const main = useRef<HTMLElement>(null);
-  const finder = `/${location.search}`;
+  const query = location.pathname === '/sign-in' ? new URL(internalReturnTo(new URLSearchParams(location.search).get('returnTo')), window.location.origin).search : location.search;
+  const finder = `/${query}`;
   useEffect(() => {
     if (previousPath.current !== location.pathname) {
       main.current?.focus();
@@ -39,21 +45,13 @@ export function App() {
         </Link>
         <nav className={styles.navigation} aria-label="Main navigation">
           <Link className={styles.libraryLink} to={finder}>Libraries</Link>
-          <div className={styles.accountControls} aria-describedby="account-note">
-            <button className={styles.saved} type="button" disabled>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
-              </svg>
-              Saved
-            </button>
-            <button className={styles.signIn} type="button" disabled>Sign in</button>
-          </div>
+          <AccountNavigation />
         </nav>
       </header>
       <main ref={main} id="main" className={styles.main} tabIndex={-1}>
-        <Routes><Route path="/" element={<FinderPage />} /><Route path="/libraries/:slug" element={<LibraryDetailPage />} /><Route path="*" element={<NotFound />} /></Routes>
+        <Routes><Route path="/" element={<FinderPage />} /><Route path="/libraries/:slug" element={<LibraryDetailPage />} /><Route path="/sign-in" element={<SignInPage />} /><Route path="/profile" element={<ProfilePage />} /><Route path="/saved" element={<SavedPage />} /><Route path="*" element={<NotFound />} /></Routes>
       </main>
-      <footer className={styles.footer} id="account-note">Free to browse. Saved libraries and accounts are coming later.</footer>
+      <footer className={styles.footer}>StudySpot Perth · Free to browse</footer>
     </div>
   );
 }

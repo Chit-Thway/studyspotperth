@@ -9,7 +9,9 @@ export function updateFinderParam(params: URLSearchParams, field: string, value:
 export function toggleFinderSelection(params: URLSearchParams, field: 'cards' | 'institutions', value: string) {
   const selected = (params.get(field) ?? '').split(',').filter(Boolean);
   const next = selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value];
-  return updateFinderParam(params, field, next.join(','));
+  const updated = updateFinderParam(params, field, next.join(','));
+  if (field === 'cards' && !next.length) updated.set('cards', '');
+  return updated;
 }
 export function resetFinderFilters(params: URLSearchParams) {
   const next = new URLSearchParams(params);

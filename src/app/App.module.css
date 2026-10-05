@@ -5,7 +5,14 @@
 .navigation { display: flex; align-items: center; flex: 1; gap: var(--space-6); }
 .libraryLink { color: var(--color-action); text-decoration: none; font-size: .85rem; }
 .accountControls { display: flex; align-items: center; gap: var(--space-6); margin-left: auto; }
-.accountControls button { color: var(--color-muted); font-size: .8rem; }
+.accountControls button, .accountControls a { font-size: .8rem; text-decoration: none; }
+.accountControls a { color: var(--color-action); }
+.accountMenu { position: relative; font-size: .8rem; }
+.accountMenu summary { cursor: pointer; border: 1px solid var(--color-border); border-radius: var(--radius-control); padding: var(--space-2) var(--space-4); color: var(--color-action); }
+.accountDropdown { position: absolute; top: calc(100% + 8px); right: 0; z-index: 2; min-width: 10rem; display: grid; gap: var(--space-2); padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-control); background: var(--color-surface); box-shadow: 0 6px 16px #203a3020; }
+.accountDropdown a, .accountDropdown button { padding: var(--space-2); text-align: left; }
+.accountDropdown button { background: none; border: 0; color: var(--color-action); }
+.accountDropdown p { margin: 0; }
 .saved { display: inline-flex; align-items: center; gap: var(--space-2); background: none; border: 0; padding: var(--space-2) 0; }
 .saved svg { width: 1.1rem; height: 1.1rem; }
 .signIn { padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-control); background: var(--color-surface); white-space: nowrap; }

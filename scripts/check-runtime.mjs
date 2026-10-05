@@ -26,13 +26,15 @@ await cp(resolve('tests/fixtures'), `${workDir}/tests/fixtures`, { recursive: tr
 await cp(resolve('migrations'), `${workDir}/migrations`, { recursive: true });
 await cp(resolve('tests/runtime/library-data-check.ts'), `${workDir}/functions/api/_data-check.ts`);
 await cp(resolve('tests/runtime/library-search-check.ts'), `${workDir}/functions/api/_search-check.ts`);
+await cp(resolve('tests/runtime/account-check.ts'), `${workDir}/functions/api/_account-check.ts`);
 await cp(resolve('dist'), `${workDir}/dist`, { recursive: true });
 await writeFile(`${workDir}/package.json`, JSON.stringify({ name: 'studyspotperth-runtime-check', private: true, type: 'module' }));
 const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
 config.pages_build_output_dir = './dist';
 config.vars.AUTH_BASE_URL = origin;
 await writeFile(`${workDir}/wrangler.jsonc`, JSON.stringify(config));
-await writeFile(`${workDir}/.dev.vars`, `AUTH_SECRET=${randomBytes(32).toString('hex')}\nGOOGLE_CLIENT_ID=\nGOOGLE_CLIENT_SECRET=\n`, { mode: 0o600 });
+// Synthetic credentials verify local binding loading without contacting Google.
+await writeFile(`${workDir}/.dev.vars`, `AUTH_SECRET=${randomBytes(32).toString('hex')}\nGOOGLE_CLIENT_ID=runtime-check-client\nGOOGLE_CLIENT_SECRET=runtime-check-secret\n`, { mode: 0o600 });
 await writeFile(`${workDir}/fixtures.sql`, createFixtureSql());
 const wranglerPath = resolve('node_modules/wrangler/bin/wrangler.js');
 const runtimeEnv = { ...process.env, WRANGLER_SEND_METRICS: 'false', BROWSER: 'none', CI: '1' };
@@ -48,6 +50,7 @@ const child = spawn(process.execPath, [
   wranglerPath, 'pages', 'dev', 'dist',
   '--ip', '127.0.0.1', '--port', String(port),
   '--persist-to', `${workDir}/state`,
+  '--env-file', '.dev.vars',
 ], { cwd: workDir, env: runtimeEnv, stdio: ['ignore', 'pipe', 'pipe'] });
 let output = '';
 child.stdout.on('data', (chunk) => { output += String(chunk); });
@@ -57,16 +60,20 @@ child.on('error', (error) => { launchError = error; });
 
 try {
   let health;
+  let healthPayload;
   const deadline = Date.now() + 60_000;
   while (Date.now() < deadline) {
     if (launchError) throw launchError;
     if (child.exitCode !== null) throw new Error(`Pages exited before startup (code ${child.exitCode}).`);
-    try { health = await fetch(`${origin}/api/health`, { signal: AbortSignal.timeout(2_000) }); } catch { /* Wait for the runtime to bind. */ }
-    if (health?.ok) break;
+    try {
+      health = await fetch(`${origin}/api/health`, { signal: AbortSignal.timeout(5_000) });
+      healthPayload = await health.json();
+      if (health.ok) break;
+    } catch { health = undefined; /* Wait for the runtime to bind and finish its first database request. */ }
     await delay(250);
   }
   assert(health?.ok, 'Pages runtime did not become healthy within 60 seconds.');
-  assert.deepEqual(await health.json(), { status: 'ok', database: 'connected', timeZone: 'Australia/Perth' });
+  assert.deepEqual(healthPayload, { status: 'ok', database: 'connected', timeZone: 'Australia/Perth' });
   assert.equal(health.headers.get('cache-control'), 'no-store');
   const wrongMethod = await fetch(`${origin}/api/health`, { method: 'POST' });
   assert.equal(wrongMethod.status, 405);
@@ -75,10 +82,24 @@ try {
   const auth = await fetch(`${origin}/api/auth/ok`);
   assert.equal(auth.status, 200, 'Better Auth did not initialise in the Pages runtime.');
   assert.deepEqual(await auth.json(), { ok: true });
-  const inactiveAuth = await fetch(`${origin}/api/auth/sign-in/social`, { method: 'POST' });
-  assert.equal(inactiveAuth.status, 404, 'Account endpoints must remain disabled.');
+  const guestSession = await fetch(`${origin}/api/auth/get-session`);
+  assert.equal(guestSession.status, 200);
+  assert.equal(await guestSession.json(), null);
+  const guestAccount = await fetch(`${origin}/api/account`);
+  assert.deepEqual(await guestAccount.json(), { account: null, googleEnabled: true }, 'Pages must load both provider credentials from .dev.vars.');
+  const social = await fetch(`${origin}/api/auth/sign-in/social`, { method: 'POST',
+    headers: { Origin: origin, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ provider: 'google', callbackURL: `${origin}/profile`, disableRedirect: true }),
+  });
+  assert.equal(social.status, 200, 'Configured Google sign-in must generate an authorization URL.');
+  const socialPayload = await social.json();
+  const authorization = new URL(socialPayload.url);
+  assert.equal(authorization.origin, 'https://accounts.google.com');
+  assert.equal(authorization.searchParams.get('client_id'), 'runtime-check-client');
+  assert.equal(authorization.searchParams.get('redirect_uri'), `${origin}/api/auth/callback/google`);
+  assert.equal(authorization.searchParams.get('code_challenge_method'), 'S256');
 
-  for (const path of ['/', '/libraries/fictional-uwa-24-hours', '/a-page-that-does-not-exist']) {
+  for (const path of ['/', '/sign-in', '/profile', '/saved', '/libraries/fictional-uwa-24-hours', '/a-page-that-does-not-exist']) {
     const page = await fetch(`${origin}${path}`);
     assert.equal(page.status, 200, `SPA fallback failed for ${path}.`);
     assert.match(await page.text(), /<title>StudySpot Perth<\/title>/);
@@ -98,9 +119,20 @@ try {
   assert.equal((await fetch(`${origin}/api/libraries`, { method: 'POST' })).status, 405);
   const searchCheck = await fetch(`${origin}/api/_search-check`);
   assert.equal(searchCheck.status, 200, await searchCheck.text());
+  const accountCheck = await fetch(`${origin}/api/_account-check`);
+  assert.equal(accountCheck.status, 200, 'Account integration checks failed; see the worker log.');
+  const testCookie = accountCheck.headers.get('set-cookie')?.split(';')[0];
+  assert(testCookie, 'The isolated account check must provide a test session.');
+  const protectedProfile = await fetch(`${origin}/api/account`, { headers: { Cookie: testCookie } });
+  assert.equal(protectedProfile.status, 200);
+  assert.equal((await protectedProfile.json()).account.user.id, 'account-check-alice');
+  const emptyPut = await fetch(`${origin}/api/account/favourites/missing-library`, { method: 'PUT', headers: { Origin: origin, Cookie: testCookie } });
+  assert.equal(emptyPut.status, 404, 'A bodyless HTTP PUT must reach library validation.');
+  const expiredPut = await fetch(`${origin}/api/account`, { method: 'PUT', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ suburbId: null, cards: [] }) });
+  assert.equal(expiredPut.status, 401);
   const dataCheck = await fetch(`${origin}/api/_data-check`);
   assert.equal(dataCheck.status, 200, await dataCheck.text());
-  console.log('Passed: search/detail API regression matrix; validated filters and ranking; fixture exclusion; local migrations and fixture replay; schema agreement; published/draft isolation; immutable snapshots; profile relations; atomic rollback; Pages/D1/auth runtime; SPA and assets.');
+  console.log('Passed: local Google credential loading, authorization URL/callback and disabled-provider handling; account ownership, preferences/favourites, session signatures/expiry/revocation/renewal, CSRF and server roles; search/detail regression matrix; fixture exclusion; migration replay; publication and rollback; Pages/D1/auth runtime; SPA and assets. Live Google sign-in is checked separately.');
 } catch (error) {
   // Wrangler masks secret values in its binding output; never print .dev.vars.
   console.error(output.slice(-6000));

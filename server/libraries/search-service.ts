@@ -37,5 +37,5 @@ export function createLibrarySearchService(env: Env, options: { includeFixtures?
     const record = await repository.getPublishedBySlug(slug, options);
     return record ? { result: evaluateLibrary(record, parsed), request: parsed, timeZone: 'Australia/Perth' as const } : null;
   }
-  return { search, detail, origins };
+  return { search, detail, origins, request };
 }

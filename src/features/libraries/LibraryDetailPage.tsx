@@ -13,6 +13,9 @@ import { LibraryFacts, RequirementLabel } from './LibraryFacts';
 import { Icon } from './Icon';
 import { directionsUrl, institutionCategory, INSTITUTION_LABELS, intervalLabel, matchLabel, readableDate } from './presentation';
 import styles from './Libraries.module.css';
+import { profileFinderParams } from '../../domain/account';
+import { useAccount } from '../account/use-account';
+import { SaveButton } from '../account/SaveButton';
 
 function HoursTable({ schedule, date, label }: { schedule: CalendarSchedule; date: string; label: string }) {
   return <table className={styles.hoursTable}><caption>{label} · from {readableDate(date)}</caption><tbody>
@@ -30,7 +33,9 @@ function HoursTable({ schedule, date, label }: { schedule: CalendarSchedule; dat
 export function LibraryDetailPage() {
   const { slug = '' } = useParams();
   const [params] = useSearchParams();
-  const resource = useLibraryApi<DetailResponse>(finderUrl(params, `/api/libraries/${encodeURIComponent(slug)}`), !params.has('start'));
+  const { account } = useAccount();
+  const effective = profileFinderParams(params, account?.preferences);
+  const resource = useLibraryApi<DetailResponse>(finderUrl(effective, `/api/libraries/${encodeURIComponent(slug)}`), !effective.has('start'));
   const result = resource.data?.result;
   useEffect(() => { document.title = result ? `${result.library.content.name} · StudySpot Perth` : 'Library details · StudySpot Perth'; }, [result]);
   const back = finderUrl(params);
@@ -48,7 +53,7 @@ export function LibraryDetailPage() {
     <Link className={styles.backLink} to={back}>← All libraries</Link>
     <LibraryPhoto key={result.library.id} photos={content.photos} name={content.name} large />
     <div className={styles.detailHeading}><div><p className={styles.category}>{institutionCategory(institution)}</p><h1>{content.name}</h1></div>
-      <button className={styles.saveButton} type="button" disabled aria-label={`Save ${content.name} (accounts coming later)`}><Icon name="heart" />Save</button></div>
+      <SaveButton id={result.library.id} name={content.name} label /></div>
     <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km from ${resource.data?.request.origin.name}` : ' · distance unknown'}</span></p>
     <LibraryFacts result={result} />
     {resource.error && <p className={styles.disclaimer} role="alert">Couldn’t refresh this library. Showing the last checked information; current hours may have changed. <button className={styles.actionButton} type="button" onClick={resource.retry}>Try again</button></p>}

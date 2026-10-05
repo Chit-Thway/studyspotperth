@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { DEFAULT_ORIGIN, isInstitution } from '../../domain/search-request';
+import { preserveProfileDefaults, profileFinderParams } from '../../domain/account';
+import { useAccount } from '../account/use-account';
 import { Icon } from '../libraries/Icon';
 import { LibraryCard } from '../libraries/LibraryCard';
 import { INSTITUTION_LABELS, UNIVERSITY_CARDS, readableDate } from '../libraries/presentation';
@@ -12,7 +14,9 @@ import { finderUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam
 import styles from './FinderPage.module.css';
 
 export function FinderPage() {
-  const [params, setParams] = useSearchParams();
+  const [rawParams, setParams] = useSearchParams();
+  const { account } = useAccount();
+  const params = profileFinderParams(rawParams, account?.preferences);
   const resource = useLibraryApi<SearchResponse>(finderUrl(params, '/api/libraries'), !params.has('start'));
   const locations = useLibraryApi<OriginsResponse>('/api/suburbs');
   const origins = locations.data?.origins ?? [DEFAULT_ORIGIN];
@@ -22,7 +26,7 @@ export function FinderPage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const cards = (params.get('cards') ?? '').split(',').filter(Boolean);
   const result = resource.data;
-  const change = (next: URLSearchParams) => setParams(next);
+  const change = (next: URLSearchParams) => setParams(preserveProfileDefaults(rawParams, params, next));
   const closeDrawer = () => { dialog.current?.close(); setDrawerOpen(false); filterButton.current?.focus(); };
   useEffect(() => { document.title = 'Find a library · StudySpot Perth'; }, []);
   useEffect(() => {
@@ -73,7 +77,7 @@ export function FinderPage() {
         {resource.error && !result && <div className={styles.statePanel} role="alert"><Icon name="book" /><h3>{resource.error instanceof LibraryApiError && resource.error.status === 400 ? 'Check your search' : 'Libraries couldn’t load'}</h3><p>{resource.error.message}</p>
           {resource.error instanceof LibraryApiError && resource.error.status === 400 ? <button type="button" className={styles.applyButton} onClick={() => change(resource.error instanceof LibraryApiError && resource.error.field === 'query' ? new URLSearchParams() : resource.error instanceof LibraryApiError && resource.error.field ? updateFinderParam(params, resource.error.field, null) : resetFinderFilters(params))}>Remove invalid selection</button> : <button type="button" className={styles.applyButton} onClick={resource.retry}>Try again</button>}</div>}
         {result && result.results.length === 0 && <div className={styles.statePanel} role="status"><div className={styles.bookMark}><Icon name="book" /></div><span className={styles.pendingLabel}>No matching libraries</span><h3>Let’s find another study window.</h3><p>{result.emptyReason}</p><button type="button" className={styles.applyButton} onClick={() => change(resetFinderFilters(params))}>Clear filters</button><p className={styles.emptyNote}>Only published library information appears here.</p></div>}
-        {result && result.results.length > 0 && <><div className={styles.cardGrid}>{result.results.map((item) => <LibraryCard key={item.library.id} result={item} params={params} />)}</div>
+        {result && result.results.length > 0 && <><div className={styles.cardGrid}>{result.results.map((item) => <LibraryCard key={item.library.id} result={item} params={rawParams} />)}</div>
           <div className={styles.pagination} aria-label="Results pages">{result.offset > 0 && <button type="button" onClick={() => change(updateFinderParam(params, 'offset', Math.max(0, result.offset - result.limit).toString()))}>Previous</button>}
             <p role="status">Showing {result.offset + 1}–{result.offset + result.results.length} of {result.total}</p>
             {result.nextOffset !== null && <button type="button" onClick={() => change(updateFinderParam(params, 'offset', result.nextOffset!.toString()))}>Next</button>}</div></>}
