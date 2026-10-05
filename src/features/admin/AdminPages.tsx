@@ -16,6 +16,7 @@ import { INSTITUTION_LABELS } from '../libraries/presentation';
 import { Field, Choice } from './Fields';
 import { ContentEditor } from './ContentEditor';
 import { UnsavedChangesDialog } from './UnsavedChangesDialog';
+import { afterUnpublish } from './editor-state';
 import styles from './Admin.module.css';
 
 function AccessFailure({ error, retry }: { error: Error | null; retry: () => void }) {
@@ -84,7 +85,7 @@ function LibraryEditor({ initial }: { initial?: AdminLibrary }) {
         if (!window.confirm(action === 'publish' ? 'Publish this saved draft for all visitors?' : 'Remove this library from public results?')) return;
         payload = await accountRequest<AdminLibrary>(`/api/admin/libraries/${saved.record.id}/${action}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ revisionId: action === 'publish' ? saved.record.revisionId : saved.publishedRevisionId }) });
       }
-      setSaved(payload);
+      setSaved((current) => action === 'unpublish' && current ? afterUnpublish(current, payload) : payload);
       // Unpublishing must not discard unsaved editor changes.
       if (action !== 'unpublish') { setContent(payload.record.content); setPreview(null); }
       setStatus(action === 'save' ? 'Draft saved. Public version unchanged.' : action === 'publish' ? 'Library published.' : 'Library unpublished.');

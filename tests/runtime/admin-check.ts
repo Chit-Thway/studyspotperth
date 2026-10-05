@@ -4,6 +4,7 @@ import { createLibrarySearchService } from '../../server/libraries/search-servic
 import { emptyLibraryContent } from '../../src/domain/admin';
 import type { AdminLibrary, AdminList } from '../../src/domain/admin';
 import type { LibrarySearchResult } from '../../src/domain/library-search';
+import { afterUnpublish } from '../../src/features/admin/editor-state';
 
 /** Runs only in the isolated local verification server. */
 export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
@@ -83,13 +84,35 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   saved = await (await call('publish', 'POST', { revisionId: saved.record.revisionId }, id)).json<AdminLibrary>();
   assert.equal((await publicService.detail(saved.record.slug, overrideQuery, now))?.result.opening.status, 'closed');
   assert.equal((await call('unpublish', 'POST', { revisionId: publicRevision }, id)).status, 409, 'Stale unpublish must preserve the current public version.');
-  assert.equal((await call('unpublish', 'POST', { revisionId: saved.record.revisionId }, id)).status, 200);
+  const editingBase = saved;
+  const pendingContent = { ...editingBase.record.content, name: 'Unsaved stale name' };
+  const competingContent = { ...editingBase.record.content, description: 'Other administrator description must survive' };
+  const otherSave = await call('library', 'PUT', { baseRevisionId: editingBase.record.revisionId, content: competingContent }, id);
+  assert.equal(otherSave.status, 200);
+  const competing = await otherSave.json<AdminLibrary>();
+  const unpublish = await call('unpublish', 'POST', { revisionId: editingBase.publishedRevisionId }, id);
+  assert.equal(unpublish.status, 200);
+  const unpublishResult = await unpublish.json<AdminLibrary>();
+  assert.equal(unpublishResult.record.revisionId, competing.record.revisionId, 'Unpublish may return a newer draft.');
+  const retainedBase = afterUnpublish(editingBase, unpublishResult);
+  assert.equal((await call('library', 'PUT', { baseRevisionId: retainedBase.record.revisionId, content: pendingContent }, id)).status, 409, 'Unpublish must not let stale content bypass conflict protection.');
+  saved = await (await call('library', 'GET', undefined, id)).json<AdminLibrary>();
+  assert.equal(saved.record.revisionId, competing.record.revisionId);
+  assert.equal(saved.record.content.description, competingContent.description);
+  assert.equal(saved.record.content.name, editingBase.record.content.name);
   assert.equal(await publicService.detail(saved.record.slug, query, now), null);
+  // Unpublishing a clean current editor must still permit the next ordinary save.
+  saved = await (await call('publish', 'POST', { revisionId: saved.record.revisionId }, id)).json<AdminLibrary>();
+  const cleanBase = saved;
+  const cleanUnpublish = await call('unpublish', 'POST', { revisionId: saved.publishedRevisionId }, id);
+  assert.equal(cleanUnpublish.status, 200);
+  const cleanState = afterUnpublish(cleanBase, await cleanUnpublish.json<AdminLibrary>());
+  assert.equal((await call('library', 'PUT', { baseRevisionId: cleanState.record.revisionId, content: cleanState.record.content }, id)).status, 200, 'Unpublish without a competing edit must not cause a false save conflict.');
   const unknown = await call('preview', 'POST', { content: { ...content, schedule: { ...content.schedule, building: { status: 'unknown', recurring: [], overrides: [], sourceId: null } } } }, id, adminCookie, `?${query.toString()}`);
   assert.equal((await unknown.json<{ result: LibrarySearchResult }>()).result.open24Hours.status, 'unknown');
   await env.DB.prepare("UPDATE user_role SET role='user' WHERE user_id='admin-check-admin'").run();
   assert.equal((await call('library', 'GET', undefined, id)).status, 403, 'Demotion must take effect on the next request.');
   await env.DB.prepare("UPDATE user_role SET role='admin' WHERE user_id='admin-check-admin'").run();
   await env.DB.prepare('DELETE FROM library WHERE id=?').bind(id).run();
-  return Response.json({ ok: true, checks: ['permissions', 'origins', 'validation', 'concurrent-edits', 'preview', 'publish', 'closures', 'overrides', 'unpublish', 'fixture-exclusion'] }, { headers: { 'Set-Cookie': `${adminCookie}; HttpOnly; Path=/; SameSite=Lax` } });
+  return Response.json({ ok: true, checks: ['permissions', 'origins', 'validation', 'concurrent-edits', 'preview', 'publish', 'closures', 'overrides', 'unpublish', 'unpublish-editing-base', 'fixture-exclusion'] }, { headers: { 'Set-Cookie': `${adminCookie}; HttpOnly; Path=/; SameSite=Lax` } });
 };

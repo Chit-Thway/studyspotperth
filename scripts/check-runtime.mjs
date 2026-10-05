@@ -22,6 +22,8 @@ const workDir = await mkdtemp(resolve('.runtime-check/run-'));
 await cp(resolve('functions'), `${workDir}/functions`, { recursive: true });
 await cp(resolve('server'), `${workDir}/server`, { recursive: true });
 await cp(resolve('src/domain'), `${workDir}/src/domain`, { recursive: true });
+await mkdir(`${workDir}/src/features/admin`, { recursive: true });
+await cp(resolve('src/features/admin/editor-state.ts'), `${workDir}/src/features/admin/editor-state.ts`);
 await cp(resolve('tests/fixtures'), `${workDir}/tests/fixtures`, { recursive: true });
 await cp(resolve('migrations'), `${workDir}/migrations`, { recursive: true });
 await cp(resolve('tests/runtime/library-data-check.ts'), `${workDir}/functions/api/_data-check.ts`);
