@@ -19,8 +19,11 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     const version = ++sequence.current;
     void accountRequest<AccountResponse>('/api/account', { signal: controller.signal }).then((response) => {
       if (sequence.current === version) { setData(response); setError(null); }
-    }).catch(() => {
-      if (!controller.signal.aborted && sequence.current === version) setError('Account information couldn’t load.');
+    }).catch((failure: unknown) => {
+      if (!controller.signal.aborted && sequence.current === version) {
+        if (failure instanceof AccountApiError && [401, 403].includes(failure.status)) setData((current) => ({ ...current, account: null }));
+        setError('Account information couldn’t load.');
+      }
     }).finally(() => { if (sequence.current === version) setLoading(false); });
   }, []);
   useEffect(() => {
