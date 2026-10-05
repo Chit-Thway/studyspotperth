@@ -27,6 +27,7 @@ await cp(resolve('migrations'), `${workDir}/migrations`, { recursive: true });
 await cp(resolve('tests/runtime/library-data-check.ts'), `${workDir}/functions/api/_data-check.ts`);
 await cp(resolve('tests/runtime/library-search-check.ts'), `${workDir}/functions/api/_search-check.ts`);
 await cp(resolve('tests/runtime/account-check.ts'), `${workDir}/functions/api/_account-check.ts`);
+await cp(resolve('tests/runtime/admin-check.ts'), `${workDir}/functions/api/_admin-check.ts`);
 await cp(resolve('dist'), `${workDir}/dist`, { recursive: true });
 await writeFile(`${workDir}/package.json`, JSON.stringify({ name: 'studyspotperth-runtime-check', private: true, type: 'module' }));
 const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
@@ -99,7 +100,7 @@ try {
   assert.equal(authorization.searchParams.get('redirect_uri'), `${origin}/api/auth/callback/google`);
   assert.equal(authorization.searchParams.get('code_challenge_method'), 'S256');
 
-  for (const path of ['/', '/sign-in', '/profile', '/saved', '/libraries/fictional-uwa-24-hours', '/a-page-that-does-not-exist']) {
+  for (const path of ['/', '/sign-in', '/profile', '/saved', '/admin', '/admin/libraries/new', '/libraries/fictional-uwa-24-hours', '/a-page-that-does-not-exist']) {
     const page = await fetch(`${origin}${path}`);
     assert.equal(page.status, 200, `SPA fallback failed for ${path}.`);
     assert.match(await page.text(), /<title>StudySpot Perth<\/title>/);
@@ -130,9 +131,21 @@ try {
   assert.equal(emptyPut.status, 404, 'A bodyless HTTP PUT must reach library validation.');
   const expiredPut = await fetch(`${origin}/api/account`, { method: 'PUT', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ suburbId: null, cards: [] }) });
   assert.equal(expiredPut.status, 401);
+  const adminCheck = await fetch(`${origin}/api/_admin-check`);
+  assert.equal(adminCheck.status, 200, 'Admin integration checks failed; see the worker log.');
+  const adminCookie = adminCheck.headers.get('set-cookie')?.split(';')[0];
+  assert(adminCookie);
+  assert.equal((await fetch(`${origin}/api/admin/libraries`)).status, 401);
+  assert.equal((await fetch(`${origin}/api/admin/libraries`, { headers: { Cookie: testCookie } })).status, 403);
+  const adminList = await fetch(`${origin}/api/admin/libraries`, { headers: { Cookie: adminCookie } });
+  assert.equal(adminList.status, 200);
+  assert((await adminList.json()).libraries.every((item) => !item.record.isFixture));
+  for (const action of ['preview', 'publish', 'unpublish']) {
+    assert.equal((await fetch(`${origin}/api/admin/libraries/missing/${action}`, { method: 'POST', headers: { Cookie: adminCookie, Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ revisionId: 'missing' }) })).status, 404, `Admin ${action} routing failed.`);
+  }
   const dataCheck = await fetch(`${origin}/api/_data-check`);
   assert.equal(dataCheck.status, 200, await dataCheck.text());
-  console.log('Passed: local Google credential loading, authorization URL/callback and disabled-provider handling; account ownership, preferences/favourites, session signatures/expiry/revocation/renewal, CSRF and server roles; search/detail regression matrix; fixture exclusion; migration replay; publication and rollback; Pages/D1/auth runtime; SPA and assets. Live Google sign-in is checked separately.');
+  console.log('Passed: admin permission/CSRF checks, concurrent drafts, preview, publish/unpublish, closures and overrides; local Google credential loading, authorization URL/callback and disabled-provider handling; account ownership, preferences/favourites, session signatures/expiry/revocation/renewal, CSRF and server roles; search/detail regression matrix; fixture exclusion; migration replay; publication and rollback; Pages/D1/auth runtime; SPA and assets. Live Google sign-in is checked separately.');
 } catch (error) {
   // Wrangler masks secret values in its binding output; never print .dev.vars.
   console.error(output.slice(-6000));

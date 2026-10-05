@@ -6,6 +6,7 @@ export interface AccountProfile {
   user: { id: string; name: string; email: string };
   preferences: Preferences;
   favouriteIds: string[];
+  isAdmin: boolean;
 }
 export interface AccountResponse { account: AccountProfile | null; googleEnabled: boolean }
 
@@ -40,6 +41,6 @@ export function preserveProfileDefaults(raw: URLSearchParams, effective: URLSear
 export function internalReturnTo(value: string | null): string {
   if (!value || value.length > 3000 || value.includes('\\') || [...value].some((character) => character.charCodeAt(0) <= 32) || !value.startsWith('/') || value.startsWith('//')) return '/';
   const url = new URL(value, 'https://studyspot.invalid');
-  if (url.origin !== 'https://studyspot.invalid' || !(/^\/$|^\/profile$|^\/saved$|^\/libraries\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(url.pathname))) return '/';
+  if (url.origin !== 'https://studyspot.invalid' || !(/^\/$|^\/profile$|^\/saved$|^\/libraries\/[a-z0-9]+(?:-[a-z0-9]+)*$|^\/admin(?:\/libraries\/(?:new|[a-zA-Z0-9_-]+))?$/.test(url.pathname))) return '/';
   return `${url.pathname}${url.search}`;
 }

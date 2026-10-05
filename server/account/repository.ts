@@ -7,12 +7,13 @@ import { AccountError } from './session';
 export function createAccountRepository(env: Env, options: { includeFixtures?: boolean } = {}) {
   const fixtureClause = options.includeFixtures ? '' : ' AND l.is_fixture = 0';
   async function profile(user: AccountProfile['user']): Promise<AccountProfile> {
-    const [preference, cards, favourites] = await Promise.all([
+    const [preference, cards, favourites, role] = await Promise.all([
       env.DB.prepare('SELECT p.suburb_id FROM user_preferences p LEFT JOIN suburb s ON s.id = p.suburb_id WHERE p.user_id = ? AND (p.suburb_id IS NULL OR s.is_fixture = 0)').bind(user.id).first<{ suburb_id: string | null }>(),
       env.DB.prepare('SELECT institution_id FROM user_card WHERE user_id = ? ORDER BY institution_id').bind(user.id).all<{ institution_id: UniversityCard }>(),
       env.DB.prepare(`SELECT f.library_id FROM favourite f INNER JOIN library l ON l.id = f.library_id INNER JOIN library_revision r ON r.library_id = l.id AND r.status = 'published' WHERE f.user_id = ?${fixtureClause}`).bind(user.id).all<{ library_id: string }>(),
+      env.DB.prepare('SELECT role FROM user_role WHERE user_id = ?').bind(user.id).first<{ role: string }>(),
     ]);
-    return { user: { id: user.id, name: user.name, email: user.email }, preferences: { suburbId: preference?.suburb_id ?? null, cards: cards.results.map((row) => row.institution_id) }, favouriteIds: favourites.results.map((row) => row.library_id) };
+    return { user: { id: user.id, name: user.name, email: user.email }, preferences: { suburbId: preference?.suburb_id ?? null, cards: cards.results.map((row) => row.institution_id) }, favouriteIds: favourites.results.map((row) => row.library_id), isAdmin: role?.role === 'admin' };
   }
   async function savePreferences(userId: string, preferences: Preferences) {
     const suburbId = preferences.suburbId === 'perth-cbd' ? null : preferences.suburbId;

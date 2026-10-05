@@ -12,6 +12,8 @@ Google sign-in lets visitors save libraries and keep a starting suburb and decla
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
+Authorised administrators can edit library details, photos, facilities, Wi-Fi and opening hours, add closures or date ranges, and preview changes before publishing. The public version stays unchanged while a draft is edited.
+
 The search backend evaluates Perth opening hours, entry rules, 24/7 access, Wi-Fi, and distance. Declared university cards personalise ranking and requirement labels; only selected filters restrict results. An optional end time shows session shortfalls without hiding libraries.
 
 ## Built with
@@ -51,6 +53,7 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run build` | Create a production build |
 | `npm run db:migrate` | Apply database changes locally |
 | `npm run db:seed` | Load fictional local test data |
+| `npm run db:admin -- --email "your-email"` | Grant administrator access to an existing local account |
 | `npm run typecheck` | Check TypeScript types |
 | `npm run lint` | Check code quality |
 | `npm test` | Run unit tests |
@@ -58,7 +61,7 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run test:runtime` | Verify the built app and local backend; run after building |
 | `npm run types:cloudflare` | Update types after changing server settings |
 
-Runtime checks use a separate local database to verify search and detail APIs, migrations, repeatable fixtures, published/draft separation, account ownership, preferences, favourites, session expiry and sign-out, routing, and file delivery. The Google browser sign-in flow is checked separately with real OAuth credentials.
+Runtime checks use a separate local database to verify search and detail APIs, migrations, repeatable fixtures, published/draft separation, account ownership, preferences, favourites, session expiry and sign-out, administrator permissions, publishing, closures, routing, and file delivery. The Google browser sign-in flow is checked separately with real OAuth credentials.
 
 ## Google sign-in
 
@@ -73,6 +76,20 @@ Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in the ignored `.dev.vars` fil
 For deployment, use the site's HTTPS origin as `AUTH_BASE_URL`, register its matching Google callback, and configure separate production secrets and a D1 database. Local configuration does not deploy the app.
 
 Sessions use server-managed cookies. Profile preferences and favourites belong to the signed-in account; card declarations are self-reported and never verify university membership. An administrator role is stored on the server and cannot be granted through a profile request.
+
+## Managing libraries locally
+
+Sign in once, then grant your local account administrator access:
+
+```sh
+npm run db:admin -- --email "your-signed-in-email"
+```
+
+Reload the app and choose **Profile → Manage libraries**, or open `/admin`. This command changes only the local database. Production access must be assigned separately by the database owner.
+
+Add a library, enter its sources and details, and save a draft. The URL slug and institution are fixed when created; the library name, address, photos and other details remain editable. Opening hours use Perth time. **Full day** means midnight to midnight; **Next day** supports overnight closing times. Copy hours to selected weekdays, or add exact-date closures and date-range replacement hours. Exact dates take priority over date ranges.
+
+Use **Preview draft** to check guest or university-card access at a selected time. Preview includes unsaved changes and calculates 24/7 eligibility from the schedules. Save before publishing; dated sources are required. **Unpublish** removes the library from public results without deleting its records. If another tab saves first, reload the record before saving again.
 
 ## Library API
 
@@ -91,6 +108,7 @@ Responses keep building hours, personal access, and Wi-Fi separate. A 24/7 expla
 - `src/app/` — app routing and shared styles
 - `src/features/finder/` — the library finder interface
 - `src/features/libraries/` — library cards, details, and shared presentation
+- `src/features/admin/` — protected library editing and preview
 - `src/domain/` — schedules, access, Wi-Fi, filtering and ranking, with unit tests
 - `functions/api/` — backend endpoints
 - `server/` — database and account infrastructure

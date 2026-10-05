@@ -1,0 +1,95 @@
+import assert from 'node:assert/strict';
+import { handleAdminRequest } from '../../server/admin/http';
+import { createLibrarySearchService } from '../../server/libraries/search-service';
+import { emptyLibraryContent } from '../../src/domain/admin';
+import type { AdminLibrary, AdminList } from '../../src/domain/admin';
+import type { LibrarySearchResult } from '../../src/domain/library-search';
+
+/** Runs only in the isolated local verification server. */
+export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
+  const origin = new URL(env.AUTH_BASE_URL).origin;
+  const now = Date.now();
+  async function session(id: string) {
+    await env.DB.prepare('INSERT INTO user(id,name,email,created_at,updated_at) VALUES (?,?,?,?,?)').bind(id, 'Synthetic administrator test', `${id}@example.invalid`, now, now).run();
+    const token = crypto.randomUUID();
+    await env.DB.prepare('INSERT INTO session(id,expires_at,token,created_at,updated_at,user_id) VALUES (?,?,?,?,?,?)').bind(crypto.randomUUID(), now + 86400000, token, now, now, id).run();
+    const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(env.AUTH_SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+    const signature = new Uint8Array(await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(token)));
+    return `better-auth.session_token=${encodeURIComponent(`${token}.${btoa(String.fromCharCode(...signature))}`)}`;
+  }
+  const adminCookie = await session('admin-check-admin');
+  const regularCookie = await session('admin-check-regular');
+  await env.DB.prepare("INSERT INTO user_role(user_id,role) VALUES ('admin-check-admin','admin')").run();
+  type Route = Parameters<typeof handleAdminRequest>[2];
+  const call = (route: Route, method = 'GET', value?: unknown, id?: string, cookie = adminCookie, query = '', requestOrigin = origin) => handleAdminRequest(new Request(`${origin}/api/admin/libraries${query}`, {
+    method, headers: { Cookie: cookie, Origin: requestOrigin, 'Content-Type': 'application/json' }, body: value === undefined ? undefined : JSON.stringify(value),
+  }), env, route, id);
+  for (const [route, method] of [['libraries', 'GET'], ['libraries', 'POST'], ['library', 'GET'], ['library', 'PUT'], ['preview', 'POST'], ['publish', 'POST'], ['unpublish', 'POST']] as const) {
+    assert.equal((await call(route, method, undefined, 'missing', '')).status, 401, `Guest reached ${route}`);
+    assert.equal((await call(route, method, undefined, 'missing', regularCookie)).status, 403, `Regular user reached ${route}`);
+  }
+  const initialList = await call('libraries');
+  assert.equal(initialList.headers.get('cache-control'), 'no-store');
+  assert((await initialList.json<AdminList>()).libraries.every((item) => !item.record.isFixture), 'Admin list must exclude fixture records.');
+  assert.equal((await call('library', 'GET', undefined, 'fixture-uwa')).status, 404);
+  assert.equal((await call('libraries', 'GET', undefined, undefined, adminCookie, '?includeFixtures=true')).status, 400);
+  assert.equal((await call('libraries', 'POST', {}, undefined, adminCookie, '', 'https://evil.invalid')).status, 403);
+  assert.equal((await call('libraries', 'POST', { slug: 'synthetic-admin-record', institution: 'public', content: {}, role: 'admin' })).status, 400);
+  const content = emptyLibraryContent();
+  content.name = 'Synthetic administration test library'; content.address = 'Synthetic test address';
+  content.sources = [{ id: 'test-source', kind: 'official', label: 'Synthetic test source', url: 'https://example.invalid/admin-test', checkedOn: null }];
+  const everyDay = Array.from({ length: 7 }, (_, weekday) => ({ weekday, startMinute: 0, endMinute: 1440 }));
+  content.schedule.building = { status: 'known', sourceId: 'test-source', recurring: everyDay, overrides: [] };
+  content.schedule.access = [{ ...structuredClone(content.schedule.building), group: 'uwa', requirement: 'UWA card required', needsActiveCredentials: false }];
+  const createdResponse = await call('libraries', 'POST', { slug: 'synthetic-admin-record', institution: 'uwa', content });
+  assert.equal(createdResponse.status, 201);
+  let saved = await createdResponse.json<AdminLibrary>();
+  const id = saved.record.id;
+  const publicService = createLibrarySearchService(env);
+  const query = new URLSearchParams('start=2026-10-05T14:00&cards=uwa');
+  assert.equal(await publicService.detail(saved.record.slug, query, now), null);
+  assert.equal((await call('publish', 'POST', { revisionId: saved.record.revisionId }, id)).status, 400, 'Undated source must prevent publishing.');
+  assert.equal((await call('libraries', 'POST', { slug: 'synthetic-admin-record', institution: 'uwa', content })).status, 409);
+  const invalid = structuredClone(content);
+  invalid.schedule.building.recurring.push({ weekday: 1, startMinute: 600, endMinute: 700 });
+  const invalidResponse = await call('library', 'PUT', { baseRevisionId: saved.record.revisionId, content: invalid }, id);
+  assert.equal(invalidResponse.status, 400); assert.match((await invalidResponse.json<{ message: string }>()).message, /overlap/);
+  content.sources[0].checkedOn = '2026-10-05';
+  const firstRevision = saved.record.revisionId;
+  const competingSaves = await Promise.all([call('library', 'PUT', { baseRevisionId: firstRevision, content }, id), call('library', 'PUT', { baseRevisionId: firstRevision, content }, id)]);
+  assert.deepEqual(competingSaves.map((response) => response.status).sort(), [200, 409], 'Concurrent stale edits must not overwrite each other.');
+  saved = await competingSaves.find((response) => response.status === 200)!.json<AdminLibrary>();
+  assert.equal((await call('publish', 'POST', { revisionId: firstRevision }, id)).status, 409);
+  const preview = await call('preview', 'POST', { content }, id, adminCookie, `?${query.toString()}`);
+  assert.equal(preview.status, 200);
+  assert.equal((await preview.json<{ result: LibrarySearchResult }>()).result.open24Hours.status, 'qualifies');
+  assert.equal(await publicService.detail(saved.record.slug, query, now), null, 'Preview must not publish.');
+  saved = await (await call('publish', 'POST', { revisionId: saved.record.revisionId }, id)).json<AdminLibrary>();
+  assert.equal((await publicService.detail(saved.record.slug, query, now))?.result.open24Hours.status, 'qualifies');
+  const publicRevision = saved.record.revisionId;
+  content.schedule.building.overrides = [{ id: 'closure', kind: 'date', startDate: '2026-10-07', endDate: '2026-10-07', status: 'closed', intervals: [], sourceId: 'test-source' }];
+  const closureQuery = new URLSearchParams('start=2026-10-07T14:00&cards=uwa');
+  const closurePreview = await call('preview', 'POST', { content }, id, adminCookie, `?${closureQuery.toString()}`);
+  assert.equal((await closurePreview.json<{ result: LibrarySearchResult }>()).result.opening.status, 'closed');
+  saved = await (await call('library', 'PUT', { baseRevisionId: saved.record.revisionId, content }, id)).json<AdminLibrary>();
+  assert.equal((await publicService.detail(saved.record.slug, closureQuery, now))?.result.opening.status, 'open', 'Draft closures must not leak into public hours.');
+  saved = await (await call('publish', 'POST', { revisionId: saved.record.revisionId }, id)).json<AdminLibrary>();
+  assert.equal((await publicService.detail(saved.record.slug, closureQuery, now))?.result.opening.status, 'closed');
+  assert.equal((await publicService.search(closureQuery, now)).results.length, 0);
+  assert.equal((await publicService.detail(saved.record.slug, query, now))?.result.open24Hours.status, 'does-not-qualify');
+  content.schedule.building.overrides = [{ id: 'period', kind: 'period', startDate: '2026-10-05', endDate: '2026-10-31', status: 'hours', intervals: everyDay.map((interval) => ({ ...interval, startMinute: 540, endMinute: 1020 })), sourceId: 'test-source' }];
+  const overrideQuery = new URLSearchParams('start=2026-10-05T23:00&cards=uwa');
+  saved = await (await call('library', 'PUT', { baseRevisionId: saved.record.revisionId, content }, id)).json<AdminLibrary>();
+  saved = await (await call('publish', 'POST', { revisionId: saved.record.revisionId }, id)).json<AdminLibrary>();
+  assert.equal((await publicService.detail(saved.record.slug, overrideQuery, now))?.result.opening.status, 'closed');
+  assert.equal((await call('unpublish', 'POST', { revisionId: publicRevision }, id)).status, 409, 'Stale unpublish must preserve the current public version.');
+  assert.equal((await call('unpublish', 'POST', { revisionId: saved.record.revisionId }, id)).status, 200);
+  assert.equal(await publicService.detail(saved.record.slug, query, now), null);
+  const unknown = await call('preview', 'POST', { content: { ...content, schedule: { ...content.schedule, building: { status: 'unknown', recurring: [], overrides: [], sourceId: null } } } }, id, adminCookie, `?${query.toString()}`);
+  assert.equal((await unknown.json<{ result: LibrarySearchResult }>()).result.open24Hours.status, 'unknown');
+  await env.DB.prepare("UPDATE user_role SET role='user' WHERE user_id='admin-check-admin'").run();
+  assert.equal((await call('library', 'GET', undefined, id)).status, 403, 'Demotion must take effect on the next request.');
+  await env.DB.prepare("UPDATE user_role SET role='admin' WHERE user_id='admin-check-admin'").run();
+  await env.DB.prepare('DELETE FROM library WHERE id=?').bind(id).run();
+  return Response.json({ ok: true, checks: ['permissions', 'origins', 'validation', 'concurrent-edits', 'preview', 'publish', 'closures', 'overrides', 'unpublish', 'fixture-exclusion'] }, { headers: { 'Set-Cookie': `${adminCookie}; HttpOnly; Path=/; SameSite=Lax` } });
+};

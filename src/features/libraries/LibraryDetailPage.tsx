@@ -16,6 +16,7 @@ import styles from './Libraries.module.css';
 import { profileFinderParams } from '../../domain/account';
 import { useAccount } from '../account/use-account';
 import { SaveButton } from '../account/SaveButton';
+import type { LibrarySearchResult } from '../../domain/library-search';
 
 function HoursTable({ schedule, date, label }: { schedule: CalendarSchedule; date: string; label: string }) {
   return <table className={styles.hoursTable}><caption>{label} · from {readableDate(date)}</caption><tbody>
@@ -47,16 +48,22 @@ export function LibraryDetailPage() {
       {resource.error && !(resource.error instanceof LibraryApiError && resource.error.status === 404) && <button className={styles.actionButton} type="button" onClick={resource.retry}>Try again</button>}
     </div>
   </section>;
+  return <><LibraryDetailContent result={result} originName={resource.data?.request.origin.name} back={back} />
+    {resource.error && <p className={styles.disclaimer} role="alert">Couldn’t refresh this library. Showing the last checked information; current hours may have changed. <button className={styles.actionButton} type="button" onClick={resource.retry}>Try again</button></p>}
+  </>;
+}
+
+/** Shared public/detail preview presentation; previews omit visitor save actions. */
+export function LibraryDetailContent({ result, originName, back, preview = false }: { result: LibrarySearchResult; originName?: string; back?: string; preview?: boolean }) {
   const { content, institution } = result.library;
   const date = result.evaluatedAt.slice(0, 10);
   return <article className={styles.detail}>
-    <Link className={styles.backLink} to={back}>← All libraries</Link>
+    {back && <Link className={styles.backLink} to={back}>← All libraries</Link>}
     <LibraryPhoto key={result.library.id} photos={content.photos} name={content.name} large />
     <div className={styles.detailHeading}><div><p className={styles.category}>{institutionCategory(institution)}</p><h1>{content.name}</h1></div>
-      <SaveButton id={result.library.id} name={content.name} label /></div>
-    <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km from ${resource.data?.request.origin.name}` : ' · distance unknown'}</span></p>
+      {!preview && <SaveButton id={result.library.id} name={content.name} label />}</div>
+    <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km from ${originName}` : ' · distance unknown'}</span></p>
     <LibraryFacts result={result} />
-    {resource.error && <p className={styles.disclaimer} role="alert">Couldn’t refresh this library. Showing the last checked information; current hours may have changed. <button className={styles.actionButton} type="button" onClick={resource.retry}>Try again</button></p>}
     <p className={styles.description}>{content.description}</p>
     <div className={styles.detailColumns}>
       <section className={styles.panel} aria-labelledby="hours-title"><h2 id="hours-title"><Icon name="clock" />Opening and entry hours</h2><p className={styles.disclaimer}>Perth time</p>

@@ -7,6 +7,7 @@ import { SignInPage } from '../features/account/SignInPage';
 import { ProfilePage } from '../features/account/ProfilePage';
 import { SavedPage } from '../features/account/SavedPage';
 import { internalReturnTo } from '../domain/account';
+import { AdminDashboard, AdminNewPage, AdminEditPage } from '../features/admin/AdminPages';
 import styles from './App.module.css';
 
 function NotFound() {
@@ -49,7 +50,7 @@ export function App() {
         </nav>
       </header>
       <main ref={main} id="main" className={styles.main} tabIndex={-1}>
-        <Routes><Route path="/" element={<FinderPage />} /><Route path="/libraries/:slug" element={<LibraryDetailPage />} /><Route path="/sign-in" element={<SignInPage />} /><Route path="/profile" element={<ProfilePage />} /><Route path="/saved" element={<SavedPage />} /><Route path="*" element={<NotFound />} /></Routes>
+        <Routes><Route path="/" element={<FinderPage />} /><Route path="/libraries/:slug" element={<LibraryDetailPage />} /><Route path="/sign-in" element={<SignInPage />} /><Route path="/profile" element={<ProfilePage />} /><Route path="/saved" element={<SavedPage />} /><Route path="/admin" element={<AdminDashboard />} /><Route path="/admin/libraries/new" element={<AdminNewPage />} /><Route path="/admin/libraries/:id" element={<AdminEditPage />} /><Route path="*" element={<NotFound />} /></Routes>
       </main>
       <footer className={styles.footer}>StudySpot Perth · Free to browse</footer>
     </div>

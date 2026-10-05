@@ -41,6 +41,7 @@ describe('internal sign-in return locations', () => {
     expect(internalReturnTo('/libraries/reid?open24Hours=true&institutions=uwa')).toBe('/libraries/reid?open24Hours=true&institutions=uwa');
   });
   it('rejects off-site redirects, malformed paths and recursive sign-in routes', () => {
-    for (const value of ['https://evil.invalid', '//evil.invalid', '/\\evil.invalid', '/sign-in', '/%2f%2fevil.invalid', '/saved\n', '/admin', null]) expect(internalReturnTo(value)).toBe('/');
+    for (const value of ['https://evil.invalid', '//evil.invalid', '/\\evil.invalid', '/sign-in', '/%2f%2fevil.invalid', '/saved\n', '/admin/users', null]) expect(internalReturnTo(value)).toBe('/');
+    expect(internalReturnTo('/admin/libraries/new')).toBe('/admin/libraries/new');
   });
 });
