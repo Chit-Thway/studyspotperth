@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { internalReturnTo } from '../../domain/account';
+import { finderUrl } from '../finder/finder-state';
 import { authClient } from './client';
 import { useAccount } from './use-account';
 import styles from './AccountPages.module.css';
@@ -11,6 +12,7 @@ export function SignInPage() {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const target = internalReturnTo(params.get('returnTo'));
+  const browse = finderUrl(new URLSearchParams(new URL(target, 'https://studyspot.invalid').search));
   useEffect(() => { document.title = 'Sign in · StudySpot Perth'; }, []);
   if (account.account) return <Navigate to={target} replace />;
   async function signIn() {
@@ -31,6 +33,6 @@ export function SignInPage() {
     </button>
     {!account.loading && !account.googleEnabled && !account.error && <p role="status">Google sign-in is not configured yet.</p>}
     <p className={styles.note}>No university email or student number needed.</p>
-    <p><Link to="/">Continue browsing</Link></p>
+    <p><Link to={browse}>Continue browsing</Link></p>
   </div></section>;
 }
