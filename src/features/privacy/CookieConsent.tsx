@@ -33,7 +33,7 @@ export function CookieConsent() {
   }, [choice, loading, error, account?.user.id, pathname, search, day]);
   function choose(next: CookieChoice) {
     saveCookieChoice(next); setChoice(next);
-    dialog.current?.close(); settings.current?.focus();
+    dialog.current?.close(); settings.current?.focus({ preventScroll: true });
   }
   return <>
     <button ref={settings} className={styles.settings} type="button" onClick={() => dialog.current?.showModal()}>Cookie settings</button>
