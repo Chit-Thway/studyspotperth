@@ -24,7 +24,6 @@ export function profileFinderParams(params: URLSearchParams, preferences?: Prefe
   const next = new URLSearchParams(params);
   if (preferences) {
     if (!next.has('cards') && preferences.cards.length) next.set('cards', preferences.cards.join(','));
-    if (!next.has('suburb') && preferences.suburbId) next.set('suburb', preferences.suburbId);
   }
   return next;
 }

@@ -11,6 +11,7 @@
     "dev:setup": "node scripts/setup-dev-env.mjs",
     "db:migrate": "wrangler d1 migrations apply studyspotperth --local",
     "db:seed": "node scripts/seed-fixtures.mjs",
+    "db:launch": "node scripts/seed-launch.mjs",
     "db:admin": "node scripts/grant-local-admin.mjs",
     "dev:pages": "npm run build && wrangler pages dev dist --ip 127.0.0.1 --port 8788 --env-file .dev.vars",
     "build": "vite build",

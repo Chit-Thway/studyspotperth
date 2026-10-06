@@ -42,3 +42,7 @@
 .confirmation .button { background: var(--color-action); color: var(--color-surface); border-color: var(--color-action); }
 .confirmation .actions { margin-bottom: 0; }
 @media (max-width: 48rem) { .section, .listItem, .preview { padding: var(--space-4); } .section .section { padding: var(--space-3); } }
+.usageStats { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: var(--space-4); }
+.usageStats dt { font-size: .85rem; color: var(--color-muted); }
+.usageStats dd { margin: .5rem 0 0; font-size: 1.8rem; font-weight: 600; }
+.usageStats small { display: block; margin-top: .25rem; font-size: .8rem; font-weight: 400; color: var(--color-muted); }

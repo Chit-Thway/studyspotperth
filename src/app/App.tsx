@@ -9,6 +9,7 @@ import { SavedPage } from '../features/account/SavedPage';
 import { internalReturnTo } from '../domain/account';
 import { finderUrl } from '../features/finder/finder-state';
 import { AdminDashboard, AdminNewPage, AdminEditPage } from '../features/admin/AdminPages';
+import { CookieConsent } from '../features/privacy/CookieConsent';
 import styles from './App.module.css';
 
 function NotFound() {
@@ -53,7 +54,7 @@ export function App() {
       <main ref={main} id="main" className={styles.main} tabIndex={-1}>
         <Routes><Route path="/" element={<FinderPage />} /><Route path="/libraries/:slug" element={<LibraryDetailPage />} /><Route path="/sign-in" element={<SignInPage />} /><Route path="/profile" element={<ProfilePage />} /><Route path="/saved" element={<SavedPage />} /><Route path="/admin" element={<AdminDashboard />} /><Route path="/admin/libraries/new" element={<AdminNewPage />} /><Route path="/admin/libraries/:id" element={<AdminEditPage />} /><Route path="*" element={<NotFound />} /></Routes>
       </main>
-      <footer className={styles.footer}>StudySpot Perth · Free to browse</footer>
+      <footer className={styles.footer}>StudySpot Perth · Free to browse<CookieConsent /><span className={styles.mapCredit}>Some location data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap contributors · ODbL</a></span></footer>
     </div>
   );
 }

@@ -30,6 +30,8 @@ await cp(resolve('tests/runtime/library-data-check.ts'), `${workDir}/functions/a
 await cp(resolve('tests/runtime/library-search-check.ts'), `${workDir}/functions/api/_search-check.ts`);
 await cp(resolve('tests/runtime/account-check.ts'), `${workDir}/functions/api/_account-check.ts`);
 await cp(resolve('tests/runtime/admin-check.ts'), `${workDir}/functions/api/_admin-check.ts`);
+await cp(resolve('tests/runtime/launch-data-check.ts'), `${workDir}/functions/api/_launch-check.ts`);
+await cp(resolve('tests/runtime/usage-check.ts'), `${workDir}/functions/api/_usage-check.ts`);
 await cp(resolve('dist'), `${workDir}/dist`, { recursive: true });
 await writeFile(`${workDir}/package.json`, JSON.stringify({ name: 'studyspotperth-runtime-check', private: true, type: 'module' }));
 const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
@@ -147,6 +149,16 @@ try {
   }
   const dataCheck = await fetch(`${origin}/api/_data-check`);
   assert.equal(dataCheck.status, 200, await dataCheck.text());
+  const launchCheck = await fetch(`${origin}/api/_launch-check`);
+  assert.equal(launchCheck.status, 200, await launchCheck.text());
+  const usageCheck = await fetch(`${origin}/api/_usage-check`);
+  assert.equal(usageCheck.status, 200, await usageCheck.text());
+  assert.equal((await fetch(`${origin}/api/admin/usage`)).status, 401);
+  assert.equal((await fetch(`${origin}/api/admin/usage`, { headers: { Cookie: adminCookie } })).status, 200);
+  const noConsent = await fetch(`${origin}/api/usage`, { method: 'POST', headers: { Origin: origin } });
+  assert.equal(noConsent.status, 204);
+  console.log('Passed: optional-cookie consent, anonymous/account separation, duplicate visits/events, returning estimates, retention, and protected usage summaries.');
+  console.log('Passed: 13 public launch listings, repeatable local import, detail routes, 24/7 ranking and explicit UWA filtering.');
   console.log('Passed: admin permission/CSRF checks, concurrent drafts, preview, publish/unpublish, closures and overrides; local Google credential loading, authorization URL/callback and disabled-provider handling; account ownership, preferences/favourites, session signatures/expiry/revocation/renewal, CSRF and server roles; search/detail regression matrix; fixture exclusion; migration replay; publication and rollback; Pages/D1/auth runtime; SPA and assets. Live Google sign-in is checked separately.');
 } catch (error) {
   // Wrangler masks secret values in its binding output; never print .dev.vars.

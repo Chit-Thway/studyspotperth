@@ -6,9 +6,9 @@ StudySpot Perth is a web project for finding study-friendly libraries around Per
 
 The app opens directly to a responsive library finder, with a filter sidebar on desktop and a filter drawer on mobile. The interface uses a quiet sage-and-ivory palette, labelled controls, and keyboard navigation.
 
-Guest search is connected to the backend. Visitors can choose a suburb and study time, filter for 24/7 access and facilities, and declare university cards to personalise results. Library details show opening and entry hours, Wi-Fi requirements, sources, and directions. Selections stay in the URL when moving between the finder and a library.
+Guest search is connected to the backend. Visitors can use their device location and choose a study time, filter for 24/7 access and facilities, and declare university cards to personalise results. Library details show opening and entry hours, Wi-Fi requirements, sources, and directions. Filter selections stay in the URL when moving between the finder and a library.
 
-Google sign-in lets visitors save libraries and keep a starting suburb and declared university cards in their profile. Saved cards personalise results without automatically restricting the finder. Verified library listings and photos have not been added yet, so the public finder currently shows an empty state.
+Google sign-in lets visitors save libraries and keep declared university cards in their profile. Saved cards personalise results without automatically restricting the finder. An initial catalogue of 13 Perth libraries is available through the local import command, with dated sources. Missing photos use a dark placeholder.
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
@@ -33,6 +33,7 @@ npm ci
 npm run dev:setup
 npm run types:cloudflare
 npm run db:migrate
+npm run db:launch
 npm run dev:pages
 ```
 
@@ -44,6 +45,8 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 
 `npm run db:seed` loads clearly labelled fictional examples into the local database for testing. These are not real library listings, and public data reads exclude them by default.
 
+`npm run db:launch` imports the initial public catalogue locally. It also upgrades untouched original records with sourced map points; drafts, administrator edits and unpublished entries are preserved. Update edited records through the admin editor. Unconfirmed details remain unknown; photo permissions still need confirmation. UWA public hours and TL Robertson's calendar are verified for 5–18 October 2026 only, so their dated hours need refreshing before later dates. The standing 24/7 card policies are recorded separately where confirmed. The CGSB entry is available on its detail page but stays out of open-library results until its hours are confirmed.
+
 ## Checks and commands
 
 | Command | Purpose |
@@ -52,6 +55,7 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run dev:pages` | Build and run the app with its local backend |
 | `npm run build` | Create a production build |
 | `npm run db:migrate` | Apply database changes locally |
+| `npm run db:launch` | Import the initial public library catalogue locally |
 | `npm run db:seed` | Load fictional local test data |
 | `npm run db:admin -- --email "your-email"` | Grant administrator access to an existing local account |
 | `npm run typecheck` | Check TypeScript types |
@@ -76,6 +80,16 @@ Set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in the ignored `.dev.vars` fil
 For deployment, use the site's HTTPS origin as `AUTH_BASE_URL`, register its matching Google callback, and configure separate production secrets and a D1 database. Local configuration does not deploy the app.
 
 Sessions use server-managed cookies. Profile preferences and favourites belong to the signed-in account; card declarations are self-reported and never verify university membership. An administrator role is stored on the server and cannot be granted through a profile request.
+
+## Cookies and usage statistics
+
+Visitors can accept optional cookies or choose **Essential only**, then change their choice using **Cookie settings** in the footer. Browsing and Google sign-in work with essential cookies alone. Location permission is separate from cookie consent.
+
+**Use my location** requests browser permission for approximate distances and sorting. Location stays in memory and is sent to search/detail/saved requests through a header; it is not put into page URLs, cookies, profiles or usage statistics. **Turn off location** keeps location off in the current tab, including after reload. Location failures leave browsing available. Library points are approximate map/building references, not walking distances or entrance guidance. The three OpenStreetMap-derived building points in `server/data/launch-locations.ts` are © OpenStreetMap contributors and available under the [Open Database License](https://www.openstreetmap.org/copyright); other location sources are credited in each library’s details.
+
+Optional cookies enable visit and directions counts. The administrator dashboard shows active accounts and estimated guest browsers for the last 30 days separately. Returning visitors have activity on at least two different days in the last 90 days. Browser estimates change when cookies are cleared or devices are changed; guest and account counts should not be added together as a count of people.
+
+The visitor identifier lasts 90 days and the cookie preference lasts 180 days. Statistics store hashed identifiers and dates, with no email, IP address or coordinates. Records older than 90 days are removed when statistics are recorded or read. Current favourites are counted from the saved-library records. Statistics failures never block browsing or directions.
 
 ## Managing libraries locally
 

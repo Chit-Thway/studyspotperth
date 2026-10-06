@@ -14,7 +14,7 @@
 .location svg { width: 1rem; height: 1rem; flex-shrink: 0; margin-top: .15rem; }
 .photo { position: relative; width: 100%; aspect-ratio: 16 / 10; margin: 0 0 var(--space-4); border-radius: var(--radius-control); overflow: hidden; background: var(--color-sage); }
 .photo img { width: 100%; height: 100%; display: block; object-fit: cover; }
-.photoPlaceholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; width: 100%; height: 100%; color: var(--color-icon); background: linear-gradient(135deg, var(--color-sage), #f4eee2); font-size: .75rem; }
+.photoPlaceholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; width: 100%; height: 100%; color: #c7c7c7; background: #111; font-size: .75rem; }
 .photoPlaceholder svg { width: 2.5rem; height: 2.5rem; }
 .facts { display: grid; gap: var(--space-3); }
 .roundTheClock { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; padding: .5rem .65rem; border-radius: var(--radius-control); background: var(--color-sage); color: var(--color-action); }

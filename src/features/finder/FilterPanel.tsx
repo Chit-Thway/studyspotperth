@@ -1,16 +1,15 @@
-import type { SearchOrigin } from '../../domain/search-request';
 import { formatPerthTime } from '../../domain/perth-time';
 import { INSTITUTIONS, INSTITUTION_LABELS } from '../libraries/presentation';
 import { resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 import styles from './FinderPage.module.css';
+import { LocationControl } from '../location/LocationControl';
 
 export interface FilterPanelProps {
   params: URLSearchParams;
-  origins: SearchOrigin[];
   change: (params: URLSearchParams) => void;
   prefix: string;
 }
-export function FilterPanel({ params, origins, change, prefix }: FilterPanelProps) {
+export function FilterPanel({ params, change, prefix }: FilterPanelProps) {
   const institutions = (params.get('institutions') ?? '').split(',');
   const update = (field: string, value: string | null) => change(updateFinderParam(params, field, value));
   const start = params.get('start');
@@ -20,12 +19,7 @@ export function FilterPanel({ params, origins, change, prefix }: FilterPanelProp
   return <>
     <div className={styles.filterHeader}><h2>Filters</h2><button type="button" onClick={() => change(resetFinderFilters(params))}>Clear all</button></div>
     <div className={styles.filterFields}>
-      <div className={styles.filterSection}><label className={styles.fieldLabel} htmlFor={`${prefix}-location`}>Location</label>
-        <select id={`${prefix}-location`} value={params.get('suburb') ?? 'perth-cbd'} onChange={(event) => update('suburb', event.target.value)}>
-          {origins.map((origin) => <option key={origin.id} value={origin.id}>{origin.name}</option>)}
-          {params.has('suburb') && !origins.some((origin) => origin.id === params.get('suburb')) && <option value={params.get('suburb')!}>Selected suburb unavailable</option>}
-        </select>
-      </div>
+      <div className={styles.filterSection}><span className={styles.fieldLabel}>Location</span><LocationControl /></div>
       <div className={styles.filterSection}><span className={styles.fieldLabel} id={`${prefix}-when-label`}>When</span>
         <div className={styles.timeMode} role="group" aria-labelledby={`${prefix}-when-label`}>
           <button className={!selectedTime ? styles.selectedMode : ''} type="button" aria-pressed={!selectedTime} onClick={() => update('start', null)}>Open now</button>

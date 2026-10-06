@@ -16,6 +16,8 @@ import { profileFinderParams } from '../../domain/account';
 import { useAccount } from '../account/use-account';
 import { SaveButton } from '../account/SaveButton';
 import type { LibrarySearchResult } from '../../domain/library-search';
+import { recordUsage } from '../privacy/client';
+import { useUserLocation } from '../location/use-location';
 
 function HoursTable({ schedule, date, label }: { schedule: CalendarSchedule; date: string; label: string }) {
   return <table className={styles.hoursTable}><caption>{label} · from {readableDate(date)}</caption><tbody>
@@ -34,7 +36,8 @@ export function LibraryDetailPage() {
   const [params] = useSearchParams();
   const { account } = useAccount();
   const effective = profileFinderParams(params, account?.preferences);
-  const resource = useLibraryApi<DetailResponse>(queryUrl(effective, `/api/libraries/${encodeURIComponent(slug)}`), !effective.has('start'));
+  const location = useUserLocation();
+  const resource = useLibraryApi<DetailResponse>(queryUrl(effective, `/api/libraries/${encodeURIComponent(slug)}`), !effective.has('start'), location.coordinates);
   const result = resource.data?.result;
   useEffect(() => { document.title = result ? `${result.library.content.name} · StudySpot Perth` : 'Library details · StudySpot Perth'; }, [result]);
   const back = finderUrl(params);
@@ -60,7 +63,7 @@ export function LibraryDetailContent({ result, originName, back, preview = false
     <LibraryPhoto key={result.library.id} photos={content.photos} name={content.name} large />
     <div className={styles.detailHeading}><div><p className={styles.category}>{institutionCategory(institution)}</p><h1>{content.name}</h1></div>
       {!preview && <SaveButton id={result.library.id} name={content.name} label />}</div>
-    <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km from ${originName}` : ' · distance unknown'}</span></p>
+    <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km${originName === 'Your location' ? ' from you' : ''}` : ' · distance unknown'}</span></p>
     <LibraryFacts result={result} />
     <p className={styles.description}>{content.description}</p>
     <div className={styles.detailColumns}>
@@ -79,7 +82,7 @@ export function LibraryDetailContent({ result, originName, back, preview = false
         <section className={styles.panel} aria-labelledby="facilities-title"><h2 id="facilities-title">Facilities</h2><dl className={styles.facilityDetails}>
           {([['quietStudy', 'Quiet areas', 'book'], ['groupStudy', 'Group spaces', 'people'], ['wheelchairAccess', 'Step-free access', 'access']] as const).map(([key, label, icon]) => <div key={key}><dt><Icon name={icon} className={styles.facilityIcon} />{label}</dt><dd>{content.facilities[key] === 'yes' ? 'Available' : content.facilities[key] === 'no' ? 'Not available' : 'Unknown'}</dd></div>)}
         </dl></section>
-        <a className={styles.directions} href={directionsUrl(result)} target="_blank" rel="noreferrer" aria-label="Directions in Google Maps"><Icon name="pin" />Directions ↗</a>
+        <a className={styles.directions} href={directionsUrl(result)} target="_blank" rel="noreferrer" aria-label="Directions in Google Maps" onClick={() => { if (!preview) void recordUsage('directions', result.library.id); }}><Icon name="pin" />Directions ↗</a>
         {content.officialUrl && <a className={styles.externalLink} href={content.officialUrl} target="_blank" rel="noreferrer">Official library website ↗</a>}
       </div>
     </div>

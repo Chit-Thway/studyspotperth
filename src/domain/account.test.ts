@@ -7,7 +7,8 @@ describe('account preferences and finder state', () => {
   const preferences = { ...profile, cards: [...profile.cards] };
   it('personalises a fresh finder without adding a hard filter', () => {
     const params = profileFinderParams(new URLSearchParams(), preferences);
-    expect(params.toString()).toBe('cards=uwa&suburb=crawley');
+    expect(params.toString()).toBe('cards=uwa');
+    expect(params.has('suburb')).toBe(false);
     expect(params.has('institutions')).toBe(false);
     expect(params.has('open24Hours')).toBe(false);
     expect(params.has('usableWifi')).toBe(false);

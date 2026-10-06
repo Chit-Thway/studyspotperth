@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from './app/App';
 import { AccountProvider } from './features/account/AccountContext';
+import { LocationProvider } from './features/location/LocationProvider';
 import './app/tokens.css';
 import './app/global.css';
 
@@ -10,7 +11,7 @@ const root = document.getElementById('root');
 if (!root) throw new Error('Application root is missing.');
 
 // A data router supplies the blocker used to protect unsaved admin edits.
-const router = createBrowserRouter([{ path: '*', element: <AccountProvider><App /></AccountProvider> }]);
+const router = createBrowserRouter([{ path: '*', element: <AccountProvider><LocationProvider><App /></LocationProvider></AccountProvider> }]);
 
 createRoot(root).render(
   <StrictMode>

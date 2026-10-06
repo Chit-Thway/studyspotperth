@@ -5,6 +5,7 @@ import { authTrustedOrigins } from '../auth/create-auth';
 import { createLibrarySearchService } from '../libraries/search-service';
 import { createAccountRepository } from './repository';
 import { AccountError, accountSession } from './session';
+import { LOCATION_HEADER, locationOrigin } from '../../src/domain/location';
 
 async function jsonBody(request: Request) {
   if (!request.headers.get('content-type')?.startsWith('application/json')) throw new AccountError(415, 'Use a JSON request.');
@@ -70,7 +71,7 @@ export async function handleAccountRequest(request: Request, env: Env, route: 'p
       await repository.favourite(user.id, libraryId, request.method === 'PUT');
       return send({ account: await repository.profile(user), googleEnabled });
     }
-    const parsed = await createLibrarySearchService(env, options).request(params, Date.now());
+    const parsed = await createLibrarySearchService(env, options).request(params, Date.now(), locationOrigin(request.headers.get(LOCATION_HEADER)));
     // Saved libraries stay visible even when closed or outside the finder filters.
     return send({ results: (await repository.saved(user.id)).map((record) => evaluateLibrary(record, parsed)) });
   } catch (error) {

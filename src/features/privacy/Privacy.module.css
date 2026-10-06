@@ -1,0 +1,11 @@
+.settings { margin-left: 1rem; padding: .25rem; border: 0; background: none; color: var(--color-action); text-decoration: underline; font-size: inherit; }
+.dialog { width: min(30rem, calc(100% - 2rem)); max-height: calc(100svh - 2rem); overflow: auto; padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-card); background: var(--color-surface); color: var(--color-text); text-align: left; box-shadow: 0 12px 48px #203a3030; }
+.dialog::backdrop { background: #203a3040; }
+:global(body):has(.dialog[open]) { overflow: hidden; }
+.dialog h2 { margin: 0 0 var(--space-3); font: 600 1.6rem var(--font-heading); }
+.dialog p { font-size: .9rem; }
+.note { color: var(--color-muted); }
+.actions { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-6); }
+.actions button { flex: 1; padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-control); background: var(--color-sage); color: var(--color-action); font-size: .85rem; }
+.actions .accept { background: var(--color-action); color: var(--color-surface); }
+@media (max-width: 30rem) { .actions { flex-direction: column; } .settings { display: block; margin: .5rem auto 0; } }

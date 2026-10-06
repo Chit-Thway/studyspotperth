@@ -5,6 +5,8 @@ import { requireAdmin, AccountError } from '../../server/account/session';
 import { libraryFixtures } from '../../tests/fixtures/libraries';
 import type { AccountResponse } from '../../src/domain/account';
 import type { LibrarySearchResult } from '../../src/domain/library-search';
+import { approximateDistanceKm } from '../../src/domain/library-search';
+import { LOCATION_HEADER } from '../../src/domain/location';
 
 /** Installed only in the disposable local verification runtime. */
 export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
@@ -74,6 +76,13 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   assert.equal(sessionPayload.results.length, 1, 'Finder restrictions must not remove saved records from the selected session.');
   assert.equal(sessionPayload.results[0].evaluatedAt, '2026-10-02T14:00:00+08:00');
   assert.equal(sessionPayload.results[0].coverage.status, 'covered');
+  const locatedSaved = await handleAccountRequest(new Request(`${origin}/api/account/favourites?start=2026-10-02T14:00&end=2026-10-02T16:00`, {
+    headers: { Cookie: alice.cookie, [LOCATION_HEADER]: '-32.01,115.89' },
+  }), env, 'saved', undefined, { includeFixtures: true });
+  assert.equal(locatedSaved.status, 200);
+  const locatedSavedPayload = await locatedSaved.json<{ results: LibrarySearchResult[] }>();
+  assert.equal(locatedSavedPayload.results[0].distanceKm, approximateDistanceKm({ latitude: -32.01, longitude: 115.89 }, libraryFixtures[0].content));
+  assert.equal(locatedSavedPayload.results[0].coverage.status, 'covered');
   const publicSaved = await handleAccountRequest(new Request(`${origin}/api/account/favourites`, { headers: { Cookie: alice.cookie } }), env, 'saved');
   assert.deepEqual(await publicSaved.json(), { results: [] }, 'Public account routes must also exclude fictional records.');
   assert.equal((await call(alice.cookie, 'favourite', 'PUT', undefined, 'missing-library')).status, 404);

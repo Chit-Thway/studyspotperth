@@ -1,0 +1,16 @@
+/** Approximate building/map points checked 6 October 2026, not entrance or route claims. */
+export const launchLocations: Record<string, { latitude: number; longitude: number; url: string; label: string; kind: 'official' | 'confirmation'; osm?: boolean }> = {
+  'reid-library': { latitude: -31.978945, longitude: 115.817794, url: 'https://link.mazemap.com/Azn2U8oJ', label: 'UWA official campus map reference point', kind: 'official' },
+  'barry-j-marshall-library': { latitude: -31.983266, longitude: 115.818363, url: 'https://link.mazemap.com/VsTwKpQw', label: 'UWA official campus map reference point', kind: 'official' },
+  'beasley-law-library': { latitude: -31.979791, longitude: 115.819864, url: 'https://link.mazemap.com/kAH9lsr7', label: 'UWA official campus map reference point', kind: 'official' },
+  'edfaa-library': { latitude: -31.976614, longitude: 115.813374, url: 'https://link.mazemap.com/JcdzU2RG', label: 'UWA official campus map reference point', kind: 'official' },
+  'j-robin-warren-library': { latitude: -31.970178, longitude: 115.815202, url: 'https://link.mazemap.com/ABZFZ4s8', label: 'UWA official campus map reference point', kind: 'official' },
+  'tl-robertson-library': { latitude: -32.005425, longitude: 115.893881, url: 'https://use.mazemap.com/#v=1&config=curtinuniversity&zlevel=1&center=115.893881,-32.005425&zoom=18&sharepoitype=poi&sharepoi=1000462610&campusid=296', label: 'Curtin official library map reference point', kind: 'official' },
+  'curtin-graduate-school-of-business-library': { latitude: -31.9541242, longitude: 115.8631822, url: 'https://www.openstreetmap.org/way/147108686', label: 'Approximate building point © OpenStreetMap contributors, ODbL', kind: 'confirmation', osm: true },
+  'ecu-joondalup-library': { latitude: -31.7527223, longitude: 115.7710711, url: 'https://www.openstreetmap.org/way/44532833', label: 'Building 31 point © OpenStreetMap contributors, ODbL; building identity confirmed by ECU campus map', kind: 'confirmation', osm: true },
+  'ecu-city-library': { latitude: -31.9502508, longitude: 115.8576633, url: 'https://www.openstreetmap.org/way/1490472649', label: 'ECU City building point © OpenStreetMap contributors, ODbL; address confirmed by ECU', kind: 'confirmation', osm: true },
+  'geoffrey-bolton-library': { latitude: -32.0670199, longitude: 115.8349379, url: 'https://api.mazemap.com/api/pois/?identifier=350&campusid=603&srid=4326', label: 'Murdoch official map building 350 point', kind: 'official' },
+  'honourable-michael-murray-law-library': { latitude: -32.0674979, longitude: 115.835109, url: 'https://api.mazemap.com/api/pois/?identifier=354&campusid=603&srid=4326', label: 'Murdoch official map building 354 point', kind: 'official' },
+  'city-of-perth-library': { latitude: -31.95515, longitude: 115.86129, url: 'https://catalogue.data.wa.gov.au/dataset/wa-public-libraries', label: 'State Library of WA public-library location dataset, CC BY 4.0; address confirmed by City of Perth', kind: 'official' },
+  'state-library-of-western-australia': { latitude: -31.949, longitude: 115.86047, url: 'https://catalogue.data.wa.gov.au/dataset/wa-public-libraries', label: 'State Library of WA public-library location dataset, CC BY 4.0; address confirmed by State Library', kind: 'official' },
+};

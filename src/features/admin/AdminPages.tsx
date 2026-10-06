@@ -17,6 +17,7 @@ import { Field, Choice } from './Fields';
 import { ContentEditor } from './ContentEditor';
 import { UnsavedChangesDialog } from './UnsavedChangesDialog';
 import { afterUnpublish } from './editor-state';
+import { UsageStats } from './UsageStats';
 import styles from './Admin.module.css';
 
 function AccessFailure({ error, retry }: { error: Error | null; retry: () => void }) {
@@ -28,6 +29,7 @@ function Dashboard() {
   const resource = useLibraryApi<AdminList>(`/api/admin/libraries?${new URLSearchParams({ after: params.get('after') ?? '' })}`);
   if (resource.error) return <AccessFailure error={resource.error} retry={resource.retry} />;
   return <section className={styles.page}><div className={styles.heading}><div><p className={styles.note}>Administration</p><h1>Manage libraries</h1></div><Link className={styles.button} to="/admin/libraries/new">Add library</Link></div>
+    <UsageStats />
     {resource.loading && <p role="status">Loading libraries…</p>}
     {resource.data && !resource.data.libraries.length && <div className={styles.section}><p>No library records yet.</p></div>}
     <div className={styles.list}>{resource.data?.libraries.map(({ record, publishedRevisionId }) => <article className={styles.listItem} key={record.id}>

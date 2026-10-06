@@ -1,25 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { DEFAULT_ORIGIN, isInstitution } from '../../domain/search-request';
+import { isInstitution } from '../../domain/search-request';
 import { preserveProfileDefaults, profileFinderParams } from '../../domain/account';
 import { useAccount } from '../account/use-account';
 import { Icon } from '../libraries/Icon';
 import { LibraryCard } from '../libraries/LibraryCard';
 import { INSTITUTION_LABELS, UNIVERSITY_CARDS, readableDate } from '../libraries/presentation';
-import type { OriginsResponse, SearchResponse } from '../libraries/api';
+import type { SearchResponse } from '../libraries/api';
 import { LibraryApiError } from '../libraries/api';
 import { useLibraryApi } from '../libraries/use-library-api';
 import { FilterPanel } from './FilterPanel';
 import { queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 import styles from './FinderPage.module.css';
+import { useUserLocation } from '../location/use-location';
 
 export function FinderPage() {
   const [rawParams, setParams] = useSearchParams();
   const { account } = useAccount();
   const params = profileFinderParams(rawParams, account?.preferences);
-  const resource = useLibraryApi<SearchResponse>(queryUrl(params, '/api/libraries'), !params.has('start'));
-  const locations = useLibraryApi<OriginsResponse>('/api/suburbs');
-  const origins = locations.data?.origins ?? [DEFAULT_ORIGIN];
+  const location = useUserLocation();
+  const resource = useLibraryApi<SearchResponse>(queryUrl(params, '/api/libraries'), !params.has('start'), location.coordinates);
   const [cardsExpanded, setCardsExpanded] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const filterButton = useRef<HTMLButtonElement>(null);
@@ -61,17 +61,16 @@ export function FinderPage() {
     {chips.length > 0 && <div className={styles.activeFilters} aria-label="Active filters">{chips.map((chip) => <button type="button" key={chip.key} onClick={chip.remove} aria-label={`Remove ${chip.label} filter`}>{chip.label}<Icon name="close" /></button>)}<button type="button" className={styles.clearFilters} onClick={() => change(resetFinderFilters(params))}>Clear filters</button></div>}
     <div className={styles.finderLayout}>
       <button ref={filterButton} className={styles.filterToggle} type="button" aria-haspopup="dialog" aria-expanded={drawerOpen} onClick={() => { dialog.current?.showModal(); setDrawerOpen(true); }}><Icon name="filter" />Filters{chips.length > 0 && <span>{chips.length} active</span>}</button>
-      <aside className={styles.filters} aria-label="Library filters"><FilterPanel params={params} origins={origins} change={change} prefix="desktop" /></aside>
+      <aside className={styles.filters} aria-label="Library filters"><FilterPanel params={params} change={change} prefix="desktop" /></aside>
       <dialog ref={dialog} className={styles.filterDialog} aria-labelledby="drawer-title" onCancel={closeDrawer} onClose={() => setDrawerOpen(false)} onClick={(event) => { if (event.target === dialog.current) closeDrawer(); }}>
         <div className={styles.drawerBody}><div className={styles.drawerHeading}><h2 id="drawer-title">Find your study spot</h2><button type="button" autoFocus onClick={closeDrawer} aria-label="Close filters"><Icon name="close" /></button></div>
-          <FilterPanel params={params} origins={origins} change={change} prefix="mobile" />
+          <FilterPanel params={params} change={change} prefix="mobile" />
           <div className={styles.drawerFooter}><button className={styles.applyButton} type="button" onClick={closeDrawer}>Show results</button></div>
         </div>
       </dialog>
       <section className={styles.results} aria-labelledby="results-title" aria-busy={resource.loading}>
         <div className={styles.resultsHeader}><h2 id="results-title">{result ? `${result.total} ${result.total === 1 ? 'library' : 'libraries'}` : 'Libraries'}</h2><p><Icon name="pin" />Recommended · nearest first</p></div>
-        <p className={styles.resultsContext}>From {result?.request.origin.name ?? origins.find((origin) => origin.id === (params.get('suburb') ?? 'perth-cbd'))?.name ?? 'selected suburb'} · Perth time</p>
-        {locations.error && <p className={styles.originNotice} role="status">Other suburbs couldn’t load. <button className={styles.textButton} type="button" onClick={locations.retry}>Try again</button></p>}
+        <p className={styles.resultsContext}>{location.coordinates ? 'Near your location · ' : ''}Perth time</p>
         {resource.loading && <div className={styles.statePanel} role="status"><Icon name="book" /><h3>Finding your study spots…</h3><p>Checking opening hours and entry information.</p></div>}
         {resource.error && result && <p className={styles.originNotice} role="alert">Couldn’t refresh these libraries. Showing the last checked information; current hours may have changed. <button className={styles.textButton} type="button" onClick={resource.retry}>Try again</button></p>}
         {resource.error && !result && <div className={styles.statePanel} role="alert"><Icon name="book" /><h3>{resource.error instanceof LibraryApiError && resource.error.status === 400 ? 'Check your search' : 'Libraries couldn’t load'}</h3><p>{resource.error.message}</p>

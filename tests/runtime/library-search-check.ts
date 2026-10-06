@@ -5,6 +5,7 @@ import { evaluateLibrary, searchLibraries } from '../../src/domain/library-searc
 import { parseSearchRequest } from '../../src/domain/search-request';
 import { parsePerthTime } from '../../src/domain/perth-time';
 import { libraryFixtures } from '../../tests/fixtures/libraries';
+import { locationOrigin, LOCATION_HEADER } from '../../src/domain/location';
 
 /** Installed only in the isolated verification server, never in app Functions. */
 export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
@@ -14,6 +15,18 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const origin = (await repository.listSuburbs({ includeFixtures: true }))[0];
   assert(origin);
   const options = { includeFixtures: true };
+  const point = '-32.01,115.89';
+  const locatedRequest = new Request('https://example.invalid/api/libraries?cards=uwa&open24Hours=true', { headers: { [LOCATION_HEADER]: point } });
+  const located = await handleLibraryRequest(locatedRequest, env, 'search', undefined, clock, options);
+  assert.equal(located.status, 200);
+  const expectedLocationRequest = parseSearchRequest(new URLSearchParams('cards=uwa&open24Hours=true'), clock, locationOrigin(point)!);
+  assert.deepEqual(await located.json(), JSON.parse(JSON.stringify({ ...searchLibraries(records, expectedLocationRequest), request: expectedLocationRequest, timeZone: 'Australia/Perth' })));
+  const locatedDetail = await handleLibraryRequest(new Request(`https://example.invalid/api/libraries/${records[0].slug}?cards=uwa&open24Hours=true`, { headers: { [LOCATION_HEADER]: point } }), env, 'detail', records[0].slug, clock, options);
+  assert.equal(locatedDetail.status, 200);
+  assert.deepEqual(await locatedDetail.json(), JSON.parse(JSON.stringify({ result: evaluateLibrary(records[0], expectedLocationRequest), request: expectedLocationRequest, timeZone: 'Australia/Perth' })));
+  for (const value of ['', '91,0', '-31.9,115.8,0', 'NaN,0']) {
+    assert.equal((await handleLibraryRequest(new Request('https://example.invalid/api/libraries', { headers: { [LOCATION_HEADER]: value } }), env, 'search', undefined, clock)).status, 400);
+  }
   const json = async (response: Response): Promise<unknown> => response.json();
   const canonicalJson = (value: unknown): unknown => JSON.parse(JSON.stringify(value));
   const request = (query = '', method = 'GET') => new Request(`https://example.invalid/api/libraries?${query}`, { method });
