@@ -13,12 +13,14 @@ import { FilterPanel } from './FilterPanel';
 import { queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 import styles from './FinderPage.module.css';
 import { useUserLocation } from '../location/use-location';
+import { useLocationPagination } from './use-location-pagination';
 
 export function FinderPage() {
   const [rawParams, setParams] = useSearchParams();
   const { account } = useAccount();
-  const params = profileFinderParams(rawParams, account?.preferences);
   const location = useUserLocation();
+  const pageParams = useLocationPagination(rawParams, setParams, location.coordinates);
+  const params = profileFinderParams(pageParams, account?.preferences);
   const resource = useLibraryApi<SearchResponse>(queryUrl(params, '/api/libraries'), !params.has('start'), location.coordinates);
   const [cardsExpanded, setCardsExpanded] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
