@@ -3,6 +3,17 @@ import { parseLibraryContent } from './parse-library';
 import { libraryFixtures } from '../../tests/fixtures/libraries';
 
 describe('library snapshots', () => {
+  it('accepts bundled photo paths and HTTPS photos while rejecting unsafe paths and protocols', () => {
+    const content = structuredClone(libraryFixtures[0].content);
+    content.photos = [{ url: '/images/libraries/reid-library.webp', alt: 'Library exterior', credit: 'Photographer', sourceId: null }];
+    expect(parseLibraryContent(content).photos[0].url).toBe(content.photos[0].url);
+    content.photos[0].url = 'https://example.com/library.jpg';
+    expect(parseLibraryContent(content).photos[0].url).toBe(content.photos[0].url);
+    for (const unsafe of ['//example.com/photo.webp', '/images/libraries/../private.webp', '/api/account', 'javascript:alert(1)', 'http://example.com/photo.jpg']) {
+      content.photos[0].url = unsafe;
+      expect(() => parseLibraryContent(content)).toThrow();
+    }
+  });
   it('round-trips fixtures without losing schedules, requirements, or unknown facts', () => {
     for (const fixture of libraryFixtures) expect(parseLibraryContent(JSON.parse(JSON.stringify(fixture.content)))).toEqual(fixture.content);
   });

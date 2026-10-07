@@ -34,6 +34,11 @@ function url(value: unknown): string | null {
   if (new URL(result).protocol !== 'https:') throw new Error('Links must use HTTPS.');
   return result;
 }
+function photoUrl(value: unknown): string {
+  const result = text(value);
+  if (/^\/images\/libraries\/[a-z0-9-]+\.webp$/.test(result)) return result;
+  return url(result)!;
+}
 function date(value: unknown): string | null {
   if (value === null) return null;
   const result = text(value);
@@ -105,9 +110,7 @@ export function parseLibraryContent(value: unknown): LibraryContent {
     description: text(item.description, true), officialUrl: url(item.officialUrl), sources,
     photos: list(item.photos).map((input) => {
       const photo = object(input);
-      const photoUrl = url(photo.url);
-      if (!photoUrl) throw new Error('Photo URL is required.');
-      return { url: photoUrl, alt: text(photo.alt), credit: text(photo.credit), sourceId: source(photo.sourceId) };
+      return { url: photoUrl(photo.url), alt: text(photo.alt), credit: text(photo.credit), sourceId: source(photo.sourceId) };
     }),
     facilities: { quietStudy: choice(facilities.quietStudy, factStatuses), groupStudy: choice(facilities.groupStudy, factStatuses),
       wheelchairAccess: choice(facilities.wheelchairAccess, factStatuses) },

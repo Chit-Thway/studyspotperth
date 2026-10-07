@@ -60,7 +60,7 @@ export function LibraryDetailContent({ result, originName, back, preview = false
   const date = result.evaluatedAt.slice(0, 10);
   return <article className={styles.detail}>
     {back && <Link className={styles.backLink} to={back}>← All libraries</Link>}
-    <LibraryPhoto key={result.library.id} photos={content.photos} name={content.name} large />
+    <LibraryPhoto key={result.library.id} photos={content.photos} sources={content.sources} name={content.name} large />
     <div className={styles.detailHeading}><div><p className={styles.category}>{institutionCategory(institution)}</p><h1>{content.name}</h1></div>
       {!preview && <SaveButton id={result.library.id} name={content.name} label />}</div>
     <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km${originName === 'Your location' ? ' from you' : ''}` : ' · distance unknown'}</span></p>
@@ -87,7 +87,7 @@ export function LibraryDetailContent({ result, originName, back, preview = false
       </div>
     </div>
     <section className={styles.panel} aria-labelledby="access-title"><h2 id="access-title">Entry and 24/7</h2>
-      <div className={styles.requirements}>{result.access.requirements.map((entry) => <RequirementLabel key={entry.group} requirement={entry.requirement} match={entry.match} />)}</div>
+      <div className={styles.requirements}>{result.access.requirements.map((entry) => <RequirementLabel key={entry.group} group={entry.group} requirement={entry.requirement} match={entry.match} />)}</div>
       <p className={styles.disclaimer}>Cards are self-reported; entry conditions apply.</p>
       {result.open24Hours.status === 'qualifies' ? result.open24Hours.groups.map((group) => <p key={group.group}>24/7 access: {group.requirement}. Checked for {readableDate(group.verifiedFrom)}–{readableDate(shiftDate(group.verifiedUntil.slice(0, 10), -1))}.{group.needsActiveCredentials ? ' Active credentials are required.' : ''}</p>) : <p>24/7 access {result.open24Hours.status === 'unknown' ? 'is unknown' : 'is not confirmed for the selected period'}.</p>}
       <p className={styles.disclaimer}>Checked until the start of {readableDate(result.evaluatedUntil)}. Later dates may differ.</p>

@@ -10,5 +10,5 @@ const paths: Record<IconName, string> = {
   arrow: 'M4 12h16M14 6l6 6-6 6', check: 'm5 12 4 4L19 6', filter: 'M4 6h16M4 12h16M4 18h16M9 4v4M15 10v4M9 16v4', close: 'm6 6 12 12M6 18 18 6',
 };
 export function Icon({ name, className }: { name: IconName; className?: string }) {
-  return <svg className={className} data-icon={name} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>;
+  return <svg className={className} data-icon={name} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={paths[name]} /></svg>;
 }

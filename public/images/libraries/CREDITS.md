@@ -1,0 +1,17 @@
+# Library photo credits
+
+These photographs have their own licences, separate from the application code. Local copies are resized and converted to WebP; the interface may crop them to fit. CC BY-SA copies retain the stated ShareAlike licence.
+
+| Photo | Photographer | Licence | Original |
+| --- | --- | --- | --- |
+| [reid-library](reid-library.webp) | Photographs by Gnangarra · commons.wikimedia.org | [CC BY 2.5 AU](https://creativecommons.org/licenses/by/2.5/au/deed.en) | [UWA 191119 gnangarra-104.jpg](https://commons.wikimedia.org/wiki/File:UWA_191119_gnangarra-104.jpg) |
+| [barry-j-marshall-library](barry-j-marshall-library.webp) | -wuppertaler | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | [AUS Perth, Central Business District, University of Western Australia 0077.jpg](https://commons.wikimedia.org/wiki/File:AUS_Perth,_Central_Business_District,_University_of_Western_Australia_0077.jpg) |
+| [beasley-law-library](beasley-law-library.webp) | Orderinchaos | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [UWA Law Building Beasley Law Library entrance.jpg](https://commons.wikimedia.org/wiki/File:UWA_Law_Building_Beasley_Law_Library_entrance.jpg) |
+| [tl-robertson-library](tl-robertson-library.webp) | Orderinchaos | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | [TL Robertson Library 2023 from Henderson Court.jpg](https://commons.wikimedia.org/wiki/File:TL_Robertson_Library_2023_from_Henderson_Court.jpg) |
+| [ecu-city-library](ecu-city-library.webp) | Seinfeld1986 | [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en) | [Edith Cowan City Campus.jpg](https://commons.wikimedia.org/wiki/File:Edith_Cowan_City_Campus.jpg) |
+| [ecu-joondalup-library](ecu-joondalup-library.webp) | Orderinchaos | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [ECU library along west side.jpg](https://commons.wikimedia.org/wiki/File:ECU_library_along_west_side.jpg) |
+| [geoffrey-bolton-library](geoffrey-bolton-library.webp) | Orderinchaos | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Murdoch looking E along Bush Court and library.jpg](https://commons.wikimedia.org/wiki/File:Murdoch_looking_E_along_Bush_Court_and_library.jpg) |
+| [honourable-michael-murray-law-library](honourable-michael-murray-law-library.webp) | Orderinchaos | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Murdoch Library Michael Murray Law Library entrance.jpg](https://commons.wikimedia.org/wiki/File:Murdoch_Library_Michael_Murray_Law_Library_entrance.jpg) |
+| [city-of-perth-library](city-of-perth-library.webp) | Photographs by JarrahTree · commons.wikimedia.org | [CC BY 2.5 AU](https://creativecommons.org/licenses/by/2.5/au/deed.en) | [Perth City Library from Hay Street.jpg](https://commons.wikimedia.org/wiki/File:Perth_City_Library_from_Hay_Street.jpg) |
+| [state-library-of-western-australia](state-library-of-western-australia.webp) | -wuppertaler | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | [AUS Perth, Central Business District, State Library of Western Australia 001.jpg](https://commons.wikimedia.org/wiki/File:AUS_Perth,_Central_Business_District,_State_Library_of_Western_Australia_001.jpg) |
+| [curtin-graduate-school-of-business-library](curtin-graduate-school-of-business-library.webp) | Calistemon | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [Government Printing Office, Perth, January 2021 01.jpg](https://commons.wikimedia.org/wiki/File:Government_Printing_Office,_Perth,_January_2021_01.jpg) |

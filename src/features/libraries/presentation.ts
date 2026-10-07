@@ -3,6 +3,7 @@ import type { Institution } from '../../domain/search-context';
 import type { MinuteInterval } from '../../domain/schedule';
 import type { RequirementMatch } from '../../domain/wifi';
 import type { ScheduleTimeline } from '../../domain/availability';
+import { calendarTimeline, intersectIntervals, mergeTimeIntervals } from '../../domain/availability';
 import { formatPerthTime, perthCalendarMinute } from '../../domain/perth-time';
 
 export const INSTITUTION_LABELS: Record<Institution, string> = { public: 'Public libraries', uwa: 'UWA', curtin: 'Curtin', ecu: 'ECU', murdoch: 'Murdoch' };
@@ -61,8 +62,63 @@ export function dayHoursLabel(timeline: Pick<ScheduleTimeline, 'intervals' | 'un
   })).join(', ');
   return timeline.unknown.length ? `${hours} · remaining hours unknown` : hours;
 }
+function cardTime(minute: number) {
+  if (minute === 0 || minute === 1440) return 'midnight';
+  const hour = Math.floor(minute / 60);
+  const remainder = minute % 60;
+  return `${hour % 12 || 12}${remainder ? `:${remainder.toString().padStart(2, '0')}` : ''} ${hour < 12 ? 'am' : 'pm'}`;
+}
+function friendlyDayHours(timeline: Pick<ScheduleTimeline, 'intervals' | 'unknown'>, date: string) {
+  if (!timeline.intervals.length) return timeline.unknown.length ? 'Unknown' : 'Closed';
+  const hours = timeline.intervals.map((interval) => {
+    const start = perthCalendarMinute(interval.start, date);
+    const end = perthCalendarMinute(interval.end, date);
+    return start === 0 && end === 1440 ? '24 hours' : `${cardTime(start)}–${cardTime(end)}`;
+  }).join(', ');
+  return `${hours}${timeline.unknown.length ? ' · remaining hours unknown' : ''}`;
+}
+function entryDayTimeline(result: LibrarySearchResult, group: Institution) {
+  const date = result.evaluatedAt.slice(0, 10);
+  const schedule = result.library.content.schedule.access.find((entry) => entry.group === group);
+  if (!schedule) return null;
+  const entry = calendarTimeline(schedule, date, 1);
+  const building = calendarTimeline(result.library.content.schedule.building, date, 1);
+  return {
+    intervals: intersectIntervals(building.intervals, entry.intervals),
+    unknown: mergeTimeIntervals([...intersectIntervals(building.intervals, entry.unknown),
+      ...intersectIntervals(building.unknown, [...entry.intervals, ...entry.unknown])]),
+  };
+}
+export function entryDayHoursLabel(result: LibrarySearchResult, group: Institution | 'unknown') {
+  const timeline = group === 'unknown' ? null : entryDayTimeline(result, group);
+  return timeline ? friendlyDayHours(timeline, result.evaluatedAt.slice(0, 10)) : 'Unknown';
+}
+export function cardEntryLabel(result: LibrarySearchResult, group: Institution | 'unknown') {
+  if (group === 'unknown') return undefined;
+  if (group === 'public') {
+    const entry = result.access.requirements.find((item) => item.group === group);
+    return entry && entryDayTimeline(result, group)?.intervals.length ? 'Public access' : undefined;
+  }
+  if (result.open24Hours.groups.some((entry) => entry.group === group)) return `24/7 · ${INSTITUTION_LABELS[group]} card`;
+  const timeline = entryDayTimeline(result, group);
+  const first = timeline?.intervals[0];
+  if (!first) return undefined;
+  const time = cardTime(perthCalendarMinute(first.start, result.evaluatedAt.slice(0, 10)));
+  return `${time} access · ${INSTITUTION_LABELS[group]} card`;
+}
+export function openingDayLabel(result: LibrarySearchResult, now = Date.now()) {
+  const date = result.evaluatedAt.slice(0, 10);
+  const day = date === formatPerthTime(now).slice(0, 10) ? 'today' : readableDate(date);
+  const timeline = calendarTimeline(result.library.content.schedule.building, date, 1);
+  if (!timeline.intervals.length) return timeline.unknown.length ? `Hours unknown · ${day}` : `Closed ${day}`;
+  return `Open ${day} ${friendlyDayHours(timeline, date)}`;
+}
 export function directionsUrl(result: LibrarySearchResult) {
   const { latitude, longitude, address, name } = result.library.content;
   const destination = latitude !== null && longitude !== null ? `${latitude},${longitude}` : `${name}, ${address}`;
   return `https://www.google.com/maps/dir/?${new URLSearchParams({ api: '1', destination })}`;
+}
+export function mapsLocationUrl(result: LibrarySearchResult) {
+  const { name, address } = result.library.content;
+  return `https://www.google.com/maps/search/?${new URLSearchParams({ api: '1', query: `${name}, ${address}` })}`;
 }

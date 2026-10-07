@@ -4,7 +4,7 @@ import { finderUrl } from '../finder/finder-state';
 import { Icon } from './Icon';
 import { LibraryPhoto } from './LibraryPhoto';
 import { LibraryFacts } from './LibraryFacts';
-import { institutionCategory } from './presentation';
+import { institutionCategory, mapsLocationUrl } from './presentation';
 import styles from './Libraries.module.css';
 import { SaveButton } from '../account/SaveButton';
 
@@ -16,13 +16,18 @@ export function LibraryCard({ result, params }: { result: LibrarySearchResult; p
     <div className={styles.cardHeading}><h3 id={`library-${library.id}`}><Link to={href}>{content.name}</Link></h3>
       <SaveButton id={library.id} name={content.name} /></div>
     <p className={styles.category}>{institutionCategory(library.institution)}</p>
-    <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km` : ' · distance unknown'}</span></p>
-    <LibraryPhoto key={library.id} photos={content.photos} name={content.name} />
+    <p className={`${styles.location} ${styles.cardLocation}`}>
+      <a className={styles.mapLink} href={mapsLocationUrl(result)} target="_blank" rel="noreferrer" title={content.address} aria-label={`${content.address} · Open in Google Maps`}>
+        <Icon name="pin" /><span>{content.address}</span>
+      </a>
+      <span className={styles.distanceBadge}>{result.distanceKm !== null ? `approx. ${result.distanceKm.toFixed(1)} km` : 'Distance unknown'}</span>
+    </p>
+    <LibraryPhoto key={library.id} photos={content.photos} sources={content.sources} name={content.name} />
     <LibraryFacts result={result} compact />
     <ul className={styles.facilities} aria-label="Facilities">
-      {(content.facilities.quietStudy === 'yes' || content.facilities.groupStudy === 'yes') && <li><Icon name={content.facilities.quietStudy === 'yes' ? 'book' : 'people'} />{content.facilities.quietStudy === 'yes' ? content.facilities.groupStudy === 'yes' ? 'Quiet + group' : 'Quiet areas' : 'Group spaces'}</li>}
-      {result.wifi.status === 'eligible' && <li><Icon name="wifi" />{result.wifi.networks.some((network) => network.match === 'public') ? 'Public Wi-Fi' : 'Wi-Fi'}</li>}
-      {content.facilities.wheelchairAccess === 'yes' && <li><Icon name="access" />Step-free access</li>}
+      <li><Icon name="wifi" />{result.wifi.networks.some((network) => network.match === 'public') ? 'Public Wi-Fi' : result.wifi.networks.some((network) => network.kind === 'institution' || network.kind === 'eduroam') ? 'University Wi-Fi' : 'Wi-Fi'}</li>
+      <li><Icon name="book" />{content.facilities.quietStudy === 'no' ? 'Study spaces' : 'Quiet areas'}</li>
+      <li><Icon name={content.facilities.wheelchairAccess === 'yes' ? 'access' : 'people'} />{content.facilities.wheelchairAccess === 'yes' ? 'Step-free access' : content.facilities.groupStudy === 'no' ? 'Shared spaces' : 'Group spaces'}</li>
     </ul>
     <Link className={styles.viewLink} to={href}>View library <Icon name="arrow" /></Link>
   </article>;

@@ -7,6 +7,7 @@ import { evaluateLibrary, searchLibraries } from '../../src/domain/library-searc
 import { parseSearchRequest } from '../../src/domain/search-request';
 import { parsePerthTime } from '../../src/domain/perth-time';
 import type { LibraryRecord } from '../../src/domain/library';
+import { launchPhotos } from './launch-photos';
 
 const records: LibraryRecord[] = launchLibraries.map((record) => ({ ...record, isFixture: false,
   status: 'published', revisionId: `${record.id}-initial` }));
@@ -21,7 +22,7 @@ function database() {
 }
 
 describe('initial public catalogue', () => {
-  it('contains exactly the 13 selected, source-backed entries and no unapproved photos', () => {
+  it('contains exactly the 13 selected, source-backed entries and reusable bundled photos', () => {
     expect(records).toHaveLength(13);
     expect(new Set(records.map((record) => record.slug)).size).toBe(13);
     expect(records.filter((record) => record.institution === 'uwa')).toHaveLength(5);
@@ -29,12 +30,22 @@ describe('initial public catalogue', () => {
     for (const record of records) {
       expect(parseAdminContent(record.content)).toEqual(record.content);
       expect(() => validateAdminPublication(record.content)).not.toThrow();
-      expect(record.content.photos).toEqual([]);
-      expect(record.content.sources.filter((source) => !source.id.startsWith('map-')).every((source) => source.kind === 'official' && source.checkedOn === '2026-10-05')).toBe(true);
+      expect(record.content.sources.filter((source) => !source.id.startsWith('map-') && !source.id.startsWith('photo')).every((source) => source.kind === 'official' && source.checkedOn === '2026-10-05')).toBe(true);
+      for (const photo of record.content.photos) {
+        const asset = readFileSync(`public${photo.url}`);
+        expect(asset.subarray(0, 4).toString()).toBe('RIFF');
+        expect(asset.subarray(8, 12).toString()).toBe('WEBP');
+        expect(asset.length).toBeLessThan(500_000);
+        expect(record.content.sources.find((source) => source.id === photo.sourceId)?.url).toMatch(/^https:\/\/commons.wikimedia.org\/wiki\/File:/);
+        expect(record.content.sources.find((source) => source.id === `${photo.sourceId}-license`)?.url).toMatch(/^https:\/\/creativecommons.org\//);
+        expect(launchPhotos[record.slug].licence).toMatch(/^CC (BY|BY-SA)|^CC0/);
+      }
       expect(record.content.sources.find((source) => source.id === 'map-location')).toMatchObject({ checkedOn: '2026-10-06' });
       expect(record.content.latitude).not.toBeNull();
       expect(record.content.longitude).not.toBeNull();
     }
+    expect(records.filter((record) => record.content.photos.length)).toHaveLength(11);
+    expect(records.filter((record) => !record.content.photos.length).map((record) => record.slug)).toEqual(['edfaa-library', 'j-robin-warren-library']);
   });
   it('keeps all six confirmed 24/7 options and ranks UWA matches first', () => {
     const result = searchLibraries(records, request('cards=uwa&open24Hours=true'));
@@ -92,6 +103,40 @@ describe('initial public catalogue', () => {
 });
 
 describe('safe first import', () => {
+  it.each(['original', 'initial', 'located'])('adds photos to the untouched %s catalogue without losing its history', (version) => {
+    const db = database();
+    try {
+      const record = records[0];
+      const base = { ...record.content, photos: [], sources: record.content.sources.filter((source) => !source.id.startsWith('photo')) };
+      const original = { ...base, latitude: null, longitude: null, sources: base.sources.filter((source) => !source.id.startsWith('map-')) };
+      db.prepare('INSERT INTO library (id,slug,institution_id,is_fixture) VALUES (?,?,?,0)').run(record.id, record.slug, record.institution);
+      const insert = db.prepare('INSERT INTO library_revision (id,library_id,status,content,created_at,published_at) VALUES (?,?,?,?,0,0)');
+      insert.run(`${record.id}-initial`, record.id, version === 'located' ? 'archived' : 'published', JSON.stringify(version === 'original' || version === 'located' ? original : base));
+      if (version === 'located') insert.run(`${record.id}-location-v1`, record.id, 'published', JSON.stringify(base));
+      db.exec(createLaunchSql());
+      const published = db.prepare("SELECT id,content FROM library_revision WHERE library_id=? AND status='published'").get(record.id);
+      expect(published?.id).toBe(`${record.id}-photos-v1`);
+      expect(JSON.parse(published?.content as string)).toEqual(record.content);
+      expect(db.prepare('SELECT status FROM library_revision WHERE id=?').get(`${record.id}-initial`)?.status).toBe('archived');
+      const count = db.prepare('SELECT count(*) AS count FROM library_revision').get()?.count;
+      db.exec(createLaunchSql());
+      expect(db.prepare('SELECT count(*) AS count FROM library_revision').get()?.count).toBe(count);
+    } finally { db.close(); }
+  });
+  it.each(['edited', 'draft'])('preserves an %s catalogue when adding launch photos', (version) => {
+    const db = database();
+    try {
+      const record = records[0];
+      const content = { ...record.content, photos: [], sources: record.content.sources.filter((source) => !source.id.startsWith('photo')) };
+      if (version === 'edited') content.name = 'Administrator title';
+      db.prepare('INSERT INTO library (id,slug,institution_id,is_fixture) VALUES (?,?,?,0)').run(record.id, record.slug, record.institution);
+      db.prepare("INSERT INTO library_revision (id,library_id,status,content,created_at,published_at) VALUES (?,?,'published',?,0,0)").run(`${record.id}-initial`, record.id, JSON.stringify(content));
+      if (version === 'draft') db.prepare("INSERT INTO library_revision (id,library_id,status,content,created_at) VALUES ('admin-draft',?,'draft',?,1)").run(record.id, JSON.stringify(content));
+      db.exec(createLaunchSql());
+      expect(db.prepare("SELECT content FROM library_revision WHERE library_id=? AND status='published'").get(record.id)?.content).toBe(JSON.stringify(content));
+      expect(db.prepare('SELECT count(*) AS count FROM library_revision WHERE id=?').get(`${record.id}-photos-v1`)?.count).toBe(0);
+    } finally { db.close(); }
+  });
   it('replays without duplicates and never replaces later drafts or republishes archived records', () => {
     const db = database();
     try {

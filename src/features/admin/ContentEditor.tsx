@@ -29,7 +29,7 @@ export function ContentEditor({ content, onChange, origins }: { content: Library
     </Section>
     <Section title="Photos">
       {content.photos.map((item, index) => <Section title={`Photo ${index + 1}`} key={index}><div className={styles.row}>
-        {(['url', 'alt', 'credit'] as const).map((key) => <Field key={key} label={key === 'url' ? 'Photo URL' : key === 'alt' ? 'Image description' : 'Photo credit'} type={key === 'url' ? 'url' : 'text'} value={item[key]} onChange={(value) => update({ photos: content.photos.map((photo, at) => at === index ? { ...photo, [key]: value } : photo) })} required />)}
+        {(['url', 'alt', 'credit'] as const).map((key) => <Field key={key} label={key === 'url' ? 'Photo URL or image path' : key === 'alt' ? 'Image description' : 'Photo credit'} value={item[key]} onChange={(value) => update({ photos: content.photos.map((photo, at) => at === index ? { ...photo, [key]: value } : photo) })} required />)}
         <SourceChoice sources={content.sources} value={item.sourceId} onChange={(sourceId) => update({ photos: content.photos.map((photo, at) => at === index ? { ...photo, sourceId } : photo) })} />
       </div><Remove label={`Remove photo ${index + 1}`} onClick={() => update({ photos: content.photos.filter((_, at) => at !== index) })} /></Section>)}
       <button type="button" className={styles.secondary} onClick={() => update({ photos: [...content.photos, { url: '', alt: '', credit: '', sourceId: null }] })}>Add photo</button>

@@ -3,6 +3,7 @@ import type { CalendarSchedule, WeeklyInterval } from '../../src/domain/schedule
 import type { Institution } from '../../src/domain/search-context.ts';
 import { parseLibraryContent } from '../../src/domain/parse-library.ts';
 import { launchLocations } from './launch-locations.ts';
+import { launchPhotos } from './launch-photos.ts';
 
 const checkedOn = '2026-10-05';
 const weekdays = [1, 2, 3, 4, 5];
@@ -45,10 +46,17 @@ const uwaPublicHours = [
 interface LaunchLibrary { id: string; slug: string; institution: Institution; content: LibraryContent }
 function library(slug: string, institution: Institution, name: string, address: string, officialUrl: string,
   description: string, building: CalendarSchedule, access: EntrySchedule[], sources: SourceRecord[]): LaunchLibrary {
+  const photo = launchPhotos[slug];
   return { id: `launch-${slug}`, slug, institution, content: {
     name, address, officialUrl, description, suburbId: null, latitude: null, longitude: null,
-    photos: [], facilities: { quietStudy: 'unknown', groupStudy: 'unknown', wheelchairAccess: 'unknown' },
-    wifi: { status: 'unknown', networks: [] }, schedule: { timeZone: 'Australia/Perth', building, access }, sources,
+    photos: photo ? [{ url: photo.url, alt: photo.alt, credit: photo.credit, sourceId: 'photo' }] : [],
+    facilities: { quietStudy: 'unknown', groupStudy: 'unknown', wheelchairAccess: 'unknown' },
+    wifi: { status: 'unknown', networks: [] }, schedule: { timeZone: 'Australia/Perth', building, access }, sources: [...sources,
+      ...(photo ? [
+        { id: 'photo', kind: 'confirmation' as const, label: `Photo: ${photo.credit}`, url: photo.sourceUrl, checkedOn: '2026-10-07' },
+        { id: 'photo-license', kind: 'confirmation' as const, label: photo.licence, url: photo.licenceUrl, checkedOn: '2026-10-07' },
+      ] : []),
+    ],
   } };
 }
 const uwaLibraries = [
@@ -191,7 +199,7 @@ for (const record of ecuLibraries) {
   ] };
 }
 
-/** Public facts only. Unsupported facilities, network eligibility and photos stay unconfirmed. */
+/** Public facts and licensed photographs only. Unsupported facts remain unconfirmed. */
 export const launchLibraries = [...uwaLibraries, curtin, cgsb, ...ecuLibraries, bolton, murdochLaw, city, state]
   .map((record) => {
     const point = launchLocations[record.slug];
@@ -203,23 +211,33 @@ export const launchLibraries = [...uwaLibraries, curtin, cgsb, ...ecuLibraries, 
     return { ...record, content: parseLibraryContent(content) };
   });
 
-/** First import only: never overwrite edits, republish an archived record, or adopt a conflicting slug. */
+/** Import and upgrade untouched launch snapshots; preserve edits, archives and conflicting slugs. */
 export function createLaunchStatements(): string[] {
   const quote = (value: string) => `'${value.replaceAll("'", "''")}'`;
   const timestamp = Date.parse(`${checkedOn}T00:00:00+08:00`);
   return launchLibraries.flatMap((record) => {
     const initial = `${record.id}-initial`;
     const located = `${record.id}-location-v1`;
+    const photographed = `${record.id}-photos-v1`;
     const content = quote(JSON.stringify(record.content));
-    const legacy = quote(JSON.stringify({ ...record.content, latitude: null, longitude: null, sources: record.content.sources.filter((item) => !['map-location', 'map-license'].includes(item.id)) }));
+    const beforePhotos = { ...record.content, photos: [], sources: record.content.sources.filter((item) => !['photo', 'photo-license'].includes(item.id)) };
+    const locatedContent = quote(JSON.stringify(beforePhotos));
+    const legacy = quote(JSON.stringify({ ...beforePhotos, latitude: null, longitude: null, sources: beforePhotos.sources.filter((item) => !['map-location', 'map-license'].includes(item.id)) }));
     const updatedAt = Date.parse('2026-10-06T00:00:00+08:00');
+    const photoUpdatedAt = Date.parse('2026-10-07T00:00:00+08:00');
     return [
     `INSERT OR IGNORE INTO library (id,slug,institution_id,is_fixture) VALUES (${quote(record.id)},${quote(record.slug)},${quote(record.institution)},0);`,
     `INSERT INTO library_revision (id,library_id,status,content,created_at,published_at) SELECT ${quote(`${record.id}-initial`)},id,'published',${quote(JSON.stringify(record.content))},${timestamp},${timestamp} FROM library WHERE id=${quote(record.id)} AND slug=${quote(record.slug)} AND institution_id=${quote(record.institution)} AND is_fixture=0 AND NOT EXISTS (SELECT 1 FROM library_revision WHERE library_id=${quote(record.id)});`,
       // Upgrade only the exact untouched original snapshot. Preserve every admin revision/edit.
-      `INSERT INTO library_revision(id,library_id,status,content,created_at) SELECT ${quote(located)},l.id,'draft',${content},${updatedAt} FROM library l INNER JOIN library_revision r ON r.library_id=l.id WHERE l.id=${quote(record.id)} AND l.slug=${quote(record.slug)} AND l.institution_id=${quote(record.institution)} AND l.is_fixture=0 AND r.id=${quote(initial)} AND r.status='published' AND r.content=${legacy} AND NOT EXISTS(SELECT 1 FROM library_revision other WHERE other.library_id=l.id AND other.id<>r.id);`,
-      `UPDATE library_revision SET status='archived' WHERE id=${quote(initial)} AND status='published' AND EXISTS(SELECT 1 FROM library_revision r WHERE r.id=${quote(located)} AND r.status='draft' AND r.content=${content});`,
+      `INSERT INTO library_revision(id,library_id,status,content,created_at) SELECT ${quote(located)},l.id,'draft',${locatedContent},${updatedAt} FROM library l INNER JOIN library_revision r ON r.library_id=l.id WHERE l.id=${quote(record.id)} AND l.slug=${quote(record.slug)} AND l.institution_id=${quote(record.institution)} AND l.is_fixture=0 AND r.id=${quote(initial)} AND r.status='published' AND r.content=${legacy} AND NOT EXISTS(SELECT 1 FROM library_revision other WHERE other.library_id=l.id AND other.id<>r.id);`,
+      `UPDATE library_revision SET status='archived' WHERE id=${quote(initial)} AND status='published' AND EXISTS(SELECT 1 FROM library_revision r WHERE r.id=${quote(located)} AND r.status='draft' AND r.content=${locatedContent});`,
       `UPDATE library_revision SET status='published',published_at=${updatedAt} WHERE id=${quote(located)} AND status='draft' AND EXISTS(SELECT 1 FROM library_revision r WHERE r.id=${quote(initial)} AND r.status='archived');`,
+      ...(record.content.photos.length ? [
+        // Only exact, untouched launch snapshots qualify. Admin photos, drafts and archived listings are preserved.
+        `INSERT INTO library_revision(id,library_id,status,content,created_at) SELECT ${quote(photographed)},l.id,'draft',${content},${photoUpdatedAt} FROM library l INNER JOIN library_revision r ON r.library_id=l.id WHERE l.id=${quote(record.id)} AND l.slug=${quote(record.slug)} AND l.institution_id=${quote(record.institution)} AND l.is_fixture=0 AND r.id IN(${quote(initial)},${quote(located)}) AND r.status='published' AND r.content=${locatedContent} AND NOT EXISTS(SELECT 1 FROM library_revision other WHERE other.library_id=l.id AND other.id NOT IN(${quote(initial)},${quote(located)}));`,
+        `UPDATE library_revision SET status='archived' WHERE id IN(${quote(initial)},${quote(located)}) AND status='published' AND EXISTS(SELECT 1 FROM library_revision r WHERE r.id=${quote(photographed)} AND r.status='draft' AND r.content=${content});`,
+        `UPDATE library_revision SET status='published',published_at=${photoUpdatedAt} WHERE id=${quote(photographed)} AND status='draft' AND NOT EXISTS(SELECT 1 FROM library_revision r WHERE r.library_id=${quote(record.id)} AND r.status='published');`,
+      ] : []),
     ];
   });
 }
