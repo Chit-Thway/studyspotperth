@@ -36,16 +36,16 @@ describe('initial public catalogue', () => {
         expect(asset.subarray(0, 4).toString()).toBe('RIFF');
         expect(asset.subarray(8, 12).toString()).toBe('WEBP');
         expect(asset.length).toBeLessThan(500_000);
-        expect(record.content.sources.find((source) => source.id === photo.sourceId)?.url).toMatch(/^https:\/\/commons.wikimedia.org\/wiki\/File:/);
-        expect(record.content.sources.find((source) => source.id === `${photo.sourceId}-license`)?.url).toMatch(/^https:\/\/creativecommons.org\//);
-        expect(launchPhotos[record.slug].licence).toMatch(/^CC (BY|BY-SA)|^CC0/);
+        expect(record.content.sources.find((source) => source.id === photo.sourceId)?.url).toBe(launchPhotos[record.slug].sourceUrl);
+        expect(record.content.sources.find((source) => source.id === `${photo.sourceId}-license`)?.url).toBe(launchPhotos[record.slug].licenceUrl);
+        expect(launchPhotos[record.slug].licence).toMatch(/^CC (BY|BY-SA)|^CC0|^Reuse with attribution$/);
       }
       expect(record.content.sources.find((source) => source.id === 'map-location')).toMatchObject({ checkedOn: '2026-10-06' });
       expect(record.content.latitude).not.toBeNull();
       expect(record.content.longitude).not.toBeNull();
     }
-    expect(records.filter((record) => record.content.photos.length)).toHaveLength(11);
-    expect(records.filter((record) => !record.content.photos.length).map((record) => record.slug)).toEqual(['edfaa-library', 'j-robin-warren-library']);
+    expect(records.filter((record) => record.content.photos.length)).toHaveLength(12);
+    expect(records.filter((record) => !record.content.photos.length).map((record) => record.slug)).toEqual(['j-robin-warren-library']);
   });
   it('keeps all six confirmed 24/7 options and ranks UWA matches first', () => {
     const result = searchLibraries(records, request('cards=uwa&open24Hours=true'));

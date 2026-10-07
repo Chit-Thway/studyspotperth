@@ -8,7 +8,7 @@ The app opens directly to a responsive library finder, with a filter sidebar on 
 
 Guest search is connected to the backend. Visitors can use their device location and choose a study time, filter for 24/7 access and facilities, and declare university cards to personalise results. Library details show opening and entry hours, Wi-Fi requirements, sources, and directions. Filter selections stay in the URL when moving between the finder and a library.
 
-Google sign-in lets visitors save libraries and keep declared university cards in their profile. Saved cards personalise results without automatically restricting the finder. An initial catalogue of 13 Perth libraries is available through the local import command, with dated sources. Eleven listings include reusable photos; missing photos use a dark placeholder. [Photo credits and licences](public/images/libraries/CREDITS.md) are included with the images.
+Google sign-in lets visitors save libraries and keep declared university cards in their profile. Saved cards personalise results without automatically restricting the finder. An initial catalogue of 13 Perth libraries is available through the local import command, with dated sources. Twelve listings include reusable photos; missing photos use a dark placeholder. [Photo credits and licences](public/images/libraries/CREDITS.md) are included with the images.
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 

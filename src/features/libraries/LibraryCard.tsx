@@ -22,7 +22,7 @@ export function LibraryCard({ result, params }: { result: LibrarySearchResult; p
       </a>
       <span className={styles.distanceBadge}>{result.distanceKm !== null ? `approx. ${result.distanceKm.toFixed(1)} km` : 'Distance unknown'}</span>
     </p>
-    <LibraryPhoto key={library.id} photos={content.photos} sources={content.sources} name={content.name} />
+    <LibraryPhoto key={library.id} photos={content.photos} name={content.name} />
     <LibraryFacts result={result} compact />
     <ul className={styles.facilities} aria-label="Facilities">
       <li><Icon name="wifi" />{result.wifi.networks.some((network) => network.match === 'public') ? 'Public Wi-Fi' : result.wifi.networks.some((network) => network.kind === 'institution' || network.kind === 'eduroam') ? 'University Wi-Fi' : 'Wi-Fi'}</li>

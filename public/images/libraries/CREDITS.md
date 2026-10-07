@@ -4,6 +4,7 @@ These photographs have their own licences, separate from the application code. L
 
 | Photo | Photographer | Licence | Original |
 | --- | --- | --- | --- |
+| [edfaa-library](edfaa-library.webp) | © The University of Western Australia, via CAUL; designer: Ferguson Architects | [Reuse with attribution, as stated by the gallery](https://clatac.wordpress.com/caul-library-and-learning-spaces-image-gallery/university-of-western-australia/) | [EDFAA Library collaborative zone (2012 photograph)](https://clatac.wordpress.com/caul-library-and-learning-spaces-image-gallery/university-of-western-australia/edfaa-library-collaborative-zone/) |
 | [reid-library](reid-library.webp) | Photographs by Gnangarra · commons.wikimedia.org | [CC BY 2.5 AU](https://creativecommons.org/licenses/by/2.5/au/deed.en) | [UWA 191119 gnangarra-104.jpg](https://commons.wikimedia.org/wiki/File:UWA_191119_gnangarra-104.jpg) |
 | [barry-j-marshall-library](barry-j-marshall-library.webp) | -wuppertaler | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) | [AUS Perth, Central Business District, University of Western Australia 0077.jpg](https://commons.wikimedia.org/wiki/File:AUS_Perth,_Central_Business_District,_University_of_Western_Australia_0077.jpg) |
 | [beasley-law-library](beasley-law-library.webp) | Orderinchaos | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) | [UWA Law Building Beasley Law Library entrance.jpg](https://commons.wikimedia.org/wiki/File:UWA_Law_Building_Beasley_Law_Library_entrance.jpg) |

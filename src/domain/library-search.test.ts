@@ -57,10 +57,29 @@ describe('search, access and ranking', () => {
     expect(ids('end=2026-10-02T18:00', [near, late])).toEqual(['fixture-late', 'fixture-public']);
     expect(ids('', [near, late])).toEqual(['fixture-late', 'fixture-public']); // Stable slug order without a requested end.
   });
-  it('requires opening at start, including the exact opening and closing boundaries', () => {
-    expect(ids('start=2026-10-02T08:59', [fixture('public')])).toEqual([]);
-    expect(ids('start=2026-10-02T09:00', [fixture('public')])).toEqual(['fixture-public']);
-    expect(ids('start=2026-10-02T17:00', [fixture('public')])).toEqual([]);
+  it('keeps closed libraries visible and finds the next public opening at exact boundaries', () => {
+    const before = search('start=2026-10-02T08:59', [fixture('public')]).results[0];
+    expect(before.opening.status).toBe('closed');
+    expect(before.access.nextWindow).toMatchObject({ from: '2026-10-02T09:00:00+08:00', until: '2026-10-02T17:00:00+08:00' });
+    const open = search('start=2026-10-02T09:00', [fixture('public')]).results[0];
+    expect(open.access.status).toBe('matches-rules');
+    const closed = search('start=2026-10-02T17:00', [fixture('public')]).results[0];
+    expect(closed.opening.status).toBe('closed');
+    expect(closed.access.nextWindow?.from).toBe('2026-10-03T09:00:00+08:00');
+  });
+  it('uses public entry for the next opening unless the visitor declares the required card', () => {
+    const guest = evaluateLibrary(fixture('uwa'), request('start=2026-10-07T23:48'));
+    expect(guest.access.window).toBeNull();
+    expect(guest.access.nextWindow).toMatchObject({ from: '2026-10-08T09:00:00+08:00', until: '2026-10-08T17:00:00+08:00' });
+    expect(evaluateLibrary(fixture('uwa'), request('cards=curtin&start=2026-10-07T23:48')).access.nextWindow).toEqual(guest.access.nextWindow);
+    expect(evaluateLibrary(fixture('uwa'), request('cards=uwa&start=2026-10-07T23:48')).access.window).not.toBeNull();
+    expect(evaluateLibrary(fixture('curtin'), request('start=2026-10-07T23:48')).access.nextWindow).toBeNull();
+  });
+  it('does not name a next opening across earlier unknown entry hours', () => {
+    const library = fixture('public');
+    library.content.schedule.access[0].overrides.push({ id: 'unknown-saturday', kind: 'date',
+      startDate: '2026-10-03', endDate: '2026-10-03', status: 'unknown', intervals: [], sourceId: null });
+    expect(evaluateLibrary(library, request('start=2026-10-02T18:00')).access.nextWindow).toBeNull();
   });
   it('stops public entry before building closure, while matching cards bridge it', () => {
     const uwa = fixture('uwa');
@@ -84,7 +103,7 @@ describe('search, access and ranking', () => {
     const result = evaluateLibrary(overnight, request('start=2026-10-05T01:00&end=2026-10-05T07:00'));
     expect(result.access.window?.until).toBe('2026-10-05T06:00:00+08:00');
     expect(result.coverage).toEqual({ status: 'shortfall', shortfallMinutes: 60 });
-    expect(ids('start=2026-10-05T06:00', [overnight])).toEqual([]);
+    expect(search('start=2026-10-05T06:00', [overnight]).results[0].opening.status).toBe('closed');
     expect(result.open24Hours.status).toBe('does-not-qualify');
   });
   it.each(['date', 'period'] as const)('keeps searches and session coverage through the end of an overnight %s exception', (kind) => {
@@ -99,13 +118,13 @@ describe('search, access and ranking', () => {
     expect(saturday.results[0].coverage).toEqual({ status: 'covered', shortfallMinutes: null });
     expect(evaluateLibrary(library, request('start=2026-10-02T22:00&end=2026-10-03T05:00')).coverage)
       .toEqual({ status: 'covered', shortfallMinutes: null });
-    expect(ids('start=2026-10-03T06:00', [library])).toEqual([]);
+    expect(search('start=2026-10-03T06:00', [library]).results[0].opening.status).toBe('closed');
   });
   it('applies semester hours, closure dates, and the end of a period', () => {
     const semester = fixture('semester');
     expect(evaluateLibrary(semester, request()).open24Hours.status).toBe('qualifies');
     expect(evaluateLibrary(semester, request('cards=uwa')).access.window?.until).toBe('2026-10-15T00:00:00+08:00');
-    expect(ids('start=2026-10-15T14:00', [semester])).toEqual([]);
+    expect(search('start=2026-10-15T14:00', [semester]).results[0].opening.status).toBe('closed');
     expect(ids('start=2026-10-14T14:00&open24Hours=true', [semester])).toEqual([]);
     expect(ids('start=2026-10-30T14:00&open24Hours=true', [semester])).toEqual([]);
     expect(evaluateLibrary(semester, request('start=2026-11-01T14:00')).open24Hours.status).toBe('does-not-qualify');
@@ -195,7 +214,7 @@ describe('search, access and ranking', () => {
     expect(ids('cards=uwa', [draft])).toEqual([]);
     const result = search('cards=uwa&limit=1&offset=1');
     expect(result.results[0].library.id).toBe('fixture-semester');
-    expect(result.total).toBe(6);
+    expect(result.total).toBe(7);
     expect(result.nextOffset).toBe(2);
     expect(search('groupStudy=true').emptyReason).toContain('selected filters');
     expect(search('offset=100').emptyReason).toContain('no more results');

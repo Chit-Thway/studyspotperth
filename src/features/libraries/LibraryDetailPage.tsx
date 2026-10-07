@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import type { CalendarSchedule } from '../../domain/schedule';
-import { calendarTimeline } from '../../domain/availability';
-import { perthMidnight, shiftDate } from '../../domain/perth-time';
+import { shiftDate } from '../../domain/perth-time';
 import type { DetailResponse } from './api';
 import { LibraryApiError } from './api';
 import { useLibraryApi } from './use-library-api';
 import { finderUrl, queryUrl } from '../finder/finder-state';
-import { LibraryPhoto } from './LibraryPhoto';
-import { LibraryFacts, RequirementLabel } from './LibraryFacts';
+import { LibraryPhoto, LibraryPhotoCredits } from './LibraryPhoto';
+import { LibraryFacts, LibraryEntryRequirements } from './LibraryFacts';
 import { Icon } from './Icon';
-import { dayHoursLabel, directionsUrl, institutionCategory, INSTITUTION_LABELS, matchLabel, readableDate } from './presentation';
+import { weeklyOpeningHours, directionsUrl, institutionCategory, INSTITUTION_LABELS, matchLabel, readableDate } from './presentation';
 import styles from './Libraries.module.css';
 import { profileFinderParams } from '../../domain/account';
 import { useAccount } from '../account/use-account';
@@ -19,15 +18,9 @@ import type { LibrarySearchResult } from '../../domain/library-search';
 import { recordUsage } from '../privacy/client';
 import { useUserLocation } from '../location/use-location';
 
-function HoursTable({ schedule, date, label }: { schedule: CalendarSchedule; date: string; label: string }) {
-  return <table className={styles.hoursTable}><caption>{label} · from {readableDate(date)}</caption><tbody>
-    {Array.from({ length: 7 }, (_, day) => {
-      const current = shiftDate(date, day);
-      const timeline = calendarTimeline(schedule, current, 1);
-      const midnight = perthMidnight(current);
-      return <tr key={current}><th scope="row">{new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Perth', weekday: 'short', day: 'numeric', month: 'short' }).format(new Date(`${current}T12:00:00+08:00`))}</th>
-        <td>{dayHoursLabel(timeline, midnight)}</td></tr>;
-    })}
+function HoursTable({ schedule, building, label }: { schedule: CalendarSchedule; building: CalendarSchedule; label: string }) {
+  return <table className={styles.hoursTable}><caption>{label}</caption><tbody>
+    {weeklyOpeningHours(schedule, building).map(({ day, hours }) => <tr key={day}><th scope="row">{day}</th><td>{hours}</td></tr>)}
   </tbody></table>;
 }
 
@@ -57,10 +50,11 @@ export function LibraryDetailPage() {
 /** Shared public/detail preview presentation; previews omit visitor save actions. */
 export function LibraryDetailContent({ result, originName, back, preview = false }: { result: LibrarySearchResult; originName?: string; back?: string; preview?: boolean }) {
   const { content, institution } = result.library;
-  const date = result.evaluatedAt.slice(0, 10);
+  const publicEntry = content.schedule.access.find((entry) => entry.group === 'public');
+  const photoSourceIds = new Set(content.photos.filter((photo) => photo.credit && photo.sourceId).flatMap((photo) => [photo.sourceId, `${photo.sourceId}-license`]));
   return <article className={styles.detail}>
     {back && <Link className={styles.backLink} to={back}>← All libraries</Link>}
-    <LibraryPhoto key={result.library.id} photos={content.photos} sources={content.sources} name={content.name} large />
+    <LibraryPhoto key={result.library.id} photos={content.photos} name={content.name} large />
     <div className={styles.detailHeading}><div><p className={styles.category}>{institutionCategory(institution)}</p><h1>{content.name}</h1></div>
       {!preview && <SaveButton id={result.library.id} name={content.name} label />}</div>
     <p className={styles.location}><Icon name="pin" /><span>{content.address}{result.distanceKm !== null ? ` · approx. ${result.distanceKm.toFixed(1)} km${originName === 'Your location' ? ' from you' : ''}` : ' · distance unknown'}</span></p>
@@ -68,10 +62,10 @@ export function LibraryDetailContent({ result, originName, back, preview = false
     <p className={styles.description}>{content.description}</p>
     <div className={styles.detailColumns}>
       <section className={styles.panel} aria-labelledby="hours-title"><h2 id="hours-title"><Icon name="clock" />Opening and entry hours</h2><p className={styles.disclaimer}>Perth time</p>
-        <HoursTable schedule={content.schedule.building} date={date} label="Building hours" />
-        {content.schedule.access.map((entry) => <details className={styles.entryHours} key={entry.group}><summary>{entry.group === 'public' ? 'Public entry' : entry.group === 'unknown' ? 'Unknown entry group' : `${INSTITUTION_LABELS[entry.group]} entry`}</summary>
+        <HoursTable schedule={publicEntry ?? content.schedule.building} building={content.schedule.building} label={publicEntry ? 'Public opening hours' : 'Opening hours'} />
+        {content.schedule.access.filter((entry) => entry.group !== 'public').map((entry) => <details className={styles.entryHours} key={entry.group}><summary>{entry.group === 'unknown' ? 'Unknown entry group' : `${INSTITUTION_LABELS[entry.group]} card access`}</summary>
           <p>{entry.requirement}{entry.needsActiveCredentials ? ' · Active credentials required.' : ''}</p>
-          <HoursTable schedule={entry} date={date} label="Entry schedule (also subject to building hours)" /></details>)}
+          <HoursTable schedule={entry} building={content.schedule.building} label="Card access hours" /></details>)}
       </section>
       <div className={styles.sidePanels}>
         <section className={styles.panel} aria-labelledby="wifi-title"><h2 id="wifi-title"><Icon name="wifi" />Wi-Fi</h2>
@@ -87,7 +81,7 @@ export function LibraryDetailContent({ result, originName, back, preview = false
       </div>
     </div>
     <section className={styles.panel} aria-labelledby="access-title"><h2 id="access-title">Entry and 24/7</h2>
-      <div className={styles.requirements}>{result.access.requirements.map((entry) => <RequirementLabel key={entry.group} group={entry.group} requirement={entry.requirement} match={entry.match} />)}</div>
+      <LibraryEntryRequirements result={result} />
       <p className={styles.disclaimer}>Cards are self-reported; entry conditions apply.</p>
       {result.open24Hours.status === 'qualifies' ? result.open24Hours.groups.map((group) => <p key={group.group}>24/7 access: {group.requirement}. Checked for {readableDate(group.verifiedFrom)}–{readableDate(shiftDate(group.verifiedUntil.slice(0, 10), -1))}.{group.needsActiveCredentials ? ' Active credentials are required.' : ''}</p>) : <p>24/7 access {result.open24Hours.status === 'unknown' ? 'is unknown' : 'is not confirmed for the selected period'}.</p>}
       <p className={styles.disclaimer}>Checked until the start of {readableDate(result.evaluatedUntil)}. Later dates may differ.</p>
@@ -96,7 +90,9 @@ export function LibraryDetailContent({ result, originName, back, preview = false
     </section>
     <section className={styles.sources} aria-labelledby="sources-title"><h2 id="sources-title">Sources and checked dates</h2>
       {!content.sources.length && <p>Source information is not available.</p>}
-      <ul>{content.sources.map((source) => <li key={source.id}>{source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a> : source.label}{source.checkedOn ? ` · checked ${readableDate(source.checkedOn)}` : ' · checked date unknown'}</li>)}</ul>
+      <ul>{content.sources.filter((source) => !photoSourceIds.has(source.id)).map((source) => <li key={source.id}>{source.url ? <a href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a> : source.label}{source.checkedOn ? ` · checked ${readableDate(source.checkedOn)}` : ' · checked date unknown'}</li>)}
+        <LibraryPhotoCredits photos={content.photos} sources={content.sources} />
+      </ul>
     </section>
   </article>;
 }

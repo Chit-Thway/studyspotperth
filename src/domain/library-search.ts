@@ -60,6 +60,10 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
   const uncertainIntervals = mergeTimeIntervals([...(!entries.length ? building.unknown : []), ...entries.flatMap(({ entry, timeline, unknown, match }) =>
     entry.group === 'unknown' ? [...unknown, ...intersectIntervals(building.intervals, timeline.intervals)] : match === 'public' || match === 'matches-profile' ? unknown : [])]);
   const personalWindow = continuousWindow(personalIntervals, request.start, building.end, uncertainIntervals);
+  const nextInterval = personalIntervals.find((interval) => interval.start > request.start);
+  // Do not call a later confirmed slot the next opening across an unknown gap.
+  const nextWindow = nextInterval && !uncertainIntervals.some((interval) => interval.start < nextInterval.start && interval.end > request.start)
+    ? continuousWindow(personalIntervals, nextInterval.start, building.end, uncertainIntervals) : null;
   const personalStatus: PersonalAccessStatus = openingStatus !== 'open' ? openingStatus === 'unknown' ? 'unknown' : 'unavailable'
     : personalWindow ? 'matches-rules'
     : intervalAt(uncertainIntervals, request.start) || !entries.length ? 'unknown'
@@ -89,7 +93,7 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
   const rankingGroup: 'matching-university-24-hours' | 'other' = priority ? 'matching-university-24-hours' : 'other';
   const coverage = sessionCoverage(request.end, request.start, personalWindow, personalStatus);
   return { library, distanceKm: approximateDistanceKm(request.origin, library.content), opening: { status: openingStatus, window: buildingWindow },
-    access: { status: personalStatus, window: personalWindow, explanation: personalStatus === 'matches-rules'
+    access: { status: personalStatus, window: personalWindow, nextWindow, explanation: personalStatus === 'matches-rules'
       ? 'Recorded entry rules match public access or your declared cards; this does not verify current eligibility.'
       : personalStatus === 'unmatched' ? 'Required card is not in your profile; opening hours do not grant entry.'
       : personalStatus === 'unknown' ? 'Entry availability is unknown.' : 'No matching entry window at the requested start.',
@@ -116,7 +120,7 @@ export function searchLibraries(libraries: readonly LibraryRecord[], request: Se
     .filter((library) => !request.filters.institutions.length || request.filters.institutions.includes(library.institution))
     .filter((library) => (['quietStudy', 'groupStudy', 'wheelchairAccess'] as const).every((facility) => !request.filters[facility] || library.content.facilities[facility] === 'yes'))
     .map((library) => evaluateLibrary(library, request))
-    .filter((result) => result.opening.status === 'open')
+    .filter((result) => result.opening.status !== 'unknown')
     .filter((result) => !request.filters.open24Hours || result.open24Hours.status === 'qualifies')
     .filter((result) => !request.filters.usableWifi || result.wifi.status === 'eligible');
   results.sort((a, b) => {
@@ -132,6 +136,6 @@ export function searchLibraries(libraries: readonly LibraryRecord[], request: Se
   });
   return { results: results.slice(request.offset, request.offset + request.limit), total: results.length,
     offset: request.offset, limit: request.limit, nextOffset: request.offset + request.limit < results.length ? request.offset + request.limit : null,
-    emptyReason: results.length === 0 ? 'No published libraries have confirmed opening hours at this start and satisfy your selected filters. Try another time or adjust the filters.'
+    emptyReason: results.length === 0 ? 'No published libraries have confirmed hours and satisfy your selected filters. Try another time or adjust the filters.'
       : request.offset >= results.length ? 'There are no more results on this page.' : null };
 }

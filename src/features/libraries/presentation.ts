@@ -1,10 +1,10 @@
 import type { LibrarySearchResult } from '../../domain/library-search';
 import type { Institution } from '../../domain/search-context';
-import type { MinuteInterval } from '../../domain/schedule';
+import type { CalendarSchedule, MinuteInterval } from '../../domain/schedule';
 import type { RequirementMatch } from '../../domain/wifi';
 import type { ScheduleTimeline } from '../../domain/availability';
 import { calendarTimeline, intersectIntervals, mergeTimeIntervals } from '../../domain/availability';
-import { formatPerthTime, perthCalendarMinute } from '../../domain/perth-time';
+import { DAY_MS, formatPerthTime, perthCalendarMinute, shiftDate } from '../../domain/perth-time';
 
 export const INSTITUTION_LABELS: Record<Institution, string> = { public: 'Public libraries', uwa: 'UWA', curtin: 'Curtin', ecu: 'ECU', murdoch: 'Murdoch' };
 export const UNIVERSITY_CARDS = ['uwa', 'curtin', 'ecu', 'murdoch'] as const;
@@ -62,6 +62,26 @@ export function dayHoursLabel(timeline: Pick<ScheduleTimeline, 'intervals' | 'un
   })).join(', ');
   return timeline.unknown.length ? `${hours} · remaining hours unknown` : hours;
 }
+/** The current Perth week, independent of the visitor's search date. */
+export function weeklyOpeningHours(schedule: CalendarSchedule, building: CalendarSchedule = schedule, now = Date.now()) {
+  const today = formatPerthTime(now).slice(0, 10);
+  const weekday = new Date(`${today}T00:00:00Z`).getUTCDay();
+  const monday = shiftDate(today, -((weekday + 6) % 7));
+  return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => {
+    const date = shiftDate(monday, index);
+    const entry = calendarTimeline(schedule, date, 1);
+    const open = calendarTimeline(building, date, 1);
+    const intervals = intersectIntervals(entry.intervals, open.intervals);
+    const unknown = mergeTimeIntervals([...intersectIntervals(open.intervals, entry.unknown),
+      ...intersectIntervals(open.unknown, [...entry.intervals, ...entry.unknown])]);
+    const hours = intervals.map((interval) => {
+      const start = perthCalendarMinute(interval.start, date);
+      const end = perthCalendarMinute(interval.end, date);
+      return `${cardTime(start)}–${cardTime(end)}${end === 1440 ? ' (next day)' : ''}`;
+    }).join(', ');
+    return { day, hours: hours ? `${hours}${unknown.length ? ' · remaining hours unknown' : ''}` : unknown.length ? 'Unknown' : 'Closed' };
+  });
+}
 function cardTime(minute: number) {
   if (minute === 0 || minute === 1440) return 'midnight';
   const hour = Math.floor(minute / 60);
@@ -73,12 +93,11 @@ function friendlyDayHours(timeline: Pick<ScheduleTimeline, 'intervals' | 'unknow
   const hours = timeline.intervals.map((interval) => {
     const start = perthCalendarMinute(interval.start, date);
     const end = perthCalendarMinute(interval.end, date);
-    return start === 0 && end === 1440 ? '24 hours' : `${cardTime(start)}–${cardTime(end)}`;
+    return start === 0 && end === 1440 ? '24 hours' : `${cardTime(start)}–${cardTime(end % 1440)}${end > 1440 ? ' (next day)' : ''}`;
   }).join(', ');
   return `${hours}${timeline.unknown.length ? ' · remaining hours unknown' : ''}`;
 }
-function entryDayTimeline(result: LibrarySearchResult, group: Institution) {
-  const date = result.evaluatedAt.slice(0, 10);
+function entryDayTimeline(result: LibrarySearchResult, group: Institution, date = result.evaluatedAt.slice(0, 10)) {
   const schedule = result.library.content.schedule.access.find((entry) => entry.group === group);
   if (!schedule) return null;
   const entry = calendarTimeline(schedule, date, 1);
@@ -89,29 +108,46 @@ function entryDayTimeline(result: LibrarySearchResult, group: Institution) {
       ...intersectIntervals(building.unknown, [...entry.intervals, ...entry.unknown])]),
   };
 }
+function displayedOpeningDate(result: LibrarySearchResult) {
+  return result.access.window ? result.evaluatedAt.slice(0, 10) : result.access.nextWindow?.from.slice(0, 10) ?? result.evaluatedAt.slice(0, 10);
+}
 export function entryDayHoursLabel(result: LibrarySearchResult, group: Institution | 'unknown') {
-  const timeline = group === 'unknown' ? null : entryDayTimeline(result, group);
-  return timeline ? friendlyDayHours(timeline, result.evaluatedAt.slice(0, 10)) : 'Unknown';
+  const date = displayedOpeningDate(result);
+  const timeline = group === 'unknown' ? null : entryDayTimeline(result, group, date);
+  return timeline ? friendlyDayHours(timeline, date) : 'Unknown';
 }
 export function cardEntryLabel(result: LibrarySearchResult, group: Institution | 'unknown') {
+  const date = displayedOpeningDate(result);
   if (group === 'unknown') return undefined;
   if (group === 'public') {
     const entry = result.access.requirements.find((item) => item.group === group);
-    return entry && entryDayTimeline(result, group)?.intervals.length ? 'Public access' : undefined;
+    return entry && entryDayTimeline(result, group, date)?.intervals.length ? 'Public access' : undefined;
   }
   if (result.open24Hours.groups.some((entry) => entry.group === group)) return `24/7 · ${INSTITUTION_LABELS[group]} card`;
-  const timeline = entryDayTimeline(result, group);
+  const timeline = entryDayTimeline(result, group, date);
   const first = timeline?.intervals[0];
   if (!first) return undefined;
-  const time = cardTime(perthCalendarMinute(first.start, result.evaluatedAt.slice(0, 10)));
+  const time = cardTime(perthCalendarMinute(first.start, date));
   return `${time} access · ${INSTITUTION_LABELS[group]} card`;
 }
-export function openingDayLabel(result: LibrarySearchResult, now = Date.now()) {
-  const date = result.evaluatedAt.slice(0, 10);
-  const day = date === formatPerthTime(now).slice(0, 10) ? 'today' : readableDate(date);
-  const timeline = calendarTimeline(result.library.content.schedule.building, date, 1);
-  if (!timeline.intervals.length) return timeline.unknown.length ? `Hours unknown · ${day}` : `Closed ${day}`;
-  return `Open ${day} ${friendlyDayHours(timeline, date)}`;
+export function openingDayLabel(result: LibrarySearchResult) {
+  if (result.access.status === 'unknown') return 'Entry hours unknown';
+  const window = result.access.window ?? result.access.nextWindow;
+  if (!window) return result.access.requirements.length && result.access.requirements.every((entry) => entry.match === 'not-in-profile')
+    ? 'Card access only' : 'Next opening unknown';
+  const date = displayedOpeningDate(result);
+  const timelines = result.access.requirements.filter((entry) => entry.match === 'public' || entry.match === 'matches-profile')
+    .flatMap((entry) => entry.group === 'unknown' ? [] : [entryDayTimeline(result, entry.group, date)!]);
+  const intervals = mergeTimeIntervals(timelines.flatMap((timeline) => timeline.intervals));
+  const unknown = mergeTimeIntervals(timelines.flatMap((timeline) => timeline.unknown))
+    .filter((gap) => !intervals.some((interval) => interval.start <= gap.start && interval.end >= gap.end));
+  const from = Date.parse(window.from);
+  const until = Date.parse(window.until);
+  const overnight = window.from.slice(0, 10) !== window.until.slice(0, 10) && window.until.slice(11, 16) !== '00:00' && until - from < DAY_MS;
+  const visibleIntervals = overnight ? [{ start: from, end: until }]
+    : result.access.window ? intervals : intervals.filter((interval) => interval.end > from);
+  const day = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Perth', weekday: 'short' }).format(new Date(`${date}T12:00:00+08:00`));
+  return `${result.access.window ? '' : 'Closed · '}Open ${friendlyDayHours({ intervals: visibleIntervals, unknown }, date)} ${day}`;
 }
 export function directionsUrl(result: LibrarySearchResult) {
   const { latitude, longitude, address, name } = result.library.content;

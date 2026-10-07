@@ -9,7 +9,8 @@ type SearchPayload = { results: { library: { id: string; institution: string } }
 /** Copied into the disposable verification server only. */
 export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const original = launchLibraries[0];
-  const legacy = { ...original.content, latitude: null, longitude: null, sources: original.content.sources.filter((source) => !['map-location', 'map-license'].includes(source.id)) };
+  const legacy = { ...original.content, photos: [], latitude: null, longitude: null,
+    sources: original.content.sources.filter((source) => !['map-location', 'map-license', 'photo', 'photo-license'].includes(source.id)) };
   await env.DB.batch([
     env.DB.prepare('INSERT INTO library(id,slug,institution_id,is_fixture) VALUES (?,?,?,0)').bind(original.id, original.slug, original.institution),
     env.DB.prepare("INSERT INTO library_revision(id,library_id,status,content,created_at,published_at) VALUES (?,?,'published',?,0,0)").bind(`${original.id}-initial`, original.id, JSON.stringify(legacy)),
@@ -24,7 +25,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   assert.equal(records.length, 13);
   assert(records.every((record) => !record.isFixture));
   assert(records.every((record) => record.content.latitude !== null && record.content.longitude !== null));
-  assert.equal((await repository.getPublishedBySlug(original.slug))?.revisionId, `${original.id}-location-v1`);
+  assert.equal((await repository.getPublishedBySlug(original.slug))?.revisionId, `${original.id}-photos-v1`);
   const clock = parsePerthTime('2026-10-05T14:00');
   const request = (query: string) => new Request(`https://example.invalid/api/libraries?start=2026-10-05T14:00&${query}`);
   const search = await handleLibraryRequest(request('cards=uwa&open24Hours=true'), env, 'search', undefined, clock);

@@ -76,7 +76,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   assert.equal((await publicService.detail(saved.record.slug, closureQuery, now))?.result.opening.status, 'open', 'Draft closures must not leak into public hours.');
   saved = await (await call('publish', 'POST', { revisionId: saved.record.revisionId }, id)).json<AdminLibrary>();
   assert.equal((await publicService.detail(saved.record.slug, closureQuery, now))?.result.opening.status, 'closed');
-  assert.equal((await publicService.search(closureQuery, now)).results.length, 0);
+  assert.equal((await publicService.search(closureQuery, now)).results.find((item) => item.library.id === saved.record.id)?.opening.status, 'closed', 'Published closures must remain visible with closed status.');
   assert.equal((await publicService.detail(saved.record.slug, query, now))?.result.open24Hours.status, 'does-not-qualify');
   content.schedule.building.overrides = [{ id: 'period', kind: 'period', startDate: '2026-10-05', endDate: '2026-10-31', status: 'hours', intervals: everyDay.map((interval) => ({ ...interval, startMinute: 540, endMinute: 1020 })), sourceId: 'test-source' }];
   const overrideQuery = new URLSearchParams('start=2026-10-05T23:00&cards=uwa');

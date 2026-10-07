@@ -4,6 +4,14 @@ export interface LaunchPhoto {
 
 /** Bundled, reusable photographs; full attribution also travels with each library snapshot. */
 export const launchPhotos: Readonly<Record<string, LaunchPhoto>> = {
+  "edfaa-library": {
+    "url": "/images/libraries/edfaa-library.webp",
+    "alt": "Collaborative study area inside EDFAA Library at UWA's Nedlands campus, photographed in 2012.",
+    "credit": "© The University of Western Australia · via CAUL",
+    "sourceUrl": "https://clatac.wordpress.com/caul-library-and-learning-spaces-image-gallery/university-of-western-australia/edfaa-library-collaborative-zone/",
+    "licence": "Reuse with attribution",
+    "licenceUrl": "https://clatac.wordpress.com/caul-library-and-learning-spaces-image-gallery/university-of-western-australia/"
+  },
   "reid-library": {
     "url": "/images/libraries/reid-library.webp",
     "alt": "Reid Library exterior and lawn at UWA Crawley campus.",

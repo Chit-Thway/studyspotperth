@@ -75,9 +75,6 @@
 .photoChoices { position: absolute; right: var(--space-3); bottom: var(--space-3); display: flex; gap: .3rem; }
 .photoChoices button { width: 2rem; height: 2rem; border: 1px solid var(--color-border); border-radius: var(--radius-control); background: var(--color-surface); color: var(--color-action); }
 .photoChoices button[aria-pressed=true] { background: var(--color-action); color: var(--color-surface); border-color: var(--color-action); }
-.photo figcaption { position: absolute; left: .4rem; bottom: .4rem; max-width: calc(100% - .8rem); padding: .15rem .35rem; border-radius: .2rem; background: rgb(255 253 246 / .94); color: #435247; font-size: .6rem; line-height: 1.35; overflow-wrap: anywhere; }
-.photo figcaption a { color: inherit; text-underline-offset: .12em; }
-.heroPhoto figcaption { max-width: calc(100% - 5rem); }
 .detailHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); }
 .detailHeading h1 { margin: 0 0 var(--space-2); font: 600 clamp(1.75rem, 3.4vw, 2.2rem)/1.15 var(--font-heading); letter-spacing: -.035em; }
 .detailHeading .category { margin: 0 0 .5rem; }

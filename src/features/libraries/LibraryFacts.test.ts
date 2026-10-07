@@ -1,12 +1,21 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import { libraryFixtures } from '../../../tests/fixtures/libraries';
 import { evaluateLibrary } from '../../domain/library-search';
 import { parseSearchRequest } from '../../domain/search-request';
 import { parsePerthTime } from '../../domain/perth-time';
-import { LibraryFacts } from './LibraryFacts';
-import { cardEntryLabel, entryDayHoursLabel } from './presentation';
+import { LibraryFacts, LibraryEntryRequirements } from './LibraryFacts';
+import { cardEntryLabel, entryDayHoursLabel, openingDayLabel, UNIVERSITY_CARDS } from './presentation';
+import { launchLibraries } from '../../../server/data/launch-libraries';
+import { LibraryDetailContent } from './LibraryDetailPage';
+import { LibraryCard } from './LibraryCard';
+import { AccountContext, type AccountState } from '../account/account-context';
+
+const guestAccount: AccountState = { account: null, googleEnabled: false, loading: false, busy: false, error: null,
+  refresh: () => undefined, savePreferences: () => Promise.resolve(), setFavourite: () => Promise.resolve(),
+  signOut: () => Promise.resolve(), registerSignOutGuard: () => () => undefined };
 
 function result(id: string, query = '') {
   const library = libraryFixtures.find((item) => item.id === `fixture-${id}`)!;
@@ -30,6 +39,25 @@ function earlyResult(date: string) {
 }
 
 describe('entry badges on library cards', () => {
+  it.each(launchLibraries.map((library) => [library.slug, library] as const))('keeps the real card and detail consistent for every access profile at %s', (_slug, library) => {
+    for (const start of ['2026-10-07T14:00', '2026-10-07T23:48']) for (const cards of ['', ...UNIVERSITY_CARDS]) {
+      const params = new URLSearchParams({ start, cards });
+      const evaluated = evaluateLibrary({ ...library, revisionId: 'test', status: 'published', isFixture: false },
+        parseSearchRequest(params, parsePerthTime(start)));
+      const card = renderToStaticMarkup(createElement(AccountContext.Provider, { value: guestAccount },
+        createElement(MemoryRouter, { initialEntries: [`/?${params}`] }, createElement(LibraryCard, { result: evaluated, params }))));
+      const detail = renderToStaticMarkup(createElement(LibraryDetailContent, { result: evaluated, preview: true }));
+      const badges = renderToStaticMarkup(createElement(LibraryEntryRequirements, { result: evaluated }));
+      const hours = openingDayLabel(evaluated);
+      for (const html of [card, detail]) {
+        expect(html).toContain(badges);
+        expect(html).toContain(`<strong>${hours}</strong>`);
+      }
+      if (!cards) expect(hours).not.toContain('24 hours');
+      if (!evaluated.access.window && evaluated.access.nextWindow) expect(hours).toMatch(/^Closed · Open /);
+      expect(hours).not.toMatch(/\b2026\b/);
+    }
+  });
   it('labels weekday early access separately from public hours', () => {
     const evaluated = earlyResult('2026-10-07');
     const html = renderToStaticMarkup(createElement(LibraryFacts, { result: evaluated, compact: true }));
@@ -68,6 +96,18 @@ describe('entry badges on library cards', () => {
     expect(html).toContain('24/7 · Curtin card');
     expect(html).not.toContain('data-group="public"');
   });
+  it('does not imply that a card is required when public entry itself is 24/7', () => {
+    const library = structuredClone(libraryFixtures.find((item) => item.id === 'fixture-uwa')!);
+    library.content.schedule.access[0].recurring = structuredClone(library.content.schedule.building.recurring);
+    const evaluated = evaluateLibrary({ ...library, status: 'published', isFixture: true, revisionId: 'test' },
+      parseSearchRequest(new URLSearchParams(), parsePerthTime('2026-10-07T23:48')));
+    for (const compact of [true, false]) {
+      const html = renderToStaticMarkup(createElement(LibraryFacts, { result: evaluated, compact }));
+      expect(html).toContain('Public access');
+      expect(html).not.toContain('data-group="uwa"');
+      expect(html).toContain('Open 24 hours Wed');
+    }
+  });
   it('does not turn unconfirmed public hours into a public-access badge', () => {
     const library = structuredClone(libraryFixtures.find((item) => item.id === 'fixture-uwa')!);
     const publicEntry = library.content.schedule.access.find((entry) => entry.group === 'public')!;
@@ -80,7 +120,7 @@ describe('entry badges on library cards', () => {
     expect(html).toContain('24/7 · UWA card');
     expect(html).not.toContain('data-group="public"');
   });
-  it('does not show public access on a closed public day when card entry stays open', () => {
+  it('keeps the public badge for the next confirmed public opening on a closed day', () => {
     const library = structuredClone(libraryFixtures.find((item) => item.id === 'fixture-uwa')!);
     library.content.schedule.access.find((entry) => entry.group === 'public')!.overrides.push({ id: 'public-closure',
       kind: 'date', startDate: '2026-10-02', endDate: '2026-10-02', status: 'closed', intervals: [], sourceId: 'fictional-source' });
@@ -88,7 +128,23 @@ describe('entry badges on library cards', () => {
       parseSearchRequest(new URLSearchParams(), parsePerthTime('2026-10-02T18:00')));
     const html = renderToStaticMarkup(createElement(LibraryFacts, { result: evaluated, compact: true }));
     expect(html).toContain('24/7 · UWA card');
-    expect(html).not.toContain('data-group="public"');
+    expect(html).toContain('data-group="public"');
+    expect(html).toContain('Closed · Open 9 am–5 pm Sat');
+  });
+  it.each(['tl-robertson-library', 'geoffrey-bolton-library'])('keeps public access and card conditions consistent across the card and detail at %s', (slug) => {
+    const library = launchLibraries.find((item) => item.slug === slug)!;
+    const evaluated = evaluateLibrary({ ...library, revisionId: 'test', status: 'published', isFixture: false },
+      parseSearchRequest(new URLSearchParams({ start: '2026-10-07T23:48' }), parsePerthTime('2026-10-07T23:48')));
+    const card = renderToStaticMarkup(createElement(LibraryFacts, { result: evaluated, compact: true }));
+    const detail = renderToStaticMarkup(createElement(LibraryDetailContent, { result: evaluated, preview: true }));
+    for (const html of [card, detail]) {
+      expect(html).toContain('data-group="public"');
+      expect(html).toContain(`24/7 · ${library.institution === 'curtin' ? 'Curtin' : 'Murdoch'} card`);
+      expect(html).toContain('Closed · Open 8 am–');
+      expect(html).toContain(' pm Thu');
+      expect(html).not.toContain('Available until');
+      expect(html).not.toContain('Open 24 hours');
+    }
   });
   it('keeps negative and unknown 24/7 statuses distinguishable without relying on colour', () => {
     const html = render('public');
