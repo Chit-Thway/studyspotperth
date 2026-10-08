@@ -26,11 +26,9 @@ export function FilterPanel({ params, change, prefix }: FilterPanelProps) {
           <button className={selectedTime ? styles.selectedMode : ''} type="button" aria-pressed={selectedTime} onClick={() => update('start', formatPerthTime(Date.now()).slice(0, 16))}>Choose a time</button>
         </div><p className={styles.help}>Perth time</p>
         {selectedTime && <div className={styles.timeFields}>
-          <label className={styles.smallLabel} htmlFor={`${prefix}-start-date`}>Start date<input type="date" id={`${prefix}-start-date`} min="2000-01-01" max="2100-12-31" required value={startDate} onChange={(event) => update('start', `${event.target.value}T${startTime || '09:00'}`)} /></label>
-          <label className={styles.smallLabel} htmlFor={`${prefix}-start-time`}>Start time<input type="time" id={`${prefix}-start-time`} required value={startTime} onChange={(event) => update('start', `${startDate}T${event.target.value}`)} /></label>
+          <label className={styles.smallLabel} htmlFor={`${prefix}-start-date`}>Date<input type="date" id={`${prefix}-start-date`} min="2000-01-01" max="2100-12-31" required value={startDate} onChange={(event) => update('start', `${event.target.value}T${startTime || '09:00'}`)} /></label>
+          <label className={styles.smallLabel} htmlFor={`${prefix}-start-time`}>Time<input type="time" id={`${prefix}-start-time`} required value={startTime} onChange={(event) => update('start', `${startDate}T${event.target.value}`)} /></label>
         </div>}
-        <label className={styles.smallLabel} htmlFor={`${prefix}-end`}>End date and time (optional)<input type="datetime-local" id={`${prefix}-end`} min="2000-01-01T00:00" max="2100-12-31T23:59" value={params.get('end') ?? ''} onChange={(event) => update('end', event.target.value)} /></label>
-        {params.has('end') && <button className={styles.textButton} type="button" onClick={() => update('end', null)}>Remove end time</button>}
       </div>
       <div className={styles.filterSection}>
         <label className={styles.switchRow}><input type="checkbox" role="switch" checked={params.get('open24Hours') === 'true'} onChange={(event) => update('open24Hours', event.target.checked ? 'true' : null)} /><span className={styles.switchTrack} aria-hidden="true" /><span><strong>Open 24/7</strong></span></label>

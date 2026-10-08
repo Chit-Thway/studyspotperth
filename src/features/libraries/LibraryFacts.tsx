@@ -1,7 +1,7 @@
 import type { LibrarySearchResult } from '../../domain/library-search';
 import type { RequirementMatch } from '../../domain/wifi';
 import type { Institution } from '../../domain/search-context';
-import { cardEntryLabel, coverageLabel, entryDayHoursLabel, matchLabel, openingDayLabel } from './presentation';
+import { cardEntryLabel, entryDayHoursLabel, matchLabel, openingDayLabel } from './presentation';
 import { Icon } from './Icon';
 import styles from './Libraries.module.css';
 
@@ -24,7 +24,6 @@ export function LibraryEntryRequirements({ result }: { result: LibrarySearchResu
 }
 
 export function LibraryFacts({ result, compact = false }: { result: LibrarySearchResult; compact?: boolean }) {
-  const coverage = coverageLabel(result);
   const qualifies = result.open24Hours.status === 'qualifies';
   return <div className={`${styles.facts} ${compact ? styles.cardFacts : ''}`}>
     <div className={styles.roundTheClock} data-status={result.open24Hours.status}>
@@ -34,7 +33,6 @@ export function LibraryFacts({ result, compact = false }: { result: LibrarySearc
     </div>
     <LibraryEntryRequirements result={result} />
     <div className={styles.availability}><Icon name="clock" /><div><strong>{openingDayLabel(result)}</strong>
-      {coverage && <small>{coverage}</small>}
     </div></div>
   </div>;
 }

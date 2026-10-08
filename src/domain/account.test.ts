@@ -15,7 +15,7 @@ describe('account preferences and finder state', () => {
   });
   it('retains guest selections and explicit filters across login', () => {
     const raw = new URLSearchParams('cards=curtin&suburb=bentley&institutions=ecu&open24Hours=true&end=2026-10-04T06:00');
-    expect(profileFinderParams(raw, preferences).toString()).toBe(raw.toString());
+    expect(profileFinderParams(raw, preferences).toString()).toBe('cards=curtin&suburb=bentley&institutions=ecu&open24Hours=true');
     expect(raw.get('cards')).toBe('curtin');
   });
   it('changing 24/7 retains inherited preferences rather than freezing them in the URL', () => {
@@ -36,10 +36,21 @@ describe('account preferences and finder state', () => {
     expect(parsePreferences({ suburbId: null, cards: ['uwa', 'uwa'] })).toEqual({ suburbId: null, cards: ['uwa'] });
     for (const body of [{ suburbId: null, cards: ['public'] }, { suburbId: '../private', cards: [] }, { suburbId: null, cards: [], userId: 'another-user' }, { suburbId: null, cards: [], role: 'admin' }]) expect(() => parsePreferences(body)).toThrow();
   });
+  it('retiring end time retains an explicit empty card declaration and does not mutate the old URL', () => {
+    const raw = new URLSearchParams('end=old&end=duplicate&cards=&start=2026-10-07T14:00&offset=4');
+    const clean = profileFinderParams(raw, preferences);
+    expect(clean.toString()).toBe('cards=&start=2026-10-07T14%3A00&offset=4');
+    expect(raw.getAll('end')).toEqual(['old', 'duplicate']);
+    expect(clean.has('institutions')).toBe(false);
+  });
 });
 describe('internal sign-in return locations', () => {
   it('preserves a library and its selected filters', () => {
     expect(internalReturnTo('/libraries/reid?open24Hours=true&institutions=uwa')).toBe('/libraries/reid?open24Hours=true&institutions=uwa');
+  });
+  it('drops legacy end times from sign-in returns while retaining active duplicates for validation', () => {
+    expect(internalReturnTo('/libraries/reid?cards=&start=bad&start=duplicate&end=old&end=duplicate'))
+      .toBe('/libraries/reid?cards=&start=bad&start=duplicate');
   });
   it('rejects off-site redirects, malformed paths and recursive sign-in routes', () => {
     for (const value of ['https://evil.invalid', '//evil.invalid', '/\\evil.invalid', '/sign-in', '/%2f%2fevil.invalid', '/saved\n', '/admin/users', null]) expect(internalReturnTo(value)).toBe('/');

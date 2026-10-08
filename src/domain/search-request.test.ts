@@ -16,17 +16,21 @@ describe('search request validation', () => {
   });
   it.each([
     'start=2026-02-30T14:00', 'start=2026-10-02T24:00', 'start=2026-10-02T14:60', 'start=2026-10-02T14:00Z',
-    'start=', 'end=2026-10-02T14:00', 'end=2026-10-02T13:00', 'end=2026-12-01T14:00',
+    'start=',
     'open24Hours=1', 'usableWifi=yes', 'cards=public', 'institutions=unknown', 'institutions=uwa,',
     'limit=0', 'limit=101', 'offset=-1', 'offset=1.5', 'suburb=', 'suburb=../private',
     'cards=uwa&cards=curtin', 'includeFixtures=true', 'start=1999-12-31T14:00',
   ])('rejects invalid query %s with a validation error', (query) => {
     expect(() => request(query)).toThrow(SearchValidationError);
   });
-  it('accepts a next-day end and exact 31-day limit without relaxing any filters', () => {
-    const result = request('start=2026-10-02T22:00&end=2026-10-03T06:00&open24Hours=true&institutions=uwa');
-    expect(result.end! - result.start).toBe(8 * 60 * 60 * 1000);
-    expect(result.filters).toMatchObject({ open24Hours: true, institutions: ['uwa'] });
-    expect(request('start=2026-10-02T14:00&end=2026-11-02T14:00').end).not.toBeNull();
+  it.each(['end=2026-10-03T06:00', 'end=2000-01-01T00:00', 'end=invalid', 'end=', 'end=invalid&end=duplicate'])('ignores legacy %s without changing the selected time or filters', (end) => {
+    const selected = 'start=2026-10-02T22:00&cards=&open24Hours=true&institutions=uwa';
+    expect(request(`${selected}&${end}`)).toEqual(request(selected));
+    expect(request(`${selected}&${end}`)).not.toHaveProperty('end');
+  });
+  it('ignores old end times for current-time searches while retaining validation of active fields', () => {
+    expect(request('end=2000-01-01T00:00')).toEqual(request(''));
+    expect(() => request('end=invalid&cards=uwa&cards=curtin')).toThrow(SearchValidationError);
+    expect(() => request('end=invalid&unexpected=true')).toThrow(SearchValidationError);
   });
 });

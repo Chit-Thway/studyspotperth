@@ -49,8 +49,7 @@ export function FinderPage() {
   ([['open24Hours', 'Open 24/7'], ['usableWifi', 'Wi-Fi I can use'], ['quietStudy', 'Quiet areas'], ['groupStudy', 'Group spaces'], ['wheelchairAccess', 'Step-free access']] as const).forEach(([field, label]) => {
     if (params.get(field) === 'true') chips.push({ key: field, label, remove: () => change(updateFinderParam(params, field, null)) });
   });
-  if (params.get('start') && !Number.isNaN(Date.parse(`${params.get('start')}:00+08:00`))) chips.push({ key: 'start', label: `From ${readableDate(params.get('start')!.slice(0, 10))} · ${params.get('start')!.slice(11)}`, remove: () => change(updateFinderParam(params, 'start', null)) });
-  if (params.get('end') && !Number.isNaN(Date.parse(`${params.get('end')}:00+08:00`))) chips.push({ key: 'end', label: `Until ${readableDate(params.get('end')!.slice(0, 10))} · ${params.get('end')!.slice(11)}`, remove: () => change(updateFinderParam(params, 'end', null)) });
+  if (params.get('start') && !Number.isNaN(Date.parse(`${params.get('start')}:00+08:00`))) chips.push({ key: 'start', label: `${readableDate(params.get('start')!.slice(0, 10))} · ${params.get('start')!.slice(11)}`, remove: () => change(updateFinderParam(params, 'start', null)) });
   return <>
     <section className={styles.heading} aria-labelledby="page-title"><h1 id="page-title">Find your next study spot</h1><p>Libraries near you, with the access details that matter.</p></section>
     <section className={styles.guestCards} aria-labelledby="guest-cards-title">

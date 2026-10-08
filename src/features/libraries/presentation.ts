@@ -36,16 +36,6 @@ export function availabilityLabel(result: LibrarySearchResult) {
   if (window.endReason === 'unknown') return `${personal ? 'Access confirmed' : 'Opening confirmed'} until ${end}; later hours unknown`;
   return `${personal ? 'Available' : 'Open'} until ${end}`;
 }
-export function coverageLabel(result: LibrarySearchResult) {
-  if (result.coverage.status === 'covered') return 'Covers your session';
-  if (result.coverage.status === 'shortfall' && result.coverage.shortfallMinutes !== null) {
-    const minutes = result.coverage.shortfallMinutes;
-    const hours = Math.floor(minutes / 60);
-    const remainder = minutes % 60;
-    return `${hours ? `${hours} hour${hours === 1 ? '' : 's'}` : ''}${hours && remainder ? ' ' : ''}${remainder ? `${remainder} min` : ''} short`;
-  }
-  return result.coverage.status === 'not-requested' ? null : 'Session coverage unknown';
-}
 export function minuteTime(minute: number) {
   const wrapped = minute % 1440;
   return `${Math.floor(wrapped / 60).toString().padStart(2, '0')}:${(wrapped % 60).toString().padStart(2, '0')}`;

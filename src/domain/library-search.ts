@@ -2,17 +2,12 @@ import type { EntrySchedule, LibraryRecord } from './library';
 import type { SearchRequest } from './search-request';
 import type { UniversityCard } from './search-context';
 import { calendarTimeline, continuousWindow, intersectIntervals, intervalAt, mergeTimeIntervals } from './availability';
-import type { ContinuousWindow } from './availability';
-import { formatPerthTime, MINUTE_MS, perthMidnight, shiftDate } from './perth-time';
+import { formatPerthTime, perthMidnight, shiftDate } from './perth-time';
 import { evaluateWifi } from './wifi';
 import type { RequirementMatch } from './wifi';
 
 export type OpeningStatus = 'open' | 'closed' | 'unknown';
 export type PersonalAccessStatus = 'matches-rules' | 'unmatched' | 'unknown' | 'unavailable';
-export interface SessionCoverage {
-  status: 'not-requested' | 'covered' | 'shortfall' | 'unknown' | 'unmatched' | 'unavailable';
-  shortfallMinutes: number | null;
-}
 export interface TwentyFourHourGroup {
   group: 'public' | UniversityCard;
   requirement: string;
@@ -91,7 +86,6 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
   const priority = library.institution !== 'public' && request.cards.includes(library.institution)
     && groups.some((group) => group.group === 'public' || (group.group === library.institution && group.match === 'matches-profile'));
   const rankingGroup: 'matching-university-24-hours' | 'other' = priority ? 'matching-university-24-hours' : 'other';
-  const coverage = sessionCoverage(request.end, request.start, personalWindow, personalStatus);
   return { library, distanceKm: approximateDistanceKm(request.origin, library.content), opening: { status: openingStatus, window: buildingWindow },
     access: { status: personalStatus, window: personalWindow, nextWindow, explanation: personalStatus === 'matches-rules'
       ? 'Recorded entry rules match public access or your declared cards; this does not verify current eligibility.'
@@ -101,19 +95,11 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
       needsActiveCredentials: entry.needsActiveCredentials, match,
       openAtStart: entry.group === 'unknown' || intervalAt(unknown, request.start) ? null : Boolean(intervalAt(intervals, request.start)),
       window: entry.group === 'unknown' ? null : continuousWindow(intervals, request.start, building.end, unknown) })) },
-    open24Hours, wifi: evaluateWifi(library.content.wifi, request.cards), rankingGroup, coverage,
+    open24Hours, wifi: evaluateWifi(library.content.wifi, request.cards), rankingGroup,
     exceptions: [{ group: 'building' as const, overrides: building.exceptions }, ...entries.map(({ entry, timeline }) => ({ group: entry.group, overrides: timeline.exceptions }))],
     evaluatedAt: formatPerthTime(request.start), evaluatedUntil: formatPerthTime(building.end) };
 }
 export type LibrarySearchResult = ReturnType<typeof evaluateLibrary>;
-
-function sessionCoverage(end: number | null, start: number, window: ContinuousWindow | null, access: PersonalAccessStatus): SessionCoverage {
-  if (end === null) return { status: 'not-requested', shortfallMinutes: null };
-  if (!window) return { status: access === 'unmatched' ? 'unmatched' : access === 'unavailable' ? 'unavailable' : 'unknown', shortfallMinutes: null };
-  const until = Date.parse(window.until);
-  return { status: until >= end ? 'covered' : window.endReason === 'unknown' || window.endReason === 'verification-limit' ? 'unknown' : 'shortfall',
-    shortfallMinutes: until < end && window.endReason === 'closes' ? Math.ceil((end - Math.max(start, until)) / MINUTE_MS) : null };
-}
 
 export function searchLibraries(libraries: readonly LibraryRecord[], request: SearchRequest) {
   const results = libraries.filter((library) => library.status === 'published')
@@ -128,10 +114,6 @@ export function searchLibraries(libraries: readonly LibraryRecord[], request: Se
     if (priority) return priority;
     const distance = (a.distanceKm ?? Infinity) - (b.distanceKm ?? Infinity);
     if (distance !== 0 && !Number.isNaN(distance)) return distance;
-    if (a.distanceKm !== null && b.distanceKm !== null) {
-      const coverage = Number(b.coverage.status === 'covered') - Number(a.coverage.status === 'covered');
-      if (coverage) return coverage;
-    }
     return a.library.slug < b.library.slug ? -1 : a.library.slug > b.library.slug ? 1 : 0;
   });
   return { results: results.slice(request.offset, request.offset + request.limit), total: results.length,

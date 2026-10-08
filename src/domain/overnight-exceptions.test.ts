@@ -22,15 +22,15 @@ function library(kind: ScheduleOverride['kind'] = 'date'): LibraryRecord {
 }
 
 describe('confirmed overnight exceptions against unknown baseline hours', () => {
-  it.each(['date', 'period'] as const)('keeps confirmed %s hours and session coverage through 06:00', (kind) => {
+  it.each(['date', 'period'] as const)('keeps confirmed %s access through 06:00', (kind) => {
     const record = library(kind);
-    const evening = evaluateLibrary(record, request('start=2026-10-09T22:00&end=2026-10-10T05:00'));
+    const evening = evaluateLibrary(record, request('start=2026-10-09T22:00'));
     expect(evening.opening.window).toMatchObject({ until: '2026-10-10T06:00:00+08:00', endReason: 'unknown' });
     expect(evening.access.window?.until).toBe('2026-10-10T06:00:00+08:00');
-    expect(evening.coverage.status).toBe('covered');
-    const morning = searchLibraries([record], request('start=2026-10-10T01:00&end=2026-10-10T06:00'));
+    expect(evening.access.status).toBe('matches-rules');
+    const morning = searchLibraries([record], request('start=2026-10-10T01:00'));
     expect(morning.total).toBe(1);
-    expect(morning.results[0].coverage.status).toBe('covered');
+    expect(morning.results[0].access.window?.until).toBe('2026-10-10T06:00:00+08:00');
     expect(morning.results[0].access.requirements[0].openAtStart).toBe(true);
     expect(morning.results[0].open24Hours.status).toBe('unknown');
     const timeline = calendarTimeline(record.content.schedule.building, '2026-10-10');
@@ -38,7 +38,6 @@ describe('confirmed overnight exceptions against unknown baseline hours', () => 
     expect(intervalAt(timeline.unknown, parsePerthTime('2026-10-10T06:00'))).toBeDefined();
     expect(evaluateLibrary(record, request('start=2026-10-10T06:00')).opening.status).toBe('unknown');
     expect(searchLibraries([record], request('start=2026-10-10T06:00')).total).toBe(0);
-    expect(evaluateLibrary(record, request('start=2026-10-09T22:00&end=2026-10-10T07:00')).coverage.status).toBe('unknown');
   });
 
   it.each(['closed', 'unknown', 'hours'] as const)('still honours an explicit receiving-day %s override', (status) => {
@@ -48,17 +47,24 @@ describe('confirmed overnight exceptions against unknown baseline hours', () => 
       intervals: status === 'hours' ? [{ weekday: 6, startMinute: 540, endMinute: 1020 }] : [], sourceId: status === 'unknown' ? null : 'source',
     });
     expect(evaluateLibrary(record, request('start=2026-10-09T22:00')).opening.window?.until).toBe('2026-10-10T00:00:00+08:00');
-    expect(searchLibraries([record], request('start=2026-10-10T01:00')).total).toBe(0);
+    const morning = searchLibraries([record], request('start=2026-10-10T01:00'));
+    if (status === 'unknown') expect(morning.total).toBe(0);
+    else {
+      expect(morning.total).toBe(1);
+      expect(morning.results[0].opening.status).toBe('closed');
+      expect(morning.results[0].access.window).toBeNull();
+      if (status === 'hours') expect(morning.results[0].access.nextWindow?.from).toBe('2026-10-10T09:00:00+08:00');
+    }
     if (status === 'hours') expect(searchLibraries([record], request('start=2026-10-10T09:00')).total).toBe(1);
   });
 
   it('keeps building opening and unknown entry permission separate', () => {
     const record = library();
     record.content.schedule.access[0].overrides = [];
-    const result = evaluateLibrary(record, request('start=2026-10-10T01:00&end=2026-10-10T05:00'));
+    const result = evaluateLibrary(record, request('start=2026-10-10T01:00'));
     expect(result.opening.status).toBe('open');
     expect(result.access.status).toBe('unknown');
-    expect(result.coverage.status).toBe('unknown');
+    expect(result.access.window).toBeNull();
   });
 
   it('does not infer building opening from an entry exception alone', () => {

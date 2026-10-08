@@ -14,7 +14,7 @@ The local backend stores versioned library records, opening and entry schedules,
 
 Authorised administrators can edit library details, photos, facilities, Wi-Fi and opening hours, add closures or date ranges, and preview changes before publishing. The public version stays unchanged while a draft is edited.
 
-The search backend evaluates Perth opening hours, entry rules, 24/7 access, Wi-Fi, and distance. Declared university cards personalise ranking and requirement labels; only selected filters restrict results. An optional end time shows session shortfalls without hiding libraries.
+The search backend evaluates Perth opening hours, entry rules, 24/7 access, Wi-Fi, and distance for the selected date and time. Declared university cards personalise ranking and requirement labels; only selected filters restrict results.
 
 ## Built with
 
@@ -111,7 +111,7 @@ Use **Preview draft** to check guest or university-card access at a selected tim
 - `GET /api/libraries/:slug` returns a published library and its opening/access explanations, including when closed.
 - `GET /api/suburbs` lists available search origins; Perth CBD is the default.
 
-Search and detail accept `start` and optional `end` in Perth local time (`YYYY-MM-DDTHH:mm`), `suburb`, and comma-separated `cards` and `institutions`. Supported university codes are `uwa`, `curtin`, `ecu`, and `murdoch`; institutions also allow `public`. Omitting `start` uses the current time. Sessions can span up to 31 days.
+Search and detail accept `start` in Perth local time (`YYYY-MM-DDTHH:mm`), `suburb`, and comma-separated `cards` and `institutions`. Supported university codes are `uwa`, `curtin`, `ecu`, and `murdoch`; institutions also allow `public`. Omitting `start` uses the current time. Older links containing `end` still work; that parameter is ignored.
 
 Search switches are `open24Hours`, `usableWifi`, `quietStudy`, `groupStudy`, and `wheelchairAccess`; each accepts `true` or `false` and defaults to off. `limit` (1–100, default 50) and `offset` paginate the ranked results. For example: `/api/libraries?cards=uwa&open24Hours=true&start=2026-10-02T14:00`.
 

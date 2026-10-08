@@ -20,12 +20,14 @@ function destination(html: string) {
 describe('continuing guest browsing from sign-in (#16)', () => {
   it('preserves the actual detail-return search while returning to the finder', () => {
     const selected = new URLSearchParams('cards=uwa&institutions=curtin&open24Hours=true&start=2026-10-06T20:00&end=2026-10-07T06:00&limit=2&offset=4');
+    const active = new URLSearchParams(selected);
+    active.delete('end');
     const html = render(`/libraries/tl-robertson-library?${selected}`);
     const continued = new URL(destination(html)!, 'https://example.invalid');
     expect(continued.pathname).toBe('/');
-    expect(continued.searchParams.toString()).toBe(selected.toString());
+    expect(continued.searchParams.toString()).toBe(active.toString());
     const back = html.match(/<a[^>]*href="([^"]*)"[^>]*>← Back<\/a>/)?.[1].replaceAll('&amp;', '&');
-    expect(back).toBe(`/libraries/tl-robertson-library?${selected}`);
+    expect(back).toBe(`/libraries/tl-robertson-library?${active}`);
   });
   it('retains empty explicit cards, duplicates and invalid supported values for validation', () => {
     const continued = new URL(destination(render('/?cards=&start=bad&start=duplicate'))!, 'https://example.invalid');

@@ -21,7 +21,7 @@ vi.mock('./finder-pagination-context', () => ({
 
 const bentley = { latitude: -32.005, longitude: 115.894 };
 const crawley = { latitude: -31.979, longitude: 115.818 };
-const selected = 'start=2026-10-06T14:00&end=2026-10-06T18:00&cards=&institutions=uwa,curtin&open24Hours=true&usableWifi=true&quietStudy=true&groupStudy=true&wheelchairAccess=true&limit=2&offset=4';
+const selected = 'start=2026-10-06T14:00&cards=&institutions=uwa,curtin&open24Hours=true&usableWifi=true&quietStudy=true&groupStudy=true&wheelchairAccess=true&limit=2&offset=4';
 
 function finder(query = selected) {
   let raw = new URLSearchParams(query);
@@ -99,7 +99,7 @@ describe('pagination when the effective device location changes', () => {
       .toBe('city-of-perth-library');
     returned.commit(); expect(returned.raw().has('offset')).toBe(false);
   });
-  it('resets after inherited cards change on Profile, retaining the study session (#15)', () => {
+  it('resets after inherited cards change on Profile, retaining the selected time (#15)', () => {
     const query = 'start=2026-10-06T14:00&end=2026-10-06T18:00&limit=2&offset=4';
     const page = finder(query); page.render(null, []); page.commit();
     const returned = finder(query);
@@ -107,7 +107,7 @@ describe('pagination when the effective device location changes', () => {
     expect(params.has('offset')).toBe(false);
     expect(params.get('cards')).toBe('uwa');
     expect(params.get('start')).toBe('2026-10-06T14:00');
-    expect(params.get('end')).toBe('2026-10-06T18:00');
+    expect(params.has('end')).toBe(false);
     const records = launchLibraries.map((record) => ({ ...record, isFixture: false, revisionId: 'test', status: 'published' as const }));
     expect(searchLibraries(records, parseSearchRequest(params, Date.parse('2026-10-06T06:00:00Z'))).results.map((result) => result.library.slug))
       .toEqual(['j-robin-warren-library', 'reid-library']);

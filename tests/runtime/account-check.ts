@@ -75,14 +75,15 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const sessionPayload = await sessionSaved.json<{ results: LibrarySearchResult[] }>();
   assert.equal(sessionPayload.results.length, 1, 'Finder restrictions must not remove saved records from the selected session.');
   assert.equal(sessionPayload.results[0].evaluatedAt, '2026-10-02T14:00:00+08:00');
-  assert.equal(sessionPayload.results[0].coverage.status, 'covered');
+  assert.equal('coverage' in sessionPayload.results[0], false);
+  assert.equal(sessionPayload.results[0].access.window?.until, '2026-10-02T17:00:00+08:00');
   const locatedSaved = await handleAccountRequest(new Request(`${origin}/api/account/favourites?start=2026-10-02T14:00&end=2026-10-02T16:00`, {
     headers: { Cookie: alice.cookie, [LOCATION_HEADER]: '-32.01,115.89' },
   }), env, 'saved', undefined, { includeFixtures: true });
   assert.equal(locatedSaved.status, 200);
   const locatedSavedPayload = await locatedSaved.json<{ results: LibrarySearchResult[] }>();
   assert.equal(locatedSavedPayload.results[0].distanceKm, approximateDistanceKm({ latitude: -32.01, longitude: 115.89 }, libraryFixtures[0].content));
-  assert.equal(locatedSavedPayload.results[0].coverage.status, 'covered');
+  assert.equal('coverage' in locatedSavedPayload.results[0], false);
   const publicSaved = await handleAccountRequest(new Request(`${origin}/api/account/favourites`, { headers: { Cookie: alice.cookie } }), env, 'saved');
   assert.deepEqual(await publicSaved.json(), { results: [] }, 'Public account routes must also exclude fictional records.');
   assert.equal((await call(alice.cookie, 'favourite', 'PUT', undefined, 'missing-library')).status, 404);

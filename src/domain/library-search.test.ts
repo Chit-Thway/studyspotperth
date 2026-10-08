@@ -44,18 +44,19 @@ describe('search, access and ranking', () => {
     expect(result.access.window?.until).toBe('2026-10-02T17:00:00+08:00');
     expect(ids('institutions=uwa&usableWifi=true')).toEqual([]);
   });
-  it('keeps a nearer shortfall ahead of a farther fully covered session', () => {
-    const result = search('end=2026-10-02T18:00', [fixture('public'), fixture('late')]);
+  it('keeps proximity ahead of later closing hours', () => {
+    const result = search('', [fixture('public'), fixture('late')]);
     expect(result.results.map((item) => item.library.id)).toEqual(['fixture-public', 'fixture-late']);
-    expect(result.results[0].coverage).toEqual({ status: 'shortfall', shortfallMinutes: 60 });
-    expect(result.results[1].coverage.status).toBe('covered');
+    expect(result.results[0].access.window?.until).toBe('2026-10-02T17:00:00+08:00');
+    expect(result.results[1].access.window?.until).toBe('2026-10-02T23:00:00+08:00');
   });
-  it('uses end coverage only to break an exact known distance tie', () => {
+  it('uses stable slug order for equal distances regardless of old departure times', () => {
     const near = fixture('public');
     const late = fixture('late');
     late.content.longitude = near.content.longitude;
-    expect(ids('end=2026-10-02T18:00', [near, late])).toEqual(['fixture-late', 'fixture-public']);
-    expect(ids('', [near, late])).toEqual(['fixture-late', 'fixture-public']); // Stable slug order without a requested end.
+    near.slug = 'a-day-library'; late.slug = 'z-late-library';
+    expect(ids('', [late, near])).toEqual(['fixture-public', 'fixture-late']);
+    expect(search('end=2026-10-02T18:00', [late, near])).toEqual(search('', [late, near]));
   });
   it('keeps closed libraries visible and finds the next public opening at exact boundaries', () => {
     const before = search('start=2026-10-02T08:59', [fixture('public')]).results[0];
@@ -83,12 +84,11 @@ describe('search, access and ranking', () => {
   });
   it('stops public entry before building closure, while matching cards bridge it', () => {
     const uwa = fixture('uwa');
-    expect(evaluateLibrary(uwa, request('end=2026-10-02T18:00'))).toMatchObject({
+    expect(evaluateLibrary(uwa, request())).toMatchObject({
       opening: { status: 'open', window: { endReason: 'verification-limit' } },
       access: { status: 'matches-rules', window: { until: '2026-10-02T17:00:00+08:00' } },
-      coverage: { status: 'shortfall', shortfallMinutes: 60 },
     });
-    expect(evaluateLibrary(uwa, request('cards=uwa&end=2026-10-03T06:00')).coverage.status).toBe('covered');
+    expect(evaluateLibrary(uwa, request('cards=uwa')).access.window?.endReason).toBe('verification-limit');
     expect(evaluateLibrary(uwa, request('start=2026-10-02T18:00')).access.status).toBe('unmatched');
   });
   it('excludes unknown hours, preserves unknown access, and never claims its personal window', () => {
@@ -100,24 +100,23 @@ describe('search, access and ranking', () => {
   });
   it('supports overnight hours over the Sunday/Monday boundary and stops at 06:00', () => {
     const overnight = fixture('overnight');
-    const result = evaluateLibrary(overnight, request('start=2026-10-05T01:00&end=2026-10-05T07:00'));
+    const result = evaluateLibrary(overnight, request('start=2026-10-05T01:00'));
     expect(result.access.window?.until).toBe('2026-10-05T06:00:00+08:00');
-    expect(result.coverage).toEqual({ status: 'shortfall', shortfallMinutes: 60 });
+    expect(result.access.window?.endReason).toBe('closes');
     expect(search('start=2026-10-05T06:00', [overnight]).results[0].opening.status).toBe('closed');
     expect(result.open24Hours.status).toBe('does-not-qualify');
   });
-  it.each(['date', 'period'] as const)('keeps searches and session coverage through the end of an overnight %s exception', (kind) => {
+  it.each(['date', 'period'] as const)('keeps confirmed access through the end of an overnight %s exception', (kind) => {
     const library = fixture('overnight');
     for (const schedule of [library.content.schedule.building, library.content.schedule.access[0]]) {
       schedule.overrides = [{ id: 'friday-hours', kind, startDate: kind === 'date' ? '2026-10-02' : '2026-10-01', endDate: '2026-10-02', status: 'hours',
         intervals: [{ weekday: 5, startMinute: 1200, endMinute: 1800 }], sourceId: 'fictional-source' }];
     }
-    const saturday = search('start=2026-10-03T01:00&end=2026-10-03T05:00', [library]);
+    const saturday = search('start=2026-10-03T01:00', [library]);
     expect(saturday.total).toBe(1);
     expect(saturday.results[0].access.window?.until).toBe('2026-10-03T06:00:00+08:00');
-    expect(saturday.results[0].coverage).toEqual({ status: 'covered', shortfallMinutes: null });
-    expect(evaluateLibrary(library, request('start=2026-10-02T22:00&end=2026-10-03T05:00')).coverage)
-      .toEqual({ status: 'covered', shortfallMinutes: null });
+    expect(evaluateLibrary(library, request('start=2026-10-02T22:00')).access.window?.until)
+      .toBe('2026-10-03T06:00:00+08:00');
     expect(search('start=2026-10-03T06:00', [library]).results[0].opening.status).toBe('closed');
   });
   it('applies semester hours, closure dates, and the end of a period', () => {
@@ -144,12 +143,12 @@ describe('search, access and ranking', () => {
     expect(ids('open24Hours=true', [library])).toEqual(['fixture-public']);
     expect(result.rankingGroup).toBe('other');
   });
-  it('a known building closure remains a shortfall even if entry hours later become unknown', () => {
+  it('a known building closure remains definite even if entry hours later become unknown', () => {
     const library = fixture('public');
     library.content.schedule.access[0].overrides = [{ id: 'unknown-tomorrow', kind: 'date', startDate: '2026-10-03', endDate: '2026-10-03', status: 'unknown', intervals: [], sourceId: null }];
-    const result = evaluateLibrary(library, request('end=2026-10-03T06:00'));
+    const result = evaluateLibrary(library, request());
     expect(result.access.window?.endReason).toBe('closes');
-    expect(result.coverage).toEqual({ status: 'shortfall', shortfallMinutes: 780 });
+    expect(result.access.window?.until).toBe('2026-10-02T17:00:00+08:00');
   });
   it('does not attach a redundant card requirement to public university 24/7 entry', () => {
     const library = fixture('uwa');
@@ -164,9 +163,8 @@ describe('search, access and ranking', () => {
     expect(evaluateLibrary(library, request())).toMatchObject({ access: { status: 'unknown', window: null }, open24Hours: { status: 'unknown' } });
     const uncertain = fixture('uwa');
     uncertain.content.schedule.access[1].overrides = [{ id: 'unknown-tomorrow', kind: 'date', startDate: '2026-10-03', endDate: '2026-10-03', status: 'unknown', intervals: [], sourceId: null }];
-    const result = evaluateLibrary(uncertain, request('cards=uwa&end=2026-10-03T06:00'));
+    const result = evaluateLibrary(uncertain, request('cards=uwa'));
     expect(result.access.window).toMatchObject({ until: '2026-10-03T00:00:00+08:00', endReason: 'unknown' });
-    expect(result.coverage).toEqual({ status: 'unknown', shortfallMinutes: null });
     expect(result.open24Hours.status).toBe('unknown');
   });
   it('intersects building and entry hours instead of trusting a longer card schedule', () => {

@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { finderUrl, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 
 describe('guest finder selections', () => {
+  it('retired end times disappear from API, detail and return links without changing pagination or cards', () => {
+    const params = new URLSearchParams('cards=&start=2026-10-07T14:00&offset=4&end=invalid&end=duplicate');
+    expect(queryUrl(params, '/api/libraries')).toBe('/api/libraries?cards=&start=2026-10-07T14%3A00&offset=4');
+    expect(finderUrl(params, '/libraries/reid')).toBe('/libraries/reid?cards=&start=2026-10-07T14%3A00&offset=4');
+    expect(params.getAll('end')).toEqual(['invalid', 'duplicate']);
+  });
   it('reset retains cards and origin while removing restrictions, end time and pagination', () => {
     const selected = new URLSearchParams('cards=uwa,curtin&suburb=fixture-cbd&institutions=uwa&open24Hours=true&usableWifi=true&quietStudy=true&start=2026-10-02T14:00&end=2026-10-03T06:00&offset=50');
     expect(resetFinderFilters(selected).toString()).toBe('cards=uwa%2Ccurtin&suburb=fixture-cbd');

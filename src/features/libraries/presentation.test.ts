@@ -5,7 +5,7 @@ import { parseSearchRequest } from '../../domain/search-request';
 import { parsePerthTime, perthMidnight } from '../../domain/perth-time';
 import { calendarTimeline } from '../../domain/availability';
 import type { CalendarSchedule } from '../../domain/schedule';
-import { availabilityLabel, coverageLabel, dayHoursLabel, intervalLabel, directionsUrl, mapsLocationUrl, openingDayLabel, weeklyOpeningHours } from './presentation';
+import { availabilityLabel, dayHoursLabel, intervalLabel, directionsUrl, mapsLocationUrl, openingDayLabel, weeklyOpeningHours } from './presentation';
 import { launchLibraries } from '../../../server/data/launch-libraries';
 
 const clock = parsePerthTime('2026-10-02T18:00');
@@ -43,10 +43,9 @@ describe('library explanations in the interface', () => {
   it('finite windows never become indefinite 24/7 availability', () => {
     expect(availabilityLabel(result('uwa', 'cards=uwa'))).toBe('Access in checked period');
   });
-  it('shows an end-time shortfall without changing the result', () => {
-    const day = result('public', 'start=2026-10-02T14:00&end=2026-10-02T18:00');
+  it('retains the closing-time explanation for a selected time', () => {
+    const day = result('public', 'start=2026-10-02T14:00');
     expect(availabilityLabel(day)).toMatch(/^Available until/);
-    expect(coverageLabel(day)).toBe('1 hour short');
   });
   it('shows the next opening when closed, using weekdays and the visitor’s entry hours', () => {
     expect(openingDayLabel(result('public'))).toBe('Closed · Open 9 am–5 pm Sat');

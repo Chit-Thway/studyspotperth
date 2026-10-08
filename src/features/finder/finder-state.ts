@@ -1,6 +1,6 @@
-import { FINDER_QUERY_FIELDS } from '../../domain/search-request';
+import { FINDER_QUERY_FIELDS, withoutEndTime } from '../../domain/search-request';
 
-const restrictiveFields = ['institutions', 'open24Hours', 'usableWifi', 'quietStudy', 'groupStudy', 'wheelchairAccess', 'start', 'end', 'offset', 'limit'];
+const restrictiveFields = ['institutions', 'open24Hours', 'usableWifi', 'quietStudy', 'groupStudy', 'wheelchairAccess', 'start', 'offset', 'limit'];
 
 /** Carry finder selections across public pages, excluding route-specific state.
  * Keep values and duplicates intact so API validation remains authoritative.
@@ -10,7 +10,7 @@ function publicFinderParams(params: URLSearchParams) {
 }
 
 export function updateFinderParam(params: URLSearchParams, field: string, value: string | null) {
-  const next = new URLSearchParams(params);
+  const next = withoutEndTime(params);
   if (value === null || value === '') next.delete(field); else next.set(field, value);
   if (field !== 'offset') next.delete('offset');
   return next;
@@ -30,8 +30,8 @@ export function resetFinderFilters(params: URLSearchParams) {
 export function finderUrl(params: URLSearchParams, path = '/') {
   return queryUrl(publicFinderParams(params), path);
 }
-/** API requests retain the original parameters for authoritative validation. */
+/** Preserve validation of active parameters while discarding retired departure times. */
 export function queryUrl(params: URLSearchParams, path: string) {
-  const query = params.toString();
+  const query = withoutEndTime(params).toString();
   return `${path}${query ? `?${query}` : ''}`;
 }
