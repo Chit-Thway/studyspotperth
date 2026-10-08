@@ -30,7 +30,7 @@ export function LibraryDetailPage() {
   const { account } = useAccount();
   const effective = profileFinderParams(params, account?.preferences);
   const location = useUserLocation();
-  const resource = useLibraryApi<DetailResponse>(queryUrl(effective, `/api/libraries/${encodeURIComponent(slug)}`), !effective.has('start'), location.coordinates);
+  const resource = useLibraryApi<DetailResponse>(queryUrl(effective, `/api/libraries/${encodeURIComponent(slug)}`), !effective.has('start'), location.coordinates, location.ready);
   const result = resource.data?.result;
   useEffect(() => { document.title = result ? `${result.library.content.name} · StudySpot Perth` : 'Library details · StudySpot Perth'; }, [result]);
   const back = finderUrl(params);

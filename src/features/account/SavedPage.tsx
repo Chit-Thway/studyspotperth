@@ -17,7 +17,7 @@ function SavedLibraries() {
   const effective = profileFinderParams(raw, account?.preferences);
   const { params, refreshNow } = savedQuery(effective);
   const location = useUserLocation();
-  const resource = useLibraryApi<{ results: LibrarySearchResult[] }>(queryUrl(params, '/api/account/favourites'), refreshNow, location.coordinates);
+  const resource = useLibraryApi<{ results: LibrarySearchResult[] }>(queryUrl(params, '/api/account/favourites'), refreshNow, location.coordinates, location.ready);
   const results = resource.data?.results.filter((result) => account?.favouriteIds.includes(result.library.id));
   return <section className={styles.savedPage}><Link className={styles.back} to={finderUrl(raw)}>← Libraries</Link><h1>Saved libraries</h1>
     {resource.loading && <p role="status">Loading saved libraries…</p>}

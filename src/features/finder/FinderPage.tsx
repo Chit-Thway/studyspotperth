@@ -21,8 +21,8 @@ export function FinderPage() {
   const location = useUserLocation();
   const effective = profileFinderParams(rawParams, account?.preferences);
   const params = useFinderPagination(effective, setParams, location.coordinates,
-    !accountLoading || Boolean(account) || rawParams.has('cards'));
-  const resource = useLibraryApi<SearchResponse>(queryUrl(params, '/api/libraries'), !params.has('start'), location.coordinates);
+    location.ready && (!accountLoading || Boolean(account) || rawParams.has('cards')));
+  const resource = useLibraryApi<SearchResponse>(queryUrl(params, '/api/libraries'), !params.has('start'), location.coordinates, location.ready);
   const [cardsExpanded, setCardsExpanded] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const filterButton = useRef<HTMLButtonElement>(null);
@@ -46,7 +46,7 @@ export function FinderPage() {
   }, []);
   const chips: { key: string; label: string; remove: () => void }[] = [];
   (params.get('institutions') ?? '').split(',').filter(isInstitution).forEach((institution) => chips.push({ key: institution, label: INSTITUTION_LABELS[institution], remove: () => change(toggleFinderSelection(params, 'institutions', institution)) }));
-  ([['open24Hours', 'Open 24/7'], ['usableWifi', 'Wi-Fi I can use'], ['quietStudy', 'Quiet areas'], ['groupStudy', 'Group spaces'], ['wheelchairAccess', 'Step-free access']] as const).forEach(([field, label]) => {
+  ([['publicAccess', 'Public access'], ['open24Hours', 'Open 24/7'], ['usableWifi', 'Wi-Fi I can use'], ['quietStudy', 'Quiet areas'], ['groupStudy', 'Group spaces'], ['wheelchairAccess', 'Step-free access']] as const).forEach(([field, label]) => {
     if (params.get(field) === 'true') chips.push({ key: field, label, remove: () => change(updateFinderParam(params, field, null)) });
   });
   if (params.get('start') && !Number.isNaN(Date.parse(`${params.get('start')}:00+08:00`))) chips.push({ key: 'start', label: `${readableDate(params.get('start')!.slice(0, 10))} · ${params.get('start')!.slice(11)}`, remove: () => change(updateFinderParam(params, 'start', null)) });
@@ -71,7 +71,7 @@ export function FinderPage() {
         </div>
       </dialog>
       <section className={styles.results} aria-labelledby="results-title" aria-busy={resource.loading}>
-        <div className={styles.resultsHeader}><h2 id="results-title">{result ? `${result.total} ${result.total === 1 ? 'library' : 'libraries'}` : 'Libraries'}</h2><p><Icon name="pin" />Recommended · nearest first</p></div>
+        <div className={styles.resultsHeader}><h2 id="results-title">{result ? `${result.total} ${result.total === 1 ? 'library' : 'libraries'}` : 'Libraries'}</h2><p><Icon name="pin" />{params.get('publicAccess') === 'true' ? 'Nearest first' : 'Recommended · nearest first'}</p></div>
         <p className={styles.resultsContext}>{location.coordinates ? 'Near your location · ' : ''}Perth time</p>
         {resource.loading && <div className={styles.statePanel} role="status"><Icon name="book" /><h3>Finding your study spots…</h3><p>Checking opening hours and entry information.</p></div>}
         {resource.error && result && <p className={styles.originNotice} role="alert">Couldn’t refresh these libraries. Showing the last checked information; current hours may have changed. <button className={styles.textButton} type="button" onClick={resource.retry}>Try again</button></p>}

@@ -1,5 +1,5 @@
 import { formatPerthTime } from '../../domain/perth-time';
-import { INSTITUTIONS, INSTITUTION_LABELS } from '../libraries/presentation';
+import { UNIVERSITY_CARDS, INSTITUTION_LABELS } from '../libraries/presentation';
 import { resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 import styles from './FinderPage.module.css';
 import { LocationControl } from '../location/LocationControl';
@@ -34,8 +34,11 @@ export function FilterPanel({ params, change, prefix }: FilterPanelProps) {
         <label className={styles.switchRow}><input type="checkbox" role="switch" checked={params.get('open24Hours') === 'true'} onChange={(event) => update('open24Hours', event.target.checked ? 'true' : null)} /><span className={styles.switchTrack} aria-hidden="true" /><span><strong>Open 24/7</strong></span></label>
         <label className={styles.switchRow}><input type="checkbox" role="switch" checked={params.get('usableWifi') === 'true'} onChange={(event) => update('usableWifi', event.target.checked ? 'true' : null)} /><span className={styles.switchTrack} aria-hidden="true" /><span><strong>Wi-Fi I can use</strong></span></label>
       </div>
+      <fieldset className={styles.filterSection}><legend className={styles.fieldLabel}>Access</legend>
+        <label className={styles.checkboxRow}><input type="checkbox" checked={params.get('publicAccess') === 'true'} onChange={(event) => update('publicAccess', event.target.checked ? 'true' : null)} />Public access</label>
+      </fieldset>
       <fieldset className={styles.filterSection}><legend className={styles.fieldLabel}>Institution</legend><p className={styles.help}>All unless selected</p>
-        {INSTITUTIONS.map((institution) => <label className={styles.checkboxRow} key={institution}><input type="checkbox" checked={institutions.includes(institution)} onChange={() => change(toggleFinderSelection(params, 'institutions', institution))} />{INSTITUTION_LABELS[institution]}</label>)}
+        {UNIVERSITY_CARDS.map((institution) => <label className={styles.checkboxRow} key={institution}><input type="checkbox" checked={institutions.includes(institution)} onChange={() => change(toggleFinderSelection(params, 'institutions', institution))} />{INSTITUTION_LABELS[institution]}</label>)}
       </fieldset>
       <fieldset className={styles.filterSection}><legend className={styles.fieldLabel}>Study environment</legend>
         {([['quietStudy', 'Quiet study areas'], ['groupStudy', 'Group study areas'], ['wheelchairAccess', 'Step-free access']] as const).map(([field, label]) => <label className={styles.checkboxRow} key={field}><input type="checkbox" checked={params.get(field) === 'true'} onChange={(event) => update(field, event.target.checked ? 'true' : null)} />{label}</label>)}

@@ -22,6 +22,18 @@ function database() {
 }
 
 describe('initial public catalogue', () => {
+  it('finds public university access with nearest-first ordering and ANDed university selection', () => {
+    const origin = { id: 'device-location', name: 'Your location', latitude: -32.005425, longitude: 115.893881 };
+    const selected = (query: string) => parseSearchRequest(new URLSearchParams(query), parsePerthTime('2026-10-08T14:00'), origin);
+    const allPublic = searchLibraries(records, selected('publicAccess=true&cards=uwa'));
+    expect(allPublic.total).toBe(11);
+    expect(allPublic.results[0].library.slug).toBe('tl-robertson-library');
+    expect(allPublic.results.some((result) => result.library.slug === 'ecu-joondalup-library')).toBe(false);
+    const uwaPublic = searchLibraries(records, selected('publicAccess=true&institutions=uwa'));
+    expect(uwaPublic.total).toBe(5);
+    expect(uwaPublic.results.every((result) => result.library.institution === 'uwa' && result.publicAccessOnDay)).toBe(true);
+    expect(searchLibraries(records, selected('publicAccess=true&institutions=uwa&start=2026-10-11T14:00')).total).toBe(4);
+  });
   it('contains exactly the 13 selected, source-backed entries and reusable bundled photos', () => {
     expect(records).toHaveLength(13);
     expect(new Set(records.map((record) => record.slug)).size).toBe(13);

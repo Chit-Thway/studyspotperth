@@ -40,7 +40,7 @@ export function CookieConsent() {
     <dialog ref={dialog} className={styles.dialog} aria-labelledby="cookie-title" aria-describedby="cookie-description" onCancel={() => choose('essential')}>
       <h2 id="cookie-title">Your cookie choice</h2>
       <p id="cookie-description">Essential cookies keep sign-in working. Optional cookies help us measure visits and directions clicks.</p>
-      <p className={styles.note}>Location permission is separate. You can change this choice anytime.</p>
+      <p className={styles.note}>Location permission is separate. Your approximate location is remembered when allowed.</p>
       <div className={styles.actions}><button type="button" onClick={() => choose('essential')}>Essential only</button><button className={styles.accept} type="button" onClick={() => choose('accepted')}>Accept optional cookies</button></div>
     </dialog>
   </>;

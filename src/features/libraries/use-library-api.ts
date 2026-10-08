@@ -3,12 +3,13 @@ import { LibraryApiError, readLibraryApi } from './api';
 import { libraryStateForUrl, reduceLibraryApi } from './library-api-state';
 import { locationHeader, type Coordinates } from '../../domain/location';
 
-export function useLibraryApi<T>(url: string, refreshNow = false, coordinates?: Coordinates | null) {
+export function useLibraryApi<T>(url: string, refreshNow = false, coordinates?: Coordinates | null, enabled = true) {
   const header = locationHeader(coordinates);
   const key = `${url}${header ? `|location:${header}` : ''}`;
   const [reload, setReload] = useState(0);
   const [state, dispatch] = useReducer(reduceLibraryApi<T>, { url: key, data: null, error: null, loading: true });
   useEffect(() => {
+    if (!enabled) return;
     const controller = new AbortController();
     dispatch({ type: 'start', url: key });
     void readLibraryApi<T>(url, controller.signal, header).then((data) => {
@@ -17,13 +18,13 @@ export function useLibraryApi<T>(url: string, refreshNow = false, coordinates?: 
       if (!controller.signal.aborted) dispatch({ type: 'error', url: key, error: error instanceof LibraryApiError ? error : new Error('Library information couldn’t load. Check your connection and try again.') });
     });
     return () => controller.abort();
-  }, [url, key, header, reload]);
+  }, [url, key, header, reload, enabled]);
   useEffect(() => {
-    if (!refreshNow) return;
+    if (!refreshNow || !enabled) return;
     const interval = window.setInterval(() => { if (!document.hidden) setReload((value) => value + 1); }, 60_000);
     return () => window.clearInterval(interval);
-  }, [refreshNow]);
+  }, [refreshNow, enabled]);
   // An old result must never appear under newly selected filters, even for one render.
-  const current = libraryStateForUrl(state, key);
+  const current = enabled ? libraryStateForUrl(state, key) : { url: key, data: null, error: null, loading: true };
   return { ...current, retry: () => setReload((value) => value + 1) };
 }

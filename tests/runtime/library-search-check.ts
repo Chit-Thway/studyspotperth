@@ -33,6 +33,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const matrix = [
     '', 'cards=uwa', 'cards=uwa&open24Hours=true', 'cards=uwa&open24Hours=true&institutions=uwa',
     'open24Hours=true', 'cards=uwa,curtin', 'institutions=uwa,curtin&open24Hours=true', 'institutions=uwa',
+    'publicAccess=true', 'publicAccess=true&cards=uwa', 'publicAccess=true&institutions=uwa', 'institutions=public,uwa',
     'end=2026-10-02T18:00', 'start=2026-10-02T17:00', 'start=2026-10-05T01:00',
     'start=2026-10-15T14:00', 'start=2026-10-14T14:00&open24Hours=true',
     'usableWifi=true&cards=uwa', 'usableWifi=true&institutions=uwa', 'groupStudy=true', 'limit=2&offset=2',
@@ -76,7 +77,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
       assert.deepEqual(await json(response), expected);
     }
   }
-  for (const query of ['start=2026-02-30T14:00', 'cards=public', 'open24Hours=1', 'includeFixtures=true', 'suburb=missing', 'end=invalid&cards=uwa&cards=curtin']) {
+  for (const query of ['start=2026-02-30T14:00', 'cards=public', 'open24Hours=1', 'includeFixtures=true', 'suburb=missing', 'end=invalid&cards=uwa&cards=curtin', 'institutions=public&offset=-1']) {
     assert.equal((await handleLibraryRequest(request(query), env, 'search', undefined, clock)).status, 400, query);
   }
   assert.equal((await handleLibraryRequest(request(), env, 'detail', '../private', clock)).status, 400);

@@ -20,20 +20,31 @@ export function isUniversityCard(value: string): value is UniversityCard {
 }
 export function isInstitution(value: string): value is Institution { return value === 'public' || isUniversityCard(value); }
 
-export const FINDER_QUERY_FIELDS: readonly string[] = ['start', 'suburb', 'cards', 'institutions', 'open24Hours', 'usableWifi',
+export const FINDER_QUERY_FIELDS: readonly string[] = ['start', 'suburb', 'cards', 'institutions', 'publicAccess', 'open24Hours', 'usableWifi',
   'quietStudy', 'groupStudy', 'wheelchairAccess', 'limit', 'offset'];
 
-/** Retired departure times are ignored in old links; all other values remain subject to validation. */
-export function withoutEndTime(params: URLSearchParams): URLSearchParams {
+/** Migrate retired options without hiding invalid active values or duplicate parameters. */
+export function normalizeSearchParams(params: URLSearchParams): URLSearchParams {
   const next = new URLSearchParams(params);
   next.delete('end');
+  const selected = next.getAll('institutions');
+  if (selected.length === 1) {
+    const institutions = selected[0].split(',');
+    if (institutions.length <= 5 && institutions.every(isInstitution) && institutions.includes('public')) {
+      const universities = institutions.filter((institution) => institution !== 'public');
+      if (universities.length) next.set('institutions', universities.join(',')); else next.delete('institutions');
+      if (!next.has('publicAccess')) next.set('publicAccess', 'true');
+      const offset = next.getAll('offset');
+      if (offset.length === 1 && /^\d+$/.test(offset[0]) && Number(offset[0]) <= 10000) next.delete('offset');
+    }
+  }
   return next;
 }
 
 /** Cards are session declarations, never institution selections or proof of entry. */
 export function parseSearchRequest(rawParams: URLSearchParams, clock: number, origin = DEFAULT_ORIGIN): SearchRequest {
   if (rawParams.toString().length > 2048) throw new SearchValidationError('query', 'Search parameters are too long.');
-  const params = withoutEndTime(rawParams);
+  const params = normalizeSearchParams(rawParams);
   for (const [key] of params) {
     if (!FINDER_QUERY_FIELDS.includes(key)) throw new SearchValidationError(key, 'Unknown search parameter.');
     if (params.getAll(key).length !== 1) throw new SearchValidationError(key, 'Supply this parameter once.');
@@ -70,6 +81,6 @@ export function parseSearchRequest(rawParams: URLSearchParams, clock: number, or
     throw new SearchValidationError('suburb', 'Use a valid suburb ID.');
   }
   return { start, origin, cards: list('cards', isUniversityCard), limit: integer('limit', 50, 1, 100), offset: integer('offset', 0, 0, 10000),
-    filters: { institutions: list('institutions', isInstitution), open24Hours: boolean('open24Hours'), usableWifi: boolean('usableWifi'),
+    filters: { institutions: list('institutions', isUniversityCard), publicAccess: boolean('publicAccess'), open24Hours: boolean('open24Hours'), usableWifi: boolean('usableWifi'),
       quietStudy: boolean('quietStudy'), groupStudy: boolean('groupStudy'), wheelchairAccess: boolean('wheelchairAccess') } };
 }

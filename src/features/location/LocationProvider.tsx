@@ -1,42 +1,31 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
-import type { Coordinates } from '../../domain/location';
+import { useLocation } from 'react-router-dom';
 import { LocationContext } from './location-context';
-import { locationDisabled, rememberLocationDisabled, requestCoordinates } from './device-location';
+import { LOCATION_PREFERENCE_KEYS } from './device-location';
+import { createDeviceLocationController, INITIAL_LOCATION_STATE } from './device-location-controller';
 
 export function LocationProvider({ children }: { children: ReactNode }) {
-  const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const sequence = useRef(0);
-  const suppressed = useRef(locationDisabled());
-  const invalidateRequests = useCallback(() => { ++sequence.current; }, []);
-  const clear = useCallback(() => { ++sequence.current; suppressed.current = true; rememberLocationDisabled(undefined, true); setCoordinates(null); setLoading(false); setError(null); }, []);
-  const request = useCallback(() => {
-    const version = ++sequence.current;
-    suppressed.current = false; rememberLocationDisabled(undefined, false); setError(null); setCoordinates(null);
-    if (!navigator.geolocation) { setLoading(false); setError('Location isn’t supported here.'); return; }
-    setLoading(true);
-    void requestCoordinates(navigator.geolocation).then((point) => {
-      if (sequence.current === version) setCoordinates(point);
-    }).catch((failure: unknown) => {
-      if (sequence.current === version) setError(failure instanceof Error ? failure.message : 'Location is unavailable.');
-    }).finally(() => { if (sequence.current === version) setLoading(false); });
-  }, []);
+  const [state, setState] = useState(INITIAL_LOCATION_STATE);
+  const controller = useRef<ReturnType<typeof createDeviceLocationController> | null>(null);
+  const { key } = useLocation();
   useEffect(() => {
-    let active = true;
-    let permission: PermissionStatus | undefined;
-    const changed = () => {
-      if (!active) return;
-      if (permission?.state === 'granted') { if (!suppressed.current) request(); }
-      else { ++sequence.current; setCoordinates(null); setLoading(false); setError(null); }
+    const location = createDeviceLocationController({ geolocation: navigator.geolocation, permissions: navigator.permissions, onChange: setState });
+    controller.current = location;
+    void location.start();
+    const storageChanged = (event: StorageEvent) => { if (event.key === null || LOCATION_PREFERENCE_KEYS.some((key) => key === event.key)) location.syncPreference(); };
+    const visible = () => { if (document.visibilityState === 'visible') location.refresh(); };
+    window.addEventListener('storage', storageChanged);
+    window.addEventListener('focus', location.refresh);
+    document.addEventListener('visibilitychange', visible);
+    return () => {
+      location.dispose(); controller.current = null;
+      window.removeEventListener('storage', storageChanged);
+      window.removeEventListener('focus', location.refresh);
+      document.removeEventListener('visibilitychange', visible);
     };
-    // Querying permission never prompts. Only restore an already granted location.
-    if (navigator.permissions) void navigator.permissions.query({ name: 'geolocation' }).then((status) => {
-      if (!active) return;
-      permission = status; permission.addEventListener('change', changed);
-      if (permission.state === 'granted' && !suppressed.current) request();
-    }).catch(() => { /* Explicit requests work even without the Permissions API. */ });
-    return () => { active = false; invalidateRequests(); permission?.removeEventListener('change', changed); };
-  }, [invalidateRequests, request]);
-  return <LocationContext value={{ coordinates, loading, error, request, clear }}>{children}</LocationContext>;
+  }, []);
+  useEffect(() => { controller.current?.refresh(); }, [key]);
+  const request = useCallback(() => controller.current?.request(), []);
+  const clear = useCallback(() => controller.current?.clear(), []);
+  return <LocationContext value={{ ...state, request, clear }}>{children}</LocationContext>;
 }

@@ -66,6 +66,8 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
   const weekStart = perthMidnight(date);
   const weekEnd = perthMidnight(shiftDate(date, 7));
   const publicIntervals = mergeTimeIntervals(entries.filter(({ entry }) => entry.group === 'public').flatMap(({ intervals }) => intervals));
+  const dayEnd = perthMidnight(shiftDate(date, 1));
+  const publicAccessOnDay = publicIntervals.some((interval) => interval.start < dayEnd && interval.end > weekStart);
   const publicWeek = intervalAt(publicIntervals, weekStart);
   const public24Hours = publicWeek !== undefined && publicWeek.end >= weekEnd;
   const groups: TwentyFourHourGroup[] = entries.flatMap(({ entry, intervals, match }) => {
@@ -95,7 +97,7 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
       needsActiveCredentials: entry.needsActiveCredentials, match,
       openAtStart: entry.group === 'unknown' || intervalAt(unknown, request.start) ? null : Boolean(intervalAt(intervals, request.start)),
       window: entry.group === 'unknown' ? null : continuousWindow(intervals, request.start, building.end, unknown) })) },
-    open24Hours, wifi: evaluateWifi(library.content.wifi, request.cards), rankingGroup,
+    open24Hours, publicAccessOnDay, wifi: evaluateWifi(library.content.wifi, request.cards), rankingGroup,
     exceptions: [{ group: 'building' as const, overrides: building.exceptions }, ...entries.map(({ entry, timeline }) => ({ group: entry.group, overrides: timeline.exceptions }))],
     evaluatedAt: formatPerthTime(request.start), evaluatedUntil: formatPerthTime(building.end) };
 }
@@ -103,14 +105,15 @@ export type LibrarySearchResult = ReturnType<typeof evaluateLibrary>;
 
 export function searchLibraries(libraries: readonly LibraryRecord[], request: SearchRequest) {
   const results = libraries.filter((library) => library.status === 'published')
-    .filter((library) => !request.filters.institutions.length || request.filters.institutions.includes(library.institution))
+    .filter((library) => !request.filters.institutions.length || library.institution !== 'public' && request.filters.institutions.includes(library.institution))
     .filter((library) => (['quietStudy', 'groupStudy', 'wheelchairAccess'] as const).every((facility) => !request.filters[facility] || library.content.facilities[facility] === 'yes'))
     .map((library) => evaluateLibrary(library, request))
-    .filter((result) => result.opening.status !== 'unknown')
+    .filter((result) => result.opening.status !== 'unknown' || request.filters.publicAccess && result.publicAccessOnDay)
+    .filter((result) => !request.filters.publicAccess || result.publicAccessOnDay)
     .filter((result) => !request.filters.open24Hours || result.open24Hours.status === 'qualifies')
     .filter((result) => !request.filters.usableWifi || result.wifi.status === 'eligible');
   results.sort((a, b) => {
-    const priority = Number(a.rankingGroup !== 'matching-university-24-hours') - Number(b.rankingGroup !== 'matching-university-24-hours');
+    const priority = request.filters.publicAccess ? 0 : Number(a.rankingGroup !== 'matching-university-24-hours') - Number(b.rankingGroup !== 'matching-university-24-hours');
     if (priority) return priority;
     const distance = (a.distanceKm ?? Infinity) - (b.distanceKm ?? Infinity);
     if (distance !== 0 && !Number.isNaN(distance)) return distance;

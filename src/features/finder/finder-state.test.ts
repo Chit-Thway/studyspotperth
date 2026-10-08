@@ -2,6 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { finderUrl, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 
 describe('guest finder selections', () => {
+  it('carries and removes public access separately from university selections', () => {
+    const old = new URLSearchParams('institutions=public,uwa&cards=&offset=10&start=2026-10-08T14:00');
+    const migrated = new URL(finderUrl(old), 'https://example.invalid').searchParams;
+    expect(migrated.get('publicAccess')).toBe('true');
+    expect(migrated.get('institutions')).toBe('uwa');
+    expect(migrated.has('offset')).toBe(false);
+    expect(updateFinderParam(migrated, 'publicAccess', null).get('institutions')).toBe('uwa');
+    expect(resetFinderFilters(migrated).has('publicAccess')).toBe(false);
+    expect(old.get('institutions')).toBe('public,uwa');
+  });
   it('retired end times disappear from API, detail and return links without changing pagination or cards', () => {
     const params = new URLSearchParams('cards=&start=2026-10-07T14:00&offset=4&end=invalid&end=duplicate');
     expect(queryUrl(params, '/api/libraries')).toBe('/api/libraries?cards=&start=2026-10-07T14%3A00&offset=4');

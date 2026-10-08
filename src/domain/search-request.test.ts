@@ -14,6 +14,16 @@ describe('search request validation', () => {
     expect(request('cards=uwa,uwa,curtin')).toMatchObject({ cards: ['uwa', 'curtin'], filters: { institutions: [], open24Hours: false, usableWifi: false } });
     expect(request('institutions=uwa')).toMatchObject({ cards: [], filters: { institutions: ['uwa'] } });
   });
+  it('migrates public institution links into an independent access filter and resets their old page', () => {
+    expect(request('institutions=public,uwa&offset=10')).toMatchObject({ offset: 0, filters: { institutions: ['uwa'], publicAccess: true } });
+    expect(request('institutions=public&publicAccess=false')).toMatchObject({ filters: { institutions: [], publicAccess: false } });
+    expect(request('publicAccess=true&institutions=uwa,curtin')).toMatchObject({ filters: { institutions: ['uwa', 'curtin'], publicAccess: true } });
+    expect(() => request('institutions=public&institutions=uwa')).toThrow(SearchValidationError);
+    expect(() => request('institutions=public,unknown')).toThrow(SearchValidationError);
+    expect(() => request('publicAccess=yes')).toThrow(SearchValidationError);
+    expect(() => request('institutions=public&offset=-1')).toThrow(SearchValidationError);
+    expect(() => request('institutions=public&offset=1&offset=2')).toThrow(SearchValidationError);
+  });
   it.each([
     'start=2026-02-30T14:00', 'start=2026-10-02T24:00', 'start=2026-10-02T14:60', 'start=2026-10-02T14:00Z',
     'start=',

@@ -7,7 +7,7 @@ import { SignInPage } from '../features/account/SignInPage';
 import { ProfilePage } from '../features/account/ProfilePage';
 import { SavedPage } from '../features/account/SavedPage';
 import { internalReturnTo } from '../domain/account';
-import { withoutEndTime } from '../domain/search-request';
+import { normalizeSearchParams } from '../domain/search-request';
 import { finderUrl } from '../features/finder/finder-state';
 import { AdminDashboard, AdminNewPage, AdminEditPage } from '../features/admin/AdminPages';
 import { CookieConsent } from '../features/privacy/CookieConsent';
@@ -34,7 +34,7 @@ export function App() {
   useEffect(() => {
     if (!['/', '/saved', '/profile', '/sign-in'].includes(location.pathname) && !location.pathname.startsWith('/libraries/')) return;
     const current = new URLSearchParams(location.search);
-    const next = withoutEndTime(current);
+    const next = normalizeSearchParams(current);
     if (location.pathname === '/sign-in' && current.has('returnTo')) next.set('returnTo', internalReturnTo(current.get('returnTo')));
     if (next.toString() !== current.toString()) {
       void navigate({ pathname: location.pathname, search: next.toString() ? `?${next}` : '', hash: location.hash }, { replace: true });

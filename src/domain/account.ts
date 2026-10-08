@@ -1,5 +1,5 @@
 import type { UniversityCard } from './search-context';
-import { isUniversityCard, withoutEndTime } from './search-request';
+import { isUniversityCard, normalizeSearchParams } from './search-request';
 
 export interface Preferences { suburbId: string | null; cards: UniversityCard[] }
 export interface AccountProfile {
@@ -21,7 +21,7 @@ export function parsePreferences(value: unknown): Preferences {
 
 /** Explicit URL declarations override profile defaults, including an empty cards selection. */
 export function profileFinderParams(params: URLSearchParams, preferences?: Preferences): URLSearchParams {
-  const next = withoutEndTime(params);
+  const next = normalizeSearchParams(params);
   if (preferences) {
     if (!next.has('cards') && preferences.cards.length) next.set('cards', preferences.cards.join(','));
   }
@@ -30,7 +30,7 @@ export function profileFinderParams(params: URLSearchParams, preferences?: Prefe
 
 /** A filter change must not turn inherited defaults into explicit URL overrides. */
 export function preserveProfileDefaults(raw: URLSearchParams, effective: URLSearchParams, next: URLSearchParams): URLSearchParams {
-  const result = withoutEndTime(next);
+  const result = normalizeSearchParams(next);
   for (const key of ['cards', 'suburb']) {
     if (!raw.has(key) && result.get(key) === effective.get(key)) result.delete(key);
   }
@@ -41,6 +41,6 @@ export function internalReturnTo(value: string | null): string {
   if (!value || value.length > 3000 || value.includes('\\') || [...value].some((character) => character.charCodeAt(0) <= 32) || !value.startsWith('/') || value.startsWith('//')) return '/';
   const url = new URL(value, 'https://studyspot.invalid');
   if (url.origin !== 'https://studyspot.invalid' || !(/^\/$|^\/profile$|^\/saved$|^\/libraries\/[a-z0-9]+(?:-[a-z0-9]+)*$|^\/admin(?:\/libraries\/(?:new|[a-zA-Z0-9_-]+))?$/.test(url.pathname))) return '/';
-  const query = withoutEndTime(url.searchParams).toString();
+  const query = normalizeSearchParams(url.searchParams).toString();
   return `${url.pathname}${query ? `?${query}` : ''}`;
 }

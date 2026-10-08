@@ -17,6 +17,46 @@ const ids = (query = '', data = records) => search(query, data).results.map((res
 const week = (startMinute: number, endMinute: number) => Array.from({ length: 7 }, (_, weekday) => ({ weekday, startMinute, endMinute }));
 
 describe('search, access and ranking', () => {
+  it('public access includes university visitors and sorts by distance even for a UWA profile', () => {
+    expect(ids('publicAccess=true&cards=uwa')).toEqual(['fixture-public', 'fixture-uwa', 'fixture-late', 'fixture-overnight']);
+    expect(ids('publicAccess=true&cards=uwa')).not.toContain('fixture-curtin');
+    expect(search('institutions=public')).toEqual(search('publicAccess=true'));
+  });
+  it('ANDs public access with university selections instead of including municipal libraries', () => {
+    expect(ids('publicAccess=true&institutions=uwa')).toEqual(['fixture-uwa']);
+    expect(ids('institutions=public,uwa')).toEqual(['fixture-uwa']);
+    expect(ids('publicAccess=true&institutions=curtin')).toEqual([]);
+    const curtin = fixture('curtin');
+    curtin.content.schedule.access.unshift({ ...structuredClone(fixture('public').content.schedule.access[0]), group: 'public' });
+    expect(ids('publicAccess=true&institutions=uwa,curtin', [fixture('public'), fixture('uwa'), curtin]))
+      .toEqual(['fixture-uwa', 'fixture-curtin']);
+  });
+  it('uses confirmed public hours on the chosen day, even outside the current public window', () => {
+    expect(ids('publicAccess=true&institutions=uwa&start=2026-10-02T23:00')).toEqual(['fixture-uwa']);
+    const uwa = fixture('uwa');
+    uwa.content.schedule.access[0].overrides.push({ id: 'closed-public', kind: 'date', startDate: '2026-10-02', endDate: '2026-10-02',
+      status: 'closed', intervals: [], sourceId: 'fictional-source' });
+    expect(ids('publicAccess=true', [uwa])).toEqual([]);
+    expect(ids('cards=uwa&open24Hours=true', [uwa])).toEqual(['fixture-uwa']);
+    uwa.content.schedule.access[0].overrides[0].status = 'unknown';
+    expect(ids('publicAccess=true', [uwa])).toEqual([]);
+  });
+  it('does not mistake a municipal institution label for confirmed public entry', () => {
+    const municipal = fixture('public');
+    municipal.content.schedule.access[0].group = 'curtin';
+    expect(ids('publicAccess=true', [municipal])).toEqual([]);
+  });
+  it('includes a confirmed public slot on the day even when other hours on that day are unknown', () => {
+    const library = fixture('overnight');
+    for (const schedule of [library.content.schedule.building, library.content.schedule.access[0]]) {
+      schedule.status = 'unknown'; schedule.recurring = [];
+      schedule.overrides = [{ id: 'confirmed-night', kind: 'date', startDate: '2026-10-02', endDate: '2026-10-02', status: 'hours',
+        intervals: [{ weekday: 5, startMinute: 1200, endMinute: 1800 }], sourceId: 'fictional-source' }];
+    }
+    const query = 'start=2026-10-03T14:00';
+    expect(search(`${query}&publicAccess=true`, [library]).results[0]).toMatchObject({ publicAccessOnDay: true, opening: { status: 'unknown' } });
+    expect(ids(query, [library])).toEqual([]);
+  });
   it('ranks declared UWA 24/7 options first without hiding other open institutions', () => {
     const result = search('cards=uwa');
     expect(result.results.slice(0, 2).map((item) => item.library.id)).toEqual(['fixture-uwa', 'fixture-semester']);
