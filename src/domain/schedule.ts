@@ -20,11 +20,25 @@ export interface CalendarSchedule {
   sourceId: string | null;
 }
 
-export function assertLocalDate(date: string): void {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(`${date}T00:00:00Z`))
-    || new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) !== date) {
+interface LocalDateParts { readonly timestamp: number; readonly weekday: number }
+// Pure civil-date metadata is independent of mutable library schedules.
+const dates = new Map<string, LocalDateParts>();
+export function localDateParts(date: string): LocalDateParts {
+  const cached = dates.get(date);
+  if (cached) return cached;
+  const timestamp = Date.parse(`${date}T00:00:00Z`);
+  const value = new Date(timestamp);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(timestamp)
+    || value.toISOString().slice(0, 10) !== date) {
     throw new Error('Expected a valid YYYY-MM-DD date.');
   }
+  if (dates.size >= 256) dates.delete(dates.keys().next().value!);
+  const parts = { timestamp, weekday: value.getUTCDay() };
+  dates.set(date, parts);
+  return parts;
+}
+export function assertLocalDate(date: string): void {
+  localDateParts(date);
 }
 
 export function assertInterval(interval: MinuteInterval): void {
@@ -86,14 +100,27 @@ export function validateCalendar(schedule: CalendarSchedule): void {
  * The returned intervals start on date. Consumers must clip overnight carry at
  * the next day's closures/overrides instead of treating this as an open-now check.
  */
-export function selectScheduleForDate(schedule: CalendarSchedule, date: string) {
-  assertLocalDate(date);
-  validateCalendar(schedule);
+function selectValidatedSchedule(schedule: CalendarSchedule, date: string) {
   const applicable = schedule.overrides.filter((override) => override.startDate <= date && date <= override.endDate);
   const override = applicable.find((item) => item.kind === 'date') ?? applicable.find((item) => item.kind === 'period');
-  const weekday = new Date(`${date}T00:00:00Z`).getUTCDay();
+  const weekday = localDateParts(date).weekday;
   const status = override ? (override.status === 'hours' ? 'known' : override.status) : schedule.status;
   const intervals = status === 'known'
     ? mergeIntervals((override?.intervals ?? schedule.recurring).filter((interval) => interval.weekday === weekday)) : [];
   return { status, intervals, sourceId: override?.sourceId ?? schedule.sourceId, overrideId: override?.id ?? null };
+}
+
+export function selectScheduleForDate(schedule: CalendarSchedule, date: string) {
+  assertLocalDate(date);
+  validateCalendar(schedule);
+  return selectValidatedSchedule(schedule, date);
+}
+
+/** Validate once for a synchronous multi-day evaluation, never cache schedules. */
+export function calendarSelector(schedule: CalendarSchedule) {
+  validateCalendar(schedule);
+  return (date: string) => {
+    assertLocalDate(date);
+    return selectValidatedSchedule(schedule, date);
+  };
 }

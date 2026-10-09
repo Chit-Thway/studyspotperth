@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatPerthTime, parsePerthTime, perthMidnight } from './perth-time';
+import { formatPerthTime, parsePerthTime, perthMidnight, shiftDate } from './perth-time';
 import { calendarTimeline, intervalAt } from './availability';
 import type { CalendarSchedule } from './schedule';
 import { dayHoursLabel } from '../features/libraries/presentation';
@@ -11,6 +11,33 @@ const daily = (startMinute = 0, endMinute = 1440): CalendarSchedule => ({ status
   recurring: Array.from({ length: 7 }, (_, weekday) => ({ weekday, startMinute, endMinute })) });
 
 describe('Perth historical offsets and calendar days', () => {
+  it('matches IANA formatting at midnight and on both sides of historical transitions', () => {
+    const reference = new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Perth', year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZoneName: 'longOffset' });
+    for (const utc of ['2000-01-01T00:00:00Z', '2006-12-02T17:59:59Z', '2006-12-02T18:00:00Z', '2006-12-03T15:00:00Z',
+      '2007-03-24T17:59:59Z', '2007-03-24T18:00:00Z', '2007-10-27T18:00:00Z', '2008-03-29T18:00:00Z',
+      '2008-10-25T18:00:00Z', '2009-03-28T18:00:00Z', '2026-10-09T16:00:00.123Z', '2100-12-31T15:59:59Z']) {
+      const instant = Date.parse(utc);
+      const parts = reference.formatToParts(instant);
+      const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === type)!.value;
+      expect(formatPerthTime(instant)).toBe(`${part('year')}-${part('month')}-${part('day')}T${part('hour')}:${part('minute')}:${part('second')}${part('timeZoneName').replace('GMT', '')}`);
+    }
+  });
+  it('retains DST and date validation after bounded caches evict old dates', () => {
+    for (let day = 0; day < 300; day++) formatPerthTime(perthMidnight(shiftDate('2098-01-01', day)));
+    expect(parsePerthTime('2007-03-25T02:30')).toBe(Date.parse('2007-03-24T17:30:00Z'));
+    expect(() => parsePerthTime('2006-12-03T02:30')).toThrow();
+    expect(() => perthMidnight('2026-02-30')).toThrow();
+  });
+  it('revalidates changed schedules rather than caching old library facts', () => {
+    const schedule = daily(540, 1020);
+    expect(calendarTimeline(schedule, '2026-10-09', 1).intervals[0].start).toBe(parsePerthTime('2026-10-09T09:00'));
+    schedule.recurring = daily().recurring;
+    const fullDay = calendarTimeline(schedule, '2026-10-09', 1);
+    expect(fullDay.intervals).toEqual([{ start: fullDay.start, end: fullDay.end }]);
+    schedule.recurring[0].endMinute = -1;
+    expect(() => calendarTimeline(schedule, '2026-10-09', 1)).toThrow();
+  });
   it.each([
     ['2000-01-01T12:00', '2000-01-01T04:00:00Z', '+08:00'],
     ['2007-01-01T12:00', '2007-01-01T03:00:00Z', '+09:00'],

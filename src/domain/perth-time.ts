@@ -1,4 +1,4 @@
-import { assertLocalDate, PERTH_TIME_ZONE } from './schedule';
+import { assertLocalDate, localDateParts, PERTH_TIME_ZONE } from './schedule';
 
 export const MINUTE_MS = 60_000;
 export const DAY_MS = 1440 * MINUTE_MS;
@@ -8,16 +8,37 @@ const formatter = new Intl.DateTimeFormat('en-CA', {
   timeZoneName: 'longOffset',
 });
 
-function partsAt(timestamp: number) {
-  const parts = formatter.formatToParts(timestamp);
-  return (kind: Intl.DateTimeFormatPartTypes) => parts.find((item) => item.type === kind)!.value;
+interface Offset { milliseconds: number; label: string }
+// Bounded, deterministic timezone data only: no schedules, user data or I/O.
+const instantOffsets = new Map<number, Offset>();
+const dayOffsets = new Map<number, readonly Offset[]>();
+function cacheValue<T>(cache: Map<number, T>, key: number, value: T, limit: number): T {
+  if (cache.size >= limit) cache.delete(cache.keys().next().value!);
+  cache.set(key, value);
+  return value;
 }
 
-function offsetAt(timestamp: number): number {
-  const offset = partsAt(timestamp)('timeZoneName').replace('GMT', '');
-  if (!offset) return 0;
-  const [, sign, hours, minutes] = /^([+-])(\d{2}):(\d{2})$/.exec(offset)!;
-  return (Number(hours) * 60 + Number(minutes)) * MINUTE_MS * (sign === '-' ? -1 : 1);
+function offsetAt(timestamp: number): Offset {
+  const cached = instantOffsets.get(timestamp);
+  if (cached) return cached;
+  const label = formatter.formatToParts(timestamp).find((part) => part.type === 'timeZoneName')!.value.replace('GMT', '') || '+00:00';
+  const [, sign, hours, minutes, seconds] = /^([+-])(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(label)!;
+  const milliseconds = ((Number(hours) * 60 + Number(minutes)) * MINUTE_MS + Number(seconds ?? 0) * 1000) * (sign === '-' ? -1 : 1);
+  return cacheValue(instantOffsets, timestamp, { milliseconds, label }, 512);
+}
+
+function offsetsForDay(timestamp: number): readonly Offset[] {
+  const day = Math.floor(timestamp / DAY_MS);
+  const cached = dayOffsets.get(day);
+  if (cached) return cached;
+  const offsets = new Map<number, Offset>();
+  // These UTC midnights bracket the Perth local day (+08/+09 in the supported
+  // range). Adjacent dates reuse the same probes, including DST transitions.
+  for (const delta of [-1, 0, 1]) {
+    const offset = offsetAt((day + delta) * DAY_MS);
+    offsets.set(offset.milliseconds, offset);
+  }
+  return cacheValue(dayOffsets, day, [...offsets.values()], 128);
 }
 
 /** Find both possible offsets around a transition using the installed IANA data.
@@ -25,10 +46,11 @@ function offsetAt(timestamp: number): number {
  * Schedule starts use the earlier occurrence, ends the later occurrence; skipped
  * schedule boundaries move forward by the clock jump (compatible disambiguation).
  */
-function localTimestamp(value: string, boundary: 'input' | 'start' | 'end'): number {
-  const wall = Date.parse(`${value}:00Z`);
-  const offsets = new Set([-DAY_MS, 0, DAY_MS].map((delta) => offsetAt(wall + delta)));
-  const candidates = [...offsets].map((offset) => wall - offset).sort((a, b) => a - b);
+function localTimestamp(wall: number, boundary: 'input' | 'start' | 'end'): number {
+  const offsets = offsetsForDay(wall);
+  if (offsets.length === 1) return wall - offsets[0].milliseconds;
+  const value = new Date(wall).toISOString().slice(0, 16);
+  const candidates = offsets.map((offset) => wall - offset.milliseconds).sort((a, b) => a - b);
   const matches = candidates.filter((timestamp) => formatPerthTime(timestamp).slice(0, 16) === value);
   if (matches.length) return boundary === 'end' ? matches.at(-1)! : matches[0];
   if (boundary !== 'input') {
@@ -47,36 +69,32 @@ export function parsePerthTime(value: string): number {
   if (hour > 23 || minute > 59 || Number(value.slice(0, 4)) < 2000 || Number(value.slice(0, 4)) > 2100) {
     throw new Error('Use a valid Perth date from 2000–2100 and time from 00:00–23:59.');
   }
-  return localTimestamp(value, 'input');
+  return localTimestamp(Date.parse(`${value}:00Z`), 'input');
 }
 
 export function formatPerthTime(timestamp: number): string {
   if (!Number.isFinite(timestamp)) throw new Error('Invalid clock timestamp.');
-  const part = partsAt(timestamp);
-  const offset = part('timeZoneName').replace('GMT', '') || '+00:00';
-  return `${part('year')}-${part('month')}-${part('day')}T${part('hour')}:${part('minute')}:${part('second')}${offset}`;
+  const offsets = offsetsForDay(timestamp);
+  const offset = offsets.length === 1 ? offsets[0] : offsetAt(timestamp);
+  return `${new Date(timestamp + offset.milliseconds).toISOString().slice(0, 19)}${offset.label}`;
 }
 
 export function shiftDate(date: string, days: number): string {
-  assertLocalDate(date);
-  return new Date(Date.parse(`${date}T00:00:00Z`) + days * DAY_MS).toISOString().slice(0, 10);
+  return new Date(localDateParts(date).timestamp + days * DAY_MS).toISOString().slice(0, 10);
 }
 
 export function perthMidnight(date: string): number {
-  assertLocalDate(date);
-  return localTimestamp(`${date}T00:00`, 'start');
+  return localTimestamp(localDateParts(date).timestamp, 'start');
 }
 
 /** Calendar minutes, including midnight at minute 1440, rather than elapsed time. */
 export function perthScheduleTime(date: string, minute: number, boundary: 'start' | 'end'): number {
-  const localDate = shiftDate(date, Math.floor(minute / 1440));
-  const remainder = minute % 1440;
-  const time = `${Math.floor(remainder / 60).toString().padStart(2, '0')}:${(remainder % 60).toString().padStart(2, '0')}`;
-  return localTimestamp(`${localDate}T${time}`, boundary);
+  if (!Number.isInteger(minute) || minute < 0 || minute > 2880) throw new Error('Use valid calendar minutes.');
+  return localTimestamp(localDateParts(date).timestamp + minute * MINUTE_MS, boundary);
 }
 
 export function perthCalendarMinute(timestamp: number, date: string): number {
   const local = formatPerthTime(timestamp);
-  const days = (Date.parse(`${local.slice(0, 10)}T00:00:00Z`) - Date.parse(`${date}T00:00:00Z`)) / DAY_MS;
+  const days = (localDateParts(local.slice(0, 10)).timestamp - localDateParts(date).timestamp) / DAY_MS;
   return days * 1440 + Number(local.slice(11, 13)) * 60 + Number(local.slice(14, 16));
 }
