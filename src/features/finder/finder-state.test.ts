@@ -1,7 +1,19 @@
 import { describe, expect, it } from 'vitest';
-import { finderUrl, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
+import { finderRequestParams, finderUrl, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 
 describe('guest finder selections', () => {
+  it('requests ten cards, including old larger-page links, and preserves return-link state', () => {
+    for (const query of ['', 'limit=50', 'limit=100', 'limit=2']) {
+      const original = new URLSearchParams(`${query}&offset=20&cards=notre-dame&publicAccess=true`);
+      expect(finderRequestParams(original).get('limit')).toBe('10');
+      expect(finderRequestParams(original).get('offset')).toBe('20');
+      expect(new URL(finderUrl(original, '/libraries/example'), 'https://example.invalid').searchParams.toString()).toBe(original.toString());
+      expect(original.get('limit')).toBe(new URLSearchParams(query).get('limit'));
+    }
+    for (const query of ['limit=0', 'limit=101', 'limit=bad', 'limit=10&limit=50']) {
+      expect(finderRequestParams(new URLSearchParams(query)).getAll('limit')).toEqual(new URLSearchParams(query).getAll('limit'));
+    }
+  });
   it('carries and removes public access separately from university selections', () => {
     const old = new URLSearchParams('institutions=public,uwa&cards=&offset=10&start=2026-10-08T14:00');
     const migrated = new URL(finderUrl(old), 'https://example.invalid').searchParams;

@@ -1,4 +1,6 @@
-export type UniversityCard = 'uwa' | 'curtin' | 'ecu' | 'murdoch';
+export const UNIVERSITY_CARDS = ['uwa', 'curtin', 'ecu', 'murdoch', 'notre-dame'] as const;
+export const INSTITUTION_CODES = ['public', ...UNIVERSITY_CARDS] as const;
+export type UniversityCard = typeof UNIVERSITY_CARDS[number];
 export type Institution = UniversityCard | 'public';
 
 export interface AccessProfile {

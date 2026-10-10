@@ -1,12 +1,13 @@
 import { sql } from 'drizzle-orm';
 import { check, index, integer, primaryKey, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 import type { LibraryContent } from '../../src/domain/library';
+import { INSTITUTION_CODES } from '../../src/domain/search-context';
 import { user } from './auth-schema';
 
 export const institutions = sqliteTable('institution', {
-  id: text('id', { enum: ['public', 'uwa', 'curtin', 'ecu', 'murdoch'] }).primaryKey(),
+  id: text('id', { enum: INSTITUTION_CODES }).primaryKey(),
   name: text('name').notNull(),
-}, (table) => [check('institution_code', sql`${table.id} IN ('public','uwa','curtin','ecu','murdoch')`)]);
+}, (table) => [check('institution_code', sql`${table.id} IN ('public','uwa','curtin','ecu','murdoch','notre-dame')`)]);
 
 export const suburbs = sqliteTable('suburb', {
   id: text('id').primaryKey(), name: text('name').notNull(),

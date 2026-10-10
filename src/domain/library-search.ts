@@ -1,7 +1,7 @@
 import type { EntrySchedule, LibraryRecord } from './library';
 import type { SearchRequest } from './search-request';
 import type { UniversityCard } from './search-context';
-import { calendarTimeline, continuousWindow, intersectIntervals, intervalAt, mergeTimeIntervals } from './availability';
+import { createCalendarTimelineReader, continuousWindow, intersectIntervals, intervalAt, mergeTimeIntervals } from './availability';
 import { formatPerthTime, perthMidnight, shiftDate } from './perth-time';
 import { evaluateWifi } from './wifi';
 import type { RequirementMatch } from './wifi';
@@ -36,19 +36,20 @@ export function approximateDistanceKm(origin: { latitude: number; longitude: num
 }
 
 /** Both search cards and details use this explanation; detail remains readable when closed. */
-export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) {
+export function evaluateLibrary(library: LibraryRecord, request: SearchRequest,
+  timeline = createCalendarTimelineReader(formatPerthTime(request.start).slice(0, 10))) {
   const date = formatPerthTime(request.start).slice(0, 10);
-  const building = calendarTimeline(library.content.schedule.building, date);
+  const building = timeline(library.content.schedule.building);
   const buildingWindow = continuousWindow(building.intervals, request.start, building.end, building.unknown);
   const openingStatus: OpeningStatus = buildingWindow ? 'open' : intervalAt(building.unknown, request.start) ? 'unknown' : 'closed';
   const entries = library.content.schedule.access.map((entry) => {
-    const timeline = calendarTimeline(entry, date);
-    const intervals = intersectIntervals(building.intervals, timeline.intervals);
+    const entryTimeline = timeline(entry);
+    const intervals = intersectIntervals(building.intervals, entryTimeline.intervals);
     // Availability is uncertain only where neither schedule definitely forbids entry.
-    const unknown = mergeTimeIntervals([...intersectIntervals(building.intervals, timeline.unknown),
-      ...intersectIntervals(building.unknown, [...timeline.intervals, ...timeline.unknown])]);
+    const unknown = mergeTimeIntervals([...intersectIntervals(building.intervals, entryTimeline.unknown),
+      ...intersectIntervals(building.unknown, [...entryTimeline.intervals, ...entryTimeline.unknown])]);
     const match = entryMatch(entry, request.cards);
-    return { entry, timeline, intervals, unknown, match };
+    return { entry, timeline: entryTimeline, intervals, unknown, match };
   });
   const matched = entries.filter(({ match }) => match === 'public' || match === 'matches-profile');
   const personalIntervals = mergeTimeIntervals(matched.flatMap(({ intervals }) => intervals));
@@ -104,10 +105,11 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest) 
 export type LibrarySearchResult = ReturnType<typeof evaluateLibrary>;
 
 export function searchLibraries(libraries: readonly LibraryRecord[], request: SearchRequest) {
+  const timeline = createCalendarTimelineReader(formatPerthTime(request.start).slice(0, 10));
   const results = libraries.filter((library) => library.status === 'published')
     .filter((library) => !request.filters.institutions.length || library.institution !== 'public' && request.filters.institutions.includes(library.institution))
     .filter((library) => (['quietStudy', 'groupStudy', 'wheelchairAccess'] as const).every((facility) => !request.filters[facility] || library.content.facilities[facility] === 'yes'))
-    .map((library) => evaluateLibrary(library, request))
+    .map((library) => evaluateLibrary(library, request, timeline))
     .filter((result) => result.opening.status !== 'unknown' || request.filters.publicAccess && result.publicAccessOnDay)
     .filter((result) => !request.filters.publicAccess || result.publicAccessOnDay)
     .filter((result) => !request.filters.open24Hours || result.open24Hours.status === 'qualifies')

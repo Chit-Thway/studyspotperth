@@ -1,4 +1,5 @@
 import type { UniversityCard } from './search-context';
+import { UNIVERSITY_CARDS } from './search-context';
 import { isUniversityCard, normalizeSearchParams } from './search-request';
 
 export interface Preferences { suburbId: string | null; cards: UniversityCard[] }
@@ -15,7 +16,7 @@ export function parsePreferences(value: unknown): Preferences {
   const input = value as Record<string, unknown>;
   if (Object.keys(input).some((key) => !['suburbId', 'cards'].includes(key))) throw new Error('Unsupported preference field.');
   if (input.suburbId !== null && (typeof input.suburbId !== 'string' || input.suburbId.length > 120 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(input.suburbId))) throw new Error('Select an available suburb.');
-  if (!Array.isArray(input.cards) || input.cards.length > 4 || !input.cards.every((card: unknown) => typeof card === 'string' && isUniversityCard(card))) throw new Error('Select supported university cards.');
+  if (!Array.isArray(input.cards) || input.cards.length > UNIVERSITY_CARDS.length || !input.cards.every((card: unknown) => typeof card === 'string' && isUniversityCard(card))) throw new Error('Select supported university cards.');
   return { suburbId: input.suburbId, cards: [...new Set(input.cards)] };
 }
 

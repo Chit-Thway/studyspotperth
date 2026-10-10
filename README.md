@@ -12,6 +12,8 @@ Google sign-in lets visitors save libraries and keep declared university cards i
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
+The finder shows ten cards per page. [Catalogue maintenance](docs/catalogue-import.md) describes the additive draft importer, shared Wi-Fi profiles, facility evidence and 82/100-record capacity checks.
+
 Authorised administrators can edit library details, photos, facilities, Wi-Fi and opening hours, add closures or date ranges, and preview changes before publishing. The public version stays unchanged while a draft is edited.
 
 The search backend evaluates Perth opening hours, entry rules, 24/7 access, Wi-Fi, and distance for the selected date and time. Declared university cards personalise ranking and requirement labels; only selected filters restrict results.

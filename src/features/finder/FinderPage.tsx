@@ -10,7 +10,7 @@ import type { SearchResponse } from '../libraries/api';
 import { LibraryApiError } from '../libraries/api';
 import { useLibraryApi } from '../libraries/use-library-api';
 import { FilterPanel } from './FilterPanel';
-import { queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
+import { finderRequestParams, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 import styles from './FinderPage.module.css';
 import { useUserLocation } from '../location/use-location';
 import { useFinderPagination } from './use-finder-pagination';
@@ -22,7 +22,7 @@ export function FinderPage() {
   const effective = profileFinderParams(rawParams, account?.preferences);
   const params = useFinderPagination(effective, setParams, location.coordinates,
     location.ready && (!accountLoading || Boolean(account) || rawParams.has('cards')));
-  const resource = useLibraryApi<SearchResponse>(queryUrl(params, '/api/libraries'), !params.has('start'), location.coordinates, location.ready);
+  const resource = useLibraryApi<SearchResponse>(queryUrl(finderRequestParams(params), '/api/libraries'), !params.has('start'), location.coordinates, location.ready);
   const [cardsExpanded, setCardsExpanded] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const filterButton = useRef<HTMLButtonElement>(null);

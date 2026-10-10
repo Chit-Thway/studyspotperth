@@ -12,7 +12,7 @@ import { useLibraryApi } from '../libraries/use-library-api';
 import { LibraryDetailContent } from '../libraries/LibraryDetailPage';
 import type { DetailResponse, OriginsResponse } from '../libraries/api';
 import { LibraryApiError } from '../libraries/api';
-import { INSTITUTION_LABELS } from '../libraries/presentation';
+import { INSTITUTION_LABELS, UNIVERSITY_CARDS } from '../libraries/presentation';
 import { Field, Choice } from './Fields';
 import { ContentEditor } from './ContentEditor';
 import { UnsavedChangesDialog } from './UnsavedChangesDialog';
@@ -115,7 +115,7 @@ function LibraryEditor({ initial }: { initial?: AdminLibrary }) {
         </div>
         {saved && <fieldset className={styles.section}><legend>Draft preview</legend><div className={styles.row}>
           <Field label="Preview time (Perth)" type="datetime-local" value={at} onChange={(value) => { setAt(value); setPreview(null); }} />
-          <Choice label="Visitor card" value={cards} options={[["", 'Guest'], ["uwa", 'UWA'], ["curtin", 'Curtin'], ["ecu", 'ECU'], ["murdoch", 'Murdoch']]} onChange={(value) => { setCards(value); setPreview(null); }} />
+          <Choice label="Visitor card" value={cards} options={[["", 'Guest'], ...UNIVERSITY_CARDS.map((card) => [card, INSTITUTION_LABELS[card]] as const)]} onChange={(value) => { setCards(value); setPreview(null); }} />
         </div><button className={styles.secondary} type="button" onClick={() => { void run('preview'); }}>Preview draft</button><p className={styles.note}>Preview includes unsaved edits. 24/7 is calculated from building and entry hours.</p></fieldset>}
       </fieldset>
     </form>

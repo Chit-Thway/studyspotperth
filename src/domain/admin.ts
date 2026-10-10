@@ -1,6 +1,6 @@
 import type { LibraryContent, LibraryRecord } from './library';
 import type { CalendarSchedule, WeeklyInterval } from './schedule';
-import { parseLibraryContent } from './parse-library';
+import { parseLibraryContent } from './parse-library.ts';
 
 export interface AdminLibrary {
   record: LibraryRecord;

@@ -32,17 +32,22 @@ await cp(resolve('tests/runtime/account-check.ts'), `${workDir}/functions/api/_a
 await cp(resolve('tests/runtime/admin-check.ts'), `${workDir}/functions/api/_admin-check.ts`);
 await cp(resolve('tests/runtime/launch-data-check.ts'), `${workDir}/functions/api/_launch-check.ts`);
 await cp(resolve('tests/runtime/usage-check.ts'), `${workDir}/functions/api/_usage-check.ts`);
+await cp(resolve('tests/runtime/catalogue-scale-check.ts'), `${workDir}/functions/api/_catalogue-scale-check.ts`);
 await cp(resolve('dist'), `${workDir}/dist`, { recursive: true });
 await writeFile(`${workDir}/package.json`, JSON.stringify({ name: 'studyspotperth-runtime-check', private: true, type: 'module' }));
 const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
 config.pages_build_output_dir = './dist';
 config.vars.AUTH_BASE_URL = origin;
+delete config.env;
+// Verification must never inherit a production/remote database binding.
+config.d1_databases = config.d1_databases.map((database) => ({ ...database, remote: false,
+  database_id: '00000000-0000-0000-0000-000000000000' }));
 await writeFile(`${workDir}/wrangler.jsonc`, JSON.stringify(config));
 // Synthetic credentials verify local binding loading without contacting Google.
 await writeFile(`${workDir}/.dev.vars`, `AUTH_SECRET=${randomBytes(32).toString('hex')}\nGOOGLE_CLIENT_ID=runtime-check-client\nGOOGLE_CLIENT_SECRET=runtime-check-secret\n`, { mode: 0o600 });
 await writeFile(`${workDir}/fixtures.sql`, createFixtureSql());
 const wranglerPath = resolve('node_modules/wrangler/bin/wrangler.js');
-const runtimeEnv = { ...process.env, WRANGLER_SEND_METRICS: 'false', BROWSER: 'none', CI: '1' };
+const runtimeEnv = { ...process.env, WRANGLER_SEND_METRICS: 'false', WRANGLER_LOG_PATH: `${workDir}/wrangler-logs`, BROWSER: 'none', CI: '1' };
 // Run twice to prove migration replay and deterministic fixture loading are safe.
 for (let replay = 0; replay < 2; replay++) {
   execFileSync(process.execPath, [wranglerPath, 'd1', 'migrations', 'apply', 'studyspotperth', '--local', '--persist-to', `${workDir}/state`],
@@ -157,6 +162,9 @@ try {
   assert.equal((await fetch(`${origin}/api/admin/usage`, { headers: { Cookie: adminCookie } })).status, 200);
   const noConsent = await fetch(`${origin}/api/usage`, { method: 'POST', headers: { Origin: origin } });
   assert.equal(noConsent.status, 204);
+  const scaleCheck = await fetch(`${origin}/api/_catalogue-scale-check`);
+  assert.equal(scaleCheck.status, 200, await scaleCheck.clone().text());
+  console.log(`Passed: catalogue capacity checks ${JSON.stringify(await scaleCheck.json())}`);
   console.log('Passed: optional-cookie consent, anonymous/account separation, duplicate visits/events, returning estimates, retention, and protected usage summaries.');
   console.log('Passed: 13 public launch listings, repeatable local import, detail routes, 24/7 ranking and explicit UWA filtering.');
   console.log('Passed: admin permission/CSRF checks, concurrent drafts, preview, publish/unpublish, closures and overrides; local Google credential loading, authorization URL/callback and disabled-provider handling; account ownership, preferences/favourites, session signatures/expiry/revocation/renewal, CSRF and server roles; search/detail regression matrix; fixture exclusion; migration replay; publication and rollback; Pages/D1/auth runtime; SPA and assets. Live Google sign-in is checked separately.');

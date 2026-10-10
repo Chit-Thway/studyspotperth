@@ -1,4 +1,14 @@
-import { FINDER_QUERY_FIELDS, normalizeSearchParams } from '../../domain/search-request';
+import { FINDER_PAGE_SIZE, FINDER_QUERY_FIELDS, normalizeSearchParams } from '../../domain/search-request';
+
+/** The finder always shows ten cards; invalid query values still reach API validation. */
+export function finderRequestParams(params: URLSearchParams) {
+  const next = normalizeSearchParams(params);
+  const limits = next.getAll('limit');
+  if (!limits.length || limits.length === 1 && /^\d+$/.test(limits[0]) && Number(limits[0]) >= 1 && Number(limits[0]) <= 100) {
+    next.set('limit', FINDER_PAGE_SIZE.toString());
+  }
+  return next;
+}
 
 const restrictiveFields = ['institutions', 'publicAccess', 'open24Hours', 'usableWifi', 'quietStudy', 'groupStudy', 'wheelchairAccess', 'start', 'offset', 'limit'];
 

@@ -1,6 +1,7 @@
 import type { CalendarSchedule, ScheduleOverride, WeeklyInterval } from './schedule.ts';
 import { assertLocalDate, PERTH_TIME_ZONE, validateCalendar } from './schedule.ts';
 import type { LibraryContent, SourceRecord } from './library.ts';
+import { UNIVERSITY_CARDS } from './search-context.ts';
 
 function object(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Expected an object.');
@@ -45,7 +46,7 @@ function date(value: unknown): string | null {
   assertLocalDate(result);
   return result;
 }
-const cards = ['uwa', 'curtin', 'ecu', 'murdoch'] as const;
+const cards = UNIVERSITY_CARDS;
 const factStatuses = ['yes', 'no', 'unknown'] as const;
 
 function weeklyInterval(value: unknown): WeeklyInterval {

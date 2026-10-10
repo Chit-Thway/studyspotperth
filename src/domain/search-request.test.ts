@@ -6,11 +6,14 @@ const clock = Date.parse('2026-10-02T06:00:30Z');
 const request = (query: string) => parseSearchRequest(new URLSearchParams(query), clock);
 describe('search request validation', () => {
   it('uses an explicit clock for open-now, in Perth regardless of host timezone', () => {
+    expect(request('').limit).toBe(10);
     expect(request('').start).toBe(clock);
     expect(formatPerthTime(clock)).toBe('2026-10-02T14:00:30+08:00');
     expect(parsePerthTime('2026-10-02T14:00')).toBe(Date.parse('2026-10-02T06:00:00Z'));
   });
   it('never turns declared cards into hard filters', () => {
+    expect(request('cards=notre-dame')).toMatchObject({ cards: ['notre-dame'], filters: { institutions: [] } });
+    expect(request('institutions=notre-dame')).toMatchObject({ cards: [], filters: { institutions: ['notre-dame'] } });
     expect(request('cards=uwa,uwa,curtin')).toMatchObject({ cards: ['uwa', 'curtin'], filters: { institutions: [], open24Hours: false, usableWifi: false } });
     expect(request('institutions=uwa')).toMatchObject({ cards: [], filters: { institutions: ['uwa'] } });
   });

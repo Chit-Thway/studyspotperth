@@ -5,7 +5,8 @@ import { Field, Choice, Check, Remove, Section, SourceChoice } from './Fields';
 import { ScheduleEditor } from './ScheduleEditor';
 import styles from './Admin.module.css';
 
-const CARDS = [['uwa', 'UWA'], ['curtin', 'Curtin'], ['ecu', 'ECU'], ['murdoch', 'Murdoch']] as const;
+import { INSTITUTION_LABELS, UNIVERSITY_CARDS } from '../libraries/presentation';
+const CARDS = UNIVERSITY_CARDS.map((card) => [card, INSTITUTION_LABELS[card]] as const);
 export function ContentEditor({ content, onChange, origins }: { content: LibraryContent; onChange: (value: LibraryContent) => void; origins: SearchOrigin[] }) {
   const update = (change: Partial<LibraryContent>) => onChange({ ...content, ...change });
   const source = (index: number, change: Partial<SourceRecord>) => update({ sources: content.sources.map((item, at) => at === index ? { ...item, ...change } : item) });

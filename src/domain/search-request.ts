@@ -1,7 +1,9 @@
 import type { Institution, SearchFilters, UniversityCard } from './search-context';
+import { INSTITUTION_CODES, UNIVERSITY_CARDS } from './search-context';
 import { formatPerthTime, parsePerthTime } from './perth-time';
 
 export interface SearchOrigin { id: string; name: string; latitude: number; longitude: number }
+export const FINDER_PAGE_SIZE = 10;
 /** Approximate CBD reference point, not a location or opening-hours claim for a library. */
 export const DEFAULT_ORIGIN: SearchOrigin = { id: 'perth-cbd', name: 'Perth CBD', latitude: -31.9523, longitude: 115.8613 };
 export interface SearchRequest {
@@ -16,7 +18,7 @@ export class SearchValidationError extends Error {
   constructor(public readonly field: string, message: string) { super(message); }
 }
 export function isUniversityCard(value: string): value is UniversityCard {
-  return value === 'uwa' || value === 'curtin' || value === 'ecu' || value === 'murdoch';
+  return UNIVERSITY_CARDS.some((card) => card === value);
 }
 export function isInstitution(value: string): value is Institution { return value === 'public' || isUniversityCard(value); }
 
@@ -30,7 +32,7 @@ export function normalizeSearchParams(params: URLSearchParams): URLSearchParams 
   const selected = next.getAll('institutions');
   if (selected.length === 1) {
     const institutions = selected[0].split(',');
-    if (institutions.length <= 5 && institutions.every(isInstitution) && institutions.includes('public')) {
+    if (institutions.length <= INSTITUTION_CODES.length && institutions.every(isInstitution) && institutions.includes('public')) {
       const universities = institutions.filter((institution) => institution !== 'public');
       if (universities.length) next.set('institutions', universities.join(',')); else next.delete('institutions');
       if (!next.has('publicAccess')) next.set('publicAccess', 'true');
@@ -68,7 +70,7 @@ export function parseSearchRequest(rawParams: URLSearchParams, clock: number, or
     const value = params.get(field);
     if (value === null || value === '') return [];
     const items = value.split(',');
-    if (items.length > 5 || !items.every(accepts)) throw new SearchValidationError(field, 'Use supported institution codes separated by commas.');
+    if (items.length > INSTITUTION_CODES.length || !items.every(accepts)) throw new SearchValidationError(field, 'Use supported institution codes separated by commas.');
     return [...new Set(items)];
   };
   const integer = (field: string, fallback: number, min: number, max: number) => {
@@ -80,7 +82,7 @@ export function parseSearchRequest(rawParams: URLSearchParams, clock: number, or
   if (params.has('suburb') && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(params.get('suburb')!)) {
     throw new SearchValidationError('suburb', 'Use a valid suburb ID.');
   }
-  return { start, origin, cards: list('cards', isUniversityCard), limit: integer('limit', 50, 1, 100), offset: integer('offset', 0, 0, 10000),
+  return { start, origin, cards: list('cards', isUniversityCard), limit: integer('limit', FINDER_PAGE_SIZE, 1, 100), offset: integer('offset', 0, 0, 10000),
     filters: { institutions: list('institutions', isUniversityCard), publicAccess: boolean('publicAccess'), open24Hours: boolean('open24Hours'), usableWifi: boolean('usableWifi'),
       quietStudy: boolean('quietStudy'), groupStudy: boolean('groupStudy'), wheelchairAccess: boolean('wheelchairAccess') } };
 }

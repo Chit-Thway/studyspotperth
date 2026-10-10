@@ -1,13 +1,14 @@
 import type { LibrarySearchResult } from '../../domain/library-search';
 import type { Institution } from '../../domain/search-context';
+import { UNIVERSITY_CARDS } from '../../domain/search-context';
 import type { CalendarSchedule, MinuteInterval } from '../../domain/schedule';
 import type { RequirementMatch } from '../../domain/wifi';
 import type { ScheduleTimeline } from '../../domain/availability';
 import { calendarTimeline, intersectIntervals, mergeTimeIntervals } from '../../domain/availability';
 import { DAY_MS, formatPerthTime, perthCalendarMinute, shiftDate } from '../../domain/perth-time';
 
-export const INSTITUTION_LABELS: Record<Institution, string> = { public: 'Public libraries', uwa: 'UWA', curtin: 'Curtin', ecu: 'ECU', murdoch: 'Murdoch' };
-export const UNIVERSITY_CARDS = ['uwa', 'curtin', 'ecu', 'murdoch'] as const;
+export { UNIVERSITY_CARDS };
+export const INSTITUTION_LABELS: Record<Institution, string> = { public: 'Public libraries', uwa: 'UWA', curtin: 'Curtin', ecu: 'ECU', murdoch: 'Murdoch', 'notre-dame': 'Notre Dame' };
 export const INSTITUTIONS = ['public', ...UNIVERSITY_CARDS] as const;
 
 export function institutionCategory(institution: Institution) {
