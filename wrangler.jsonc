@@ -13,5 +13,18 @@
       "database_id": "00000000-0000-0000-0000-000000000000",
       "migrations_dir": "migrations"
     }
-  ]
+  ],
+  "env": {
+    "production": {
+      "vars": { "AUTH_BASE_URL": "https://studyspotperth.pages.dev" },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "studyspotperth",
+          "database_id": "8bd0fdb7-4cb7-418a-9328-50df6909a217",
+          "migrations_dir": "migrations"
+        }
+      ]
+    }
+  }
 }
