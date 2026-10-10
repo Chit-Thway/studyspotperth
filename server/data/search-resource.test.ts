@@ -3,7 +3,7 @@ import { launchLibraries } from './launch-libraries';
 
 afterEach(() => vi.restoreAllMocks());
 it.each([
-  ['', 12], ['open24Hours=true', 6], ['usableWifi=true', 4], ['open24Hours=true&usableWifi=true', 2],
+  ['', 13], ['open24Hours=true', 6], ['usableWifi=true', 4], ['open24Hours=true&usableWifi=true', 2],
   ['cards=uwa&open24Hours=true&institutions=uwa', 2],
 ])('bounds timezone work on a cold catalogue search: %s', async (query, expectedTotal) => {
   // Fresh modules prevent a warm isolate cache from hiding excessive cold work.

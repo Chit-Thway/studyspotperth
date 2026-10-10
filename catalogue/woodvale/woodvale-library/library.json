@@ -1,0 +1,153 @@
+{
+  "id": "catalogue-woodvale-library",
+  "slug": "woodvale-library",
+  "institution": "public",
+  "wifiProfileId": "joondalup",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-quietStudy"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-groupStudy"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Woodvale Library",
+    "address": "5 Trappers Drive, Woodvale",
+    "suburbId": "woodvale",
+    "latitude": -31.79798,
+    "longitude": 115.79532,
+    "description": "Public library in Woodvale, operated by City of Joondalup.",
+    "officialUrl": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/library-locations-and-opening-hours",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 6,
+            "startMinute": 570,
+            "endMinute": 780
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 6,
+              "startMinute": 570,
+              "endMinute": 780
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Joondalup: library information",
+        "url": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/library-locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/library-locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-quietStudy",
+        "label": "Quiet study information",
+        "url": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/student-resources",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "facility-groupStudy",
+        "label": "Group study information",
+        "url": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/student-resources",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  }
+}

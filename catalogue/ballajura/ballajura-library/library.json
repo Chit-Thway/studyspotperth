@@ -1,0 +1,176 @@
+{
+  "id": "catalogue-ballajura-library",
+  "slug": "ballajura-library",
+  "institution": "public",
+  "wifiProfileId": "swan",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-groupStudy"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Ballajura Library",
+    "address": "Corner Kingfisher Avenue and Illawarra Crescent South, Ballajura",
+    "suburbId": "ballajura",
+    "latitude": -31.83941,
+    "longitude": 115.89483,
+    "description": "Public library in Ballajura, operated by City of Swan.",
+    "officialUrl": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ballajura-library",
+    "photos": [
+      {
+        "url": "/images/libraries/ballajura/ballajura-library/exterior.webp",
+        "alt": "Exterior of Ballajura Library. Photographed 2012-07-06.",
+        "credit": "User:Orderinchaos / Wikimedia Commons / CC BY-SA 3.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 570,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 570,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 570,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 570,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 570,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 6,
+            "startMinute": 600,
+            "endMinute": 900
+          },
+          {
+            "weekday": 0,
+            "startMinute": 600,
+            "endMinute": 780
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 570,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 570,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 570,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 570,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 570,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 900
+            },
+            {
+              "weekday": 0,
+              "startMinute": 600,
+              "endMinute": 780
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Swan: library information",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ballajura-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ballajura-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-groupStudy",
+        "label": "Group study information",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ballajura-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: User:Orderinchaos / Wikimedia Commons / CC BY-SA 3.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Ballajura_Library_front.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

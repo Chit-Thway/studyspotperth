@@ -55,7 +55,7 @@ describe('search, access and ranking', () => {
     }
     const query = 'start=2026-10-03T14:00';
     expect(search(`${query}&publicAccess=true`, [library]).results[0]).toMatchObject({ publicAccessOnDay: true, opening: { status: 'unknown' } });
-    expect(ids(query, [library])).toEqual([]);
+    expect(ids(query, [library])).toEqual([library.id]);
   });
   it('ranks declared UWA 24/7 options first without hiding other open institutions', () => {
     const result = search('cards=uwa');
@@ -131,8 +131,9 @@ describe('search, access and ranking', () => {
     expect(evaluateLibrary(uwa, request('cards=uwa')).access.window?.endReason).toBe('verification-limit');
     expect(evaluateLibrary(uwa, request('start=2026-10-02T18:00')).access.status).toBe('unmatched');
   });
-  it('excludes unknown hours, preserves unknown access, and never claims its personal window', () => {
-    expect(ids()).not.toContain('fixture-unknown');
+  it('shows unknown hours until an explicit filter excludes them and never claims its personal window', () => {
+    expect(ids()).toContain('fixture-unknown');
+    expect(ids('publicAccess=true')).not.toContain('fixture-unknown');
     const unknown = search().results.find((item) => item.library.id === 'fixture-unknown-entry')!;
     expect(unknown.access).toMatchObject({ status: 'unknown', window: null });
     expect(unknown.access.requirements[0]).toMatchObject({ match: 'unknown', window: null, openAtStart: null });
@@ -252,7 +253,7 @@ describe('search, access and ranking', () => {
     expect(ids('cards=uwa', [draft])).toEqual([]);
     const result = search('cards=uwa&limit=1&offset=1');
     expect(result.results[0].library.id).toBe('fixture-semester');
-    expect(result.total).toBe(7);
+    expect(result.total).toBe(8);
     expect(result.nextOffset).toBe(2);
     expect(search('groupStudy=true').emptyReason).toContain('selected filters');
     expect(search('offset=100').emptyReason).toContain('no more results');

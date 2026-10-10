@@ -1,0 +1,147 @@
+{
+  "id": "catalogue-ah-bracks-library-creative-space",
+  "slug": "ah-bracks-library-creative-space",
+  "institution": "public",
+  "wifiProfileId": "melville",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "AH Bracks Library + Creative Space",
+    "address": "Corner Canning Highway and Stock Road, Melville",
+    "suburbId": "melville",
+    "latitude": -32.03446,
+    "longitude": 115.79552,
+    "description": "Public library in Melville, operated by City of Melville.",
+    "officialUrl": "https://www.melvillecity.com.au/things-to-do/libraries/library-contacts-and-opening-hours",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 780
+          },
+          {
+            "weekday": 0,
+            "startMinute": 600,
+            "endMinute": 840
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 780
+            },
+            {
+              "weekday": 0,
+              "startMinute": 600,
+              "endMinute": 840
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Melville: library information",
+        "url": "https://www.melvillecity.com.au/things-to-do/libraries/library-contacts-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.melvillecity.com.au/things-to-do/libraries/library-contacts-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      }
+    ]
+  }
+}

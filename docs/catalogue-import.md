@@ -1,12 +1,45 @@
 # Catalogue maintenance
 
 Library facts remain in the existing D1 `library` and `library_revision` tables.
-Photos remain compressed static WebP files in `public/images/libraries/`; D1
-stores their paths, credits and sources. The finder requests ten cards per page,
+Source facts and compressed WebP photos live together in `catalogue/`; D1
+stores published snapshots, photo paths, credits and sources. Vite emits the
+photos as static Pages assets under `/images/libraries/`. Existing photo URLs
+remain valid. The finder shows ten cards per page,
 after the full published catalogue has been filtered and ranked. Declared cards
 affect ranking; explicit filters still control exclusions.
 
 ## Importing additional libraries
+
+The authored catalogue contains 82 libraries, grouped by physical suburb for
+public libraries and university for university libraries:
+
+```text
+catalogue/
+  catalogue.json
+  suburbs.json
+  wifi-profiles.json
+  cloverdale/ruth-faulkner-library/library.json
+  cloverdale/ruth-faulkner-library/images/exterior.webp
+  uwa/reid-library/library.json
+  uwa/reid-library/images/reid-library.webp
+```
+
+Every record also has a physical `content.suburbId`, including university
+libraries. These IDs support future suburb filtering; choosing a suburb today
+sets the search origin. Suburb coordinates are approximate venue reference
+points, not geographic centroids or entrance locations.
+
+Preview the checked-in folders with `npm run db:catalogue -- --catalogue`, then
+add `--apply` to insert missing records as local drafts. Optional
+`--link-suburbs` attaches physical suburb IDs to existing published records
+whose address and map point match. This creates new immutable revisions and
+keeps all existing facts; newer drafts and archived records are preserved.
+
+Thirty-two additions have 33 licensed photographs. Thirty-seven additions use
+placeholders. Notre Dame's image is labelled as campus context. Photo credits,
+licences and source dates are recorded alongside each library's public facts.
+Builds validate the catalogue and copy only its photos into static assets;
+library JSON is served through the versioned public D1 catalogue endpoint.
 
 Apply local migrations first with `npm run db:migrate`. Prepare a local JSON
 manifest, then preview it:
@@ -47,6 +80,12 @@ the existing `LibraryContent` format in `src/domain/library.ts`. Sources must
 be dated official sources or confirmations. Unknown hours, Wi-Fi and access
 remain explicitly unknown. Photo candidate links are not imported as photos;
 use an empty photo array until a credited usable image is ready.
+
+Known recurring schedules can include `unknownWeekdays` (Sunday = 0) for days
+whose hours are unpublished. Such days display Unknown rather than Closed;
+dated confirmations or closures take precedence. Lesmurdie's sourced school
+holiday variant is dated against WA term calendars. Notre Dame's October
+calendar is bounded to its verified dates, like the existing university calendars.
 
 Each physical suburb has `id`, `name`, `latitude`, `longitude`, HTTPS `sourceUrl`
 and `checkedOn`. A library's `content.suburbId` must reference an existing real
@@ -93,8 +132,9 @@ not Cloudflare edge CPU measurements and are not a free-tier compliance proof.
 catalogue imports and pagination in an isolated local Pages/D1 runtime. Its
 synthetic scale records never enter the ordinary local database.
 
-Search shares date boundaries only within a request. Personal rankings and
-opening status are recomputed; public API responses remain `no-store`. There
-is no new shared result cache requiring publication invalidation. Before a
+The browser downloads the public catalogue, filters and ranks it locally,
+and evaluates detailed windows for the ten visible cards. It reuses the
+ranking between pages. The public endpoint shapes JSON in D1 and versions it
+with ETags; publication changes the version. Before a
 production expansion, check real edge CPU/request metrics with the final
 catalogue and expected traffic.

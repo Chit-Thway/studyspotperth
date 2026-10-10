@@ -1,0 +1,144 @@
+{
+  "id": "catalogue-dordaak-kepup-library",
+  "slug": "dordaak-kepup-library",
+  "institution": "public",
+  "wifiProfileId": "wanneroo",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Dordaak Kepup Library",
+    "address": "15 The Broadview, Landsdale",
+    "suburbId": "landsdale",
+    "latitude": -31.8070059,
+    "longitude": 115.8633629,
+    "description": "Public library in Landsdale, operated by City of Wanneroo.",
+    "officialUrl": "https://www.wanneroo.wa.gov.au/info/20040/libraries/712/library_locations",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 1020
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 1020
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Wanneroo: library information",
+        "url": "https://www.wanneroo.wa.gov.au/info/20040/libraries/712/library_locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.wanneroo.wa.gov.au/info/20040/libraries/712/library_locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "Approximate venue/building point © OpenStreetMap contributors, ODbL",
+        "url": "https://www.openstreetmap.org/way/1531554267",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "map-license",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "id": "catalogue-albert-facey-memorial-library",
+  "slug": "albert-facey-memorial-library",
+  "institution": "public",
+  "wifiProfileId": "mundaring",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "confirmed",
+      "sourceId": "facility-wheelchairAccess"
+    }
+  },
+  "content": {
+    "name": "Albert Facey Memorial Library",
+    "address": "1 Nichol Street, Mundaring",
+    "suburbId": "mundaring",
+    "latitude": -31.90303,
+    "longitude": 116.16561,
+    "description": "Public library in Mundaring, operated by Shire of Mundaring.",
+    "officialUrl": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
+    "photos": [
+      {
+        "url": "/images/libraries/mundaring/albert-facey-memorial-library/exterior.webp",
+        "alt": "Exterior of Albert Facey Memorial Library. Photographed 2012-02-04.",
+        "credit": "User:JarrahTree / Wikimedia Commons / CC BY 2.5 au. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "yes"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          }
+        ],
+        "unknownWeekdays": [
+          0
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            }
+          ],
+          "unknownWeekdays": [
+            0
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "Shire of Mundaring: library information",
+        "url": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-wheelchairAccess",
+        "label": "Step-free access information",
+        "url": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: User:JarrahTree / Wikimedia Commons / CC BY 2.5 au",
+        "url": "https://commons.wikimedia.org/wiki/File:Albert_Facey_memorial_library,_Mundaring.JPG",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY 2.5 au",
+        "url": "https://creativecommons.org/licenses/by/2.5/au/deed.en",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

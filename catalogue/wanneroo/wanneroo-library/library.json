@@ -1,0 +1,158 @@
+{
+  "id": "catalogue-wanneroo-library",
+  "slug": "wanneroo-library",
+  "institution": "public",
+  "wifiProfileId": "wanneroo",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Wanneroo Library",
+    "address": "3 Rocca Way, Wanneroo",
+    "suburbId": "wanneroo",
+    "latitude": -31.75065,
+    "longitude": 115.80533,
+    "description": "Public library in Wanneroo, operated by City of Wanneroo.",
+    "officialUrl": "https://www.wanneroo.wa.gov.au/info/20040/libraries/712/library_locations",
+    "photos": [
+      {
+        "url": "/images/libraries/wanneroo/wanneroo-library/exterior.webp",
+        "alt": "Exterior of Wanneroo Library. Photographed 2021-07-15.",
+        "credit": "Orderinchaos / Wikimedia Commons / CC BY-SA 4.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 1020
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 1020
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Wanneroo: library information",
+        "url": "https://www.wanneroo.wa.gov.au/info/20040/libraries/712/library_locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.wanneroo.wa.gov.au/info/20040/libraries/712/library_locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Orderinchaos / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Wanneroo_Library_from_E.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

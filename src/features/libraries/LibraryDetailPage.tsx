@@ -68,7 +68,7 @@ export function LibraryDetailContent({ result, originName, back, preview = false
       </section>
       <div className={styles.sidePanels}>
         <section className={styles.panel} aria-labelledby="wifi-title"><h2 id="wifi-title"><Icon name="wifi" />Wi-Fi</h2>
-          {content.wifi.status === 'unknown' || !result.wifi.networks.length ? <p>Wi-Fi unknown</p> : result.wifi.networks.map((network, index) => <div className={styles.network} key={`${network.name}-${index}`}><h3>{network.name}</h3><p className={styles.networkType} title={matchLabel(network.match)}>{network.kind === 'eduroam' ? 'eduroam' : network.kind.replaceAll('-', ' ')}<span className={styles.screenReaderOnly}> · {matchLabel(network.match)}</span></p><p>{network.requirements}</p>
+          {content.wifi.status === 'unknown' ? <p>Wi-Fi unknown</p> : !result.wifi.networks.length ? <p>Wi-Fi not available</p> : result.wifi.networks.map((network, index) => <div className={styles.network} key={`${network.name}-${index}`}><h3>{network.name}</h3><p className={styles.networkType} title={matchLabel(network.match)}>{network.kind === 'eduroam' ? 'eduroam' : network.kind.replaceAll('-', ' ')}<span className={styles.screenReaderOnly}> · {matchLabel(network.match)}</span></p><p>{network.requirements}</p>
             {network.needsActiveCredentials && <p>Active login required</p>}
             {network.limits && <p>{network.limits}</p>}{network.helpUrl && <a href={network.helpUrl} target="_blank" rel="noreferrer">Connection help ↗</a>}</div>)}
         </section>

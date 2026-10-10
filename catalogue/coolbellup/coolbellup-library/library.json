@@ -1,0 +1,137 @@
+{
+  "id": "catalogue-coolbellup-library",
+  "slug": "coolbellup-library",
+  "institution": "public",
+  "wifiProfileId": "cockburn",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Coolbellup Library",
+    "address": "90 Cordelia Avenue, Coolbellup",
+    "suburbId": "coolbellup",
+    "latitude": -32.08295,
+    "longitude": 115.809,
+    "description": "Public library in Coolbellup, operated by City of Cockburn.",
+    "officialUrl": "https://www.cockburnlibraries.com.au/contact/",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 780
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 780
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Cockburn: library information",
+        "url": "https://www.cockburnlibraries.com.au/contact/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.cockburnlibraries.com.au/contact/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      }
+    ]
+  }
+}

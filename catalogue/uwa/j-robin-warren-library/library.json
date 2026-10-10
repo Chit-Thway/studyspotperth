@@ -1,0 +1,259 @@
+{
+  "id": "launch-j-robin-warren-library",
+  "slug": "j-robin-warren-library",
+  "institution": "uwa",
+  "content": {
+    "latitude": -31.970178,
+    "longitude": 115.815202,
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Unifi",
+          "kind": "institution",
+          "eligibleCards": [
+            "uwa"
+          ],
+          "needsActiveCredentials": true,
+          "requirements": "Active UWA UniID and acceptance of internet terms required.",
+          "limits": "Up to three devices.",
+          "helpUrl": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/683/~/wireless-access-at-uwa",
+          "sourceId": "wifi"
+        },
+        {
+          "name": "eduroam",
+          "kind": "eduroam",
+          "eligibleCards": [
+            "curtin",
+            "ecu",
+            "murdoch"
+          ],
+          "needsActiveCredentials": true,
+          "requirements": "Visiting participating-institution users need active home-institution credentials.",
+          "limits": null,
+          "helpUrl": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/683/~/wireless-access-at-uwa",
+          "sourceId": "wifi"
+        }
+      ]
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 0,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 1,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 2,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 3,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 4,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 5,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 6,
+            "startMinute": 0,
+            "endMinute": 1440
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 960
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        },
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 0,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 1,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 2,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 3,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 4,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 5,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 6,
+              "startMinute": 0,
+              "endMinute": 1440
+            }
+          ],
+          "overrides": [],
+          "group": "uwa",
+          "requirement": "UWA card required",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "J. Robin Warren Library",
+    "address": "UWA Health campus, Nedlands",
+    "suburbId": "nedlands",
+    "description": "24/7 UWA CampusCard entry to ground and first floors; use the side entrance after hours.",
+    "officialUrl": "https://www.uwa.edu.au/facilities/j-robin-warren-library",
+    "sources": [
+      {
+        "id": "venue",
+        "kind": "official",
+        "label": "J. Robin Warren Library",
+        "url": "https://www.uwa.edu.au/facilities/j-robin-warren-library",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "Public hours 5–18 October 2026 and CampusCard policy",
+        "url": "https://www.uwa.edu.au/library/visit-our-libraries/opening-hours",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "wifi",
+        "kind": "official",
+        "label": "UWA wireless eligibility",
+        "url": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/683/~/wireless-access-at-uwa",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "ecu-eduroam",
+        "kind": "official",
+        "label": "ECU eduroam membership and roaming",
+        "url": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "curtin-eduroam",
+        "kind": "official",
+        "label": "Curtin eduroam membership and roaming",
+        "url": "https://www.curtin.edu.au/students/essentials/it/internet-computers-printing/wireless/",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "murdoch-eduroam",
+        "kind": "official",
+        "label": "Murdoch eduroam membership and roaming",
+        "url": "https://www.murdoch.edu.au/mymurdoch/support-advice/learning-study/student-it/internet-and-wifi",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "uwa-roaming",
+        "kind": "official",
+        "label": "UWA eduroam roaming",
+        "url": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/1045/~/accessing-wifi-at-other-universities-%28eduroam%29",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "UWA official campus map reference point",
+        "url": "https://link.mazemap.com/ABZFZ4s8",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": []
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "id": "catalogue-ellenbrook-library",
+  "slug": "ellenbrook-library",
+  "institution": "public",
+  "wifiProfileId": "swan",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-quietStudy"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-groupStudy"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Ellenbrook Library",
+    "address": "90 Main Street, Ellenbrook",
+    "suburbId": "ellenbrook",
+    "latitude": -31.78373,
+    "longitude": 115.96469,
+    "description": "Public library in Ellenbrook, operated by City of Swan.",
+    "officialUrl": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ellenbrook-library",
+    "photos": [
+      {
+        "url": "/images/libraries/ellenbrook/ellenbrook-library/exterior.webp",
+        "alt": "Exterior of Ellenbrook Library. Photographed 2018-03-01.",
+        "credit": "Orderinchaos / Wikimedia Commons / CC BY-SA 4.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 900
+          },
+          {
+            "weekday": 0,
+            "startMinute": 780,
+            "endMinute": 960
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 900
+            },
+            {
+              "weekday": 0,
+              "startMinute": 780,
+              "endMinute": 960
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Swan: library information",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ellenbrook-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ellenbrook-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-quietStudy",
+        "label": "Quiet study information",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ellenbrook-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "facility-groupStudy",
+        "label": "Group study information",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/ellenbrook-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Orderinchaos / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Ellenbrook_library_from_Main_St.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

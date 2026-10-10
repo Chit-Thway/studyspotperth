@@ -1,0 +1,166 @@
+{
+  "id": "catalogue-spearwood-library",
+  "slug": "spearwood-library",
+  "institution": "public",
+  "wifiProfileId": "cockburn",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-quietStudy"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Spearwood Library",
+    "address": "9 Coleville Crescent, Spearwood",
+    "suburbId": "spearwood",
+    "latitude": -32.1005,
+    "longitude": 115.78404,
+    "description": "Public library in Spearwood, operated by City of Cockburn.",
+    "officialUrl": "https://www.cockburnlibraries.com.au/contact/",
+    "photos": [
+      {
+        "url": "/images/libraries/spearwood/spearwood-library/interior.webp",
+        "alt": "Interior of Spearwood Library. Photographed 2013-02-02.",
+        "credit": "Sam Wilson  (taken with Panasonic Lumix DMC-FT1) / Wikimedia Commons / CC BY-SA 4.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1035
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1215
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1035
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1215
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1035
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 1020
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1035
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1215
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1035
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1215
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1035
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 1020
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Cockburn: library information",
+        "url": "https://www.cockburnlibraries.com.au/contact/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.cockburnlibraries.com.au/contact/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-quietStudy",
+        "label": "Quiet study information",
+        "url": "https://www.cockburnlibraries.com.au/services/internet-access-computers-free-wifi/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Sam Wilson  (taken with Panasonic Lumix DMC-FT1) / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Cockburn_Library_windows_inside.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

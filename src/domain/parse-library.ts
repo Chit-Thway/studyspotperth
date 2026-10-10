@@ -37,7 +37,7 @@ function url(value: unknown): string | null {
 }
 function photoUrl(value: unknown): string {
   const result = text(value);
-  if (/^\/images\/libraries\/[a-z0-9-]+\.webp$/.test(result)) return result;
+  if (/^\/images\/libraries\/(?:[a-z0-9-]+\/[a-z0-9-]+\/)?[a-z0-9-]+\.webp$/.test(result)) return result;
   return url(result)!;
 }
 function date(value: unknown): string | null {
@@ -64,6 +64,7 @@ function calendar(value: unknown, sourceIds: Set<string>): CalendarSchedule {
   const result: CalendarSchedule = {
     status: choice(item.status, ['known', 'unknown']), sourceId: source(item.sourceId),
     recurring: list(item.recurring).map(weeklyInterval),
+    ...(item.unknownWeekdays === undefined ? {} : { unknownWeekdays: list(item.unknownWeekdays).map(number) }),
     overrides: list(item.overrides).map((input): ScheduleOverride => {
       const override = object(input);
       return {
@@ -145,7 +146,8 @@ export function parseLibraryContent(value: unknown): LibraryContent {
       const photo = object(input);
       const sourceId = nullableText(photo.sourceId);
       if (sourceId !== null && !sourceIds.has(sourceId)) throw new Error('Unknown source reference.');
-      return { url: photoUrl(photo.url), alt: text(photo.alt), credit: text(photo.credit), sourceId };
+      return { url: photoUrl(photo.url), alt: text(photo.alt), credit: text(photo.credit), sourceId,
+        ...(photo.caption === undefined ? {} : { caption: text(photo.caption) }) };
     }),
   };
 }

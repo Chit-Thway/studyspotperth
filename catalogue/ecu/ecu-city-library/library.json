@@ -1,0 +1,284 @@
+{
+  "id": "launch-ecu-city-library",
+  "slug": "ecu-city-library",
+  "institution": "ecu",
+  "content": {
+    "latitude": -31.9502508,
+    "longitude": 115.8576633,
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "eduroam",
+          "kind": "eduroam",
+          "eligibleCards": [
+            "uwa",
+            "curtin",
+            "ecu",
+            "murdoch"
+          ],
+          "needsActiveCredentials": true,
+          "requirements": "Active participating-institution credentials required.",
+          "limits": null,
+          "helpUrl": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+          "sourceId": "wifi"
+        },
+        {
+          "name": "ECU Guest",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept the on-screen wireless conditions to connect.",
+          "limits": null,
+          "helpUrl": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+          "sourceId": "wifi"
+        }
+      ]
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 0,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 1,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 2,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 3,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 4,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 5,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 6,
+            "startMinute": 0,
+            "endMinute": 1440
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        },
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 0,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 1,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 2,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 3,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 4,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 5,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 6,
+              "startMinute": 0,
+              "endMinute": 1440
+            }
+          ],
+          "overrides": [],
+          "group": "ecu",
+          "requirement": "ECU card required",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "ECU City Campus Library (Kaarlak)",
+    "address": "Levels 4–5, 500 Wellington Street, Perth",
+    "suburbId": "perth",
+    "description": "Kaarlak levels 4–5 offer 24/7 ECU card access. Public entry is Monday–Friday, 8 am–6 pm during semester.",
+    "officialUrl": "https://www.ecu.edu.au/centres/library-services/opening-hours",
+    "sources": [
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "ECU 24-hour card policy and semester public hours",
+        "url": "https://www.ecu.edu.au/centres/library-services/opening-hours",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "location",
+        "kind": "official",
+        "label": "ECU library locations",
+        "url": "https://www.ecu.edu.au/centres/library-services/contact",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Seinfeld1986",
+        "url": "https://commons.wikimedia.org/wiki/File:Edith_Cowan_City_Campus.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "ecu-eduroam",
+        "kind": "official",
+        "label": "ECU eduroam membership and roaming",
+        "url": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "curtin-eduroam",
+        "kind": "official",
+        "label": "Curtin eduroam membership and roaming",
+        "url": "https://www.curtin.edu.au/students/essentials/it/internet-computers-printing/wireless/",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "murdoch-eduroam",
+        "kind": "official",
+        "label": "Murdoch eduroam membership and roaming",
+        "url": "https://www.murdoch.edu.au/mymurdoch/support-advice/learning-study/student-it/internet-and-wifi",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "uwa-roaming",
+        "kind": "official",
+        "label": "UWA eduroam roaming",
+        "url": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/1045/~/accessing-wifi-at-other-universities-%28eduroam%29",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "wifi",
+        "kind": "official",
+        "label": "ECU campus wireless networks and guest access",
+        "url": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "map-location",
+        "kind": "confirmation",
+        "label": "ECU City building point © OpenStreetMap contributors, ODbL; address confirmed by ECU",
+        "url": "https://www.openstreetmap.org/way/1490472649",
+        "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "map-license",
+        "kind": "confirmation",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/ecu-city-library.webp",
+        "alt": "ECU City Campus exterior, the building housing Kaarlak Library.",
+        "credit": "Seinfeld1986",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "unknown"
+    },
+    "groupStudy": {
+      "kind": "unknown"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

@@ -16,6 +16,8 @@ export interface ScheduleOverride {
 export interface CalendarSchedule {
   status: 'known' | 'unknown';
   recurring: WeeklyInterval[];
+  /** Unpublished days stay unknown while other recurring days remain confirmed. */
+  unknownWeekdays?: number[];
   overrides: ScheduleOverride[];
   sourceId: string | null;
 }
@@ -62,6 +64,11 @@ export function mergeIntervals(intervals: readonly MinuteInterval[]): MinuteInte
 }
 
 export function validateCalendar(schedule: CalendarSchedule): void {
+  const unknownWeekdays = schedule.unknownWeekdays ?? [];
+  if (new Set(unknownWeekdays).size !== unknownWeekdays.length || unknownWeekdays.some((day) => !Number.isInteger(day) || day < 0 || day > 6)) {
+    throw new Error('Unknown weekdays must be unique days between 0 and 6.');
+  }
+  if (schedule.recurring.some((interval) => unknownWeekdays.includes(interval.weekday))) throw new Error('Unknown days cannot contain confirmed recurring hours.');
   const validateWeekly = (interval: WeeklyInterval) => {
     assertInterval(interval);
     if (!Number.isInteger(interval.weekday) || interval.weekday < 0 || interval.weekday > 6) {
@@ -104,7 +111,8 @@ function selectValidatedSchedule(schedule: CalendarSchedule, date: string) {
   const applicable = schedule.overrides.filter((override) => override.startDate <= date && date <= override.endDate);
   const override = applicable.find((item) => item.kind === 'date') ?? applicable.find((item) => item.kind === 'period');
   const weekday = localDateParts(date).weekday;
-  const status = override ? (override.status === 'hours' ? 'known' : override.status) : schedule.status;
+  const status = override ? (override.status === 'hours' ? 'known' : override.status)
+    : schedule.unknownWeekdays?.includes(weekday) ? 'unknown' : schedule.status;
   const intervals = status === 'known'
     ? mergeIntervals((override?.intervals ?? schedule.recurring).filter((interval) => interval.weekday === weekday)) : [];
   return { status, intervals, sourceId: override?.sourceId ?? schedule.sourceId, overrideId: override?.id ?? null };

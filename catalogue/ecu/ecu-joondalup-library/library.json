@@ -1,0 +1,248 @@
+{
+  "id": "launch-ecu-joondalup-library",
+  "slug": "ecu-joondalup-library",
+  "institution": "ecu",
+  "content": {
+    "latitude": -31.7527223,
+    "longitude": 115.7710711,
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "eduroam",
+          "kind": "eduroam",
+          "eligibleCards": [
+            "uwa",
+            "curtin",
+            "ecu",
+            "murdoch"
+          ],
+          "needsActiveCredentials": true,
+          "requirements": "Active participating-institution credentials required.",
+          "limits": null,
+          "helpUrl": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+          "sourceId": "wifi"
+        },
+        {
+          "name": "ECU Guest",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept the on-screen wireless conditions to connect.",
+          "limits": null,
+          "helpUrl": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+          "sourceId": "wifi"
+        }
+      ]
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 0,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 1,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 2,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 3,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 4,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 5,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 6,
+            "startMinute": 0,
+            "endMinute": 1440
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public entry hours unconfirmed",
+          "needsActiveCredentials": false
+        },
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 0,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 1,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 2,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 3,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 4,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 5,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 6,
+              "startMinute": 0,
+              "endMinute": 1440
+            }
+          ],
+          "overrides": [],
+          "group": "ecu",
+          "requirement": "ECU card required",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "ECU Joondalup Campus Library",
+    "address": "Building 31, 270 Joondalup Drive, Joondalup",
+    "suburbId": "joondalup",
+    "description": "Lower level 1 and level 2 offer 24/7 ECU card access. Other levels follow staffed hours. Public entry hours await confirmation.",
+    "officialUrl": "https://www.ecu.edu.au/centres/library-services/opening-hours",
+    "sources": [
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "ECU 24-hour card policy and semester public hours",
+        "url": "https://www.ecu.edu.au/centres/library-services/opening-hours",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "location",
+        "kind": "official",
+        "label": "ECU library locations",
+        "url": "https://www.ecu.edu.au/centres/library-services/contact",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Orderinchaos",
+        "url": "https://commons.wikimedia.org/wiki/File:ECU_library_along_west_side.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "ecu-eduroam",
+        "kind": "official",
+        "label": "ECU eduroam membership and roaming",
+        "url": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "curtin-eduroam",
+        "kind": "official",
+        "label": "Curtin eduroam membership and roaming",
+        "url": "https://www.curtin.edu.au/students/essentials/it/internet-computers-printing/wireless/",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "murdoch-eduroam",
+        "kind": "official",
+        "label": "Murdoch eduroam membership and roaming",
+        "url": "https://www.murdoch.edu.au/mymurdoch/support-advice/learning-study/student-it/internet-and-wifi",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "uwa-roaming",
+        "kind": "official",
+        "label": "UWA eduroam roaming",
+        "url": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/1045/~/accessing-wifi-at-other-universities-%28eduroam%29",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "wifi",
+        "kind": "official",
+        "label": "ECU campus wireless networks and guest access",
+        "url": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "map-location",
+        "kind": "confirmation",
+        "label": "Building 31 point © OpenStreetMap contributors, ODbL; building identity confirmed by ECU campus map",
+        "url": "https://www.openstreetmap.org/way/44532833",
+        "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "map-license",
+        "kind": "confirmation",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/ecu-joondalup-library.webp",
+        "alt": "ECU Joondalup Library exterior viewed from the west.",
+        "credit": "Orderinchaos",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "unknown"
+    },
+    "groupStudy": {
+      "kind": "unknown"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "id": "launch-geoffrey-bolton-library",
+  "slug": "geoffrey-bolton-library",
+  "institution": "murdoch",
+  "content": {
+    "latitude": -32.0670199,
+    "longitude": 115.8349379,
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "eduroam",
+          "kind": "eduroam",
+          "eligibleCards": [
+            "uwa",
+            "curtin",
+            "ecu",
+            "murdoch"
+          ],
+          "needsActiveCredentials": true,
+          "requirements": "Active participating-institution credentials required.",
+          "limits": null,
+          "helpUrl": "https://www.murdoch.edu.au/mymurdoch/support-advice/learning-study/student-it/internet-and-wifi",
+          "sourceId": "wifi"
+        }
+      ]
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 0,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 1,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 2,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 3,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 4,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 5,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 6,
+            "startMinute": 0,
+            "endMinute": 1440
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 480,
+              "endMinute": 1380
+            },
+            {
+              "weekday": 2,
+              "startMinute": 480,
+              "endMinute": 1380
+            },
+            {
+              "weekday": 3,
+              "startMinute": 480,
+              "endMinute": 1380
+            },
+            {
+              "weekday": 4,
+              "startMinute": 480,
+              "endMinute": 1380
+            },
+            {
+              "weekday": 5,
+              "startMinute": 480,
+              "endMinute": 1380
+            },
+            {
+              "weekday": 0,
+              "startMinute": 600,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 1020
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        },
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 0,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 1,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 2,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 3,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 4,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 5,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 6,
+              "startMinute": 0,
+              "endMinute": 1440
+            }
+          ],
+          "overrides": [],
+          "group": "murdoch",
+          "requirement": "MURDOCH card required",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "Geoffrey Bolton Library",
+    "address": "Building 350, 90 South Street, Murdoch",
+    "suburbId": "murdoch",
+    "description": "The level 2 Learning Common offers 24/7 Murdoch card access via the entrance near the ECL courtyard. Other floors follow regular hours.",
+    "officialUrl": "https://www.murdoch.edu.au/library/visit-us",
+    "sources": [
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "Murdoch locations, opening hours and after-hours entry",
+        "url": "https://www.murdoch.edu.au/library/visit-us",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "visitors",
+        "kind": "official",
+        "label": "Visitor study-space eligibility",
+        "url": "https://www.murdoch.edu.au/library/borrow/join-the-library",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "spaces",
+        "kind": "official",
+        "label": "Study zones and Learning Common",
+        "url": "https://www.murdoch.edu.au/library/visit-us/study-spaces",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "wifi",
+        "kind": "official",
+        "label": "Murdoch eduroam requirements",
+        "url": "https://www.murdoch.edu.au/mymurdoch/support-advice/learning-study/student-it/internet-and-wifi",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Orderinchaos",
+        "url": "https://commons.wikimedia.org/wiki/File:Murdoch_looking_E_along_Bush_Court_and_library.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "uwa-eduroam",
+        "kind": "official",
+        "label": "UWA eduroam use at participating institutions",
+        "url": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/1045/~/accessing-wifi-at-other-universities-%28eduroam%29",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "ecu-eduroam",
+        "kind": "official",
+        "label": "ECU eduroam membership and roaming",
+        "url": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "curtin-eduroam",
+        "kind": "official",
+        "label": "Curtin eduroam membership and roaming",
+        "url": "https://www.curtin.edu.au/students/essentials/it/internet-computers-printing/wireless/",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "murdoch-eduroam",
+        "kind": "official",
+        "label": "Murdoch eduroam membership and roaming",
+        "url": "https://www.murdoch.edu.au/mymurdoch/support-advice/learning-study/student-it/internet-and-wifi",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "uwa-roaming",
+        "kind": "official",
+        "label": "UWA eduroam roaming",
+        "url": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/1045/~/accessing-wifi-at-other-universities-%28eduroam%29",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "Murdoch official map building 350 point",
+        "url": "https://api.mazemap.com/api/pois/?identifier=350&campusid=603&srid=4326",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/geoffrey-bolton-library.webp",
+        "alt": "Geoffrey Bolton Library beside Bush Court at Murdoch University.",
+        "credit": "Orderinchaos",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "spaces"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "spaces"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "id": "catalogue-fremantle-library",
+  "slug": "fremantle-library",
+  "institution": "public",
+  "wifiProfileId": "fremantle",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Fremantle Library",
+    "address": "Lower ground level, Walyalup Civic Centre, 151 High Street, Fremantle",
+    "suburbId": "fremantle",
+    "latitude": -32.054226,
+    "longitude": 115.748352,
+    "description": "Public library in Fremantle, operated by City of Fremantle.",
+    "officialUrl": "https://www.fremantle.wa.gov.au/services-and-support/fremantle-library/about-fremantle-library/",
+    "photos": [
+      {
+        "url": "/images/libraries/fremantle/fremantle-library/exterior.webp",
+        "alt": "Walyalup Civic Centre, home of Fremantle Library. Photographed 2022-06-19.",
+        "credit": "Kgbo / Wikimedia Commons / CC BY-SA 4.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/fremantle/fremantle-library/interior.webp",
+        "alt": "Interior of Fremantle Library. Photographed 2026-01-10.",
+        "credit": "Loomhigh223555 / Wikimedia Commons / CC0. Resized and converted to WebP.",
+        "sourceId": "photo-2"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 0,
+            "startMinute": 660,
+            "endMinute": 900
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 0,
+              "startMinute": 660,
+              "endMinute": 900
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Fremantle: library information",
+        "url": "https://www.fremantle.wa.gov.au/services-and-support/fremantle-library/about-fremantle-library/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.fremantle.wa.gov.au/services-and-support/fremantle-library/about-fremantle-library/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "Approximate venue/building point © OpenStreetMap contributors, ODbL",
+        "url": "https://www.openstreetmap.org/way/1071226373",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "map-license",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Kgbo / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Walyalup_Civic_Centre,_Fremantle_WA,_2022_01.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Loomhigh223555 / Wikimedia Commons / CC0",
+        "url": "https://commons.wikimedia.org/wiki/File:Fremantle_Library.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2-license",
+        "label": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

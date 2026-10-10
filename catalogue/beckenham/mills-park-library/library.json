@@ -1,0 +1,154 @@
+{
+  "id": "catalogue-mills-park-library",
+  "slug": "mills-park-library",
+  "institution": "public",
+  "wifiProfileId": "gosnells",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Mills Park Library",
+    "address": "86 Brixton Street, Beckenham",
+    "suburbId": "beckenham",
+    "latitude": -32.023888,
+    "longitude": 115.9672901,
+    "description": "Public library in Beckenham, operated by City of Gosnells.",
+    "officialUrl": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 780
+          },
+          {
+            "weekday": 0,
+            "startMinute": 540,
+            "endMinute": 780
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 780
+            },
+            {
+              "weekday": 0,
+              "startMinute": 540,
+              "endMinute": 780
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Gosnells: library information",
+        "url": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "Approximate venue/building point © OpenStreetMap contributors, ODbL",
+        "url": "https://www.openstreetmap.org/way/1214273525",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "map-license",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

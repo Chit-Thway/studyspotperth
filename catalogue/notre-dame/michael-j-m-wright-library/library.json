@@ -1,0 +1,219 @@
+{
+  "id": "catalogue-michael-j-m-wright-library",
+  "slug": "michael-j-m-wright-library",
+  "institution": "notre-dame",
+  "wifiProfileId": "notre-dame",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-quietStudy"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-groupStudy"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Michael J M Wright Library",
+    "address": "32 Mouat Street, Fremantle",
+    "suburbId": "fremantle",
+    "latitude": -32.0562981,
+    "longitude": 115.7438371,
+    "description": "Notre Dame library on the Fremantle campus. Public visitors are welcome during confirmed opening hours. Opening hours are confirmed for 5–18 October 2026; later hours await confirmation. The photo shows campus context, not the confirmed library facade.",
+    "officialUrl": "https://library.nd.edu.au/michaeljmwright",
+    "photos": [
+      {
+        "url": "/images/libraries/notre-dame/michael-j-m-wright-library/campus.webp",
+        "caption": "Notre Dame campus · library facade unconfirmed",
+        "alt": "Notre Dame Fremantle campus on Mouat Street. Photographed 2026-05-05.",
+        "credit": "Calistemon / Wikimedia Commons / CC BY-SA 4.0. Resized and converted to WebP. Campus context photo; exact library facade unconfirmed.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "unknown",
+        "sourceId": null,
+        "recurring": [],
+        "overrides": [
+          {
+            "id": "verified-october-dates",
+            "kind": "period",
+            "startDate": "2026-10-05",
+            "endDate": "2026-10-18",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 2,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 3,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 4,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 5,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 6,
+                "startMinute": 600,
+                "endMinute": 1080
+              },
+              {
+                "weekday": 0,
+                "startMinute": 600,
+                "endMinute": 1080
+              }
+            ],
+            "sourceId": "hours"
+          }
+        ]
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 600,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 0,
+                  "startMinute": 600,
+                  "endMinute": 1080
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "University of Notre Dame Australia: library information",
+        "url": "https://library.nd.edu.au/michaeljmwright",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://bookings.library.nd.edu.au/hours/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "Approximate venue/building point © OpenStreetMap contributors, ODbL",
+        "url": "https://www.openstreetmap.org/way/1051032222",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "map-license",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "facility-quietStudy",
+        "label": "Quiet study information",
+        "url": "https://library.nd.edu.au/michaeljmwright",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "facility-groupStudy",
+        "label": "Group study information",
+        "url": "https://library.nd.edu.au/michaeljmwright",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "entry",
+        "label": "Notre Dame welcomes public library visitors",
+        "url": "https://www.notredame.edu.au/staff/support/campus-infrastructure-and-facilities/visit-us",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Calistemon / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:University_of_Notre_Dame_Australia,_Fremantle,_May_2026.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

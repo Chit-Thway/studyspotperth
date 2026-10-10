@@ -1,0 +1,176 @@
+{
+  "id": "catalogue-riverton-library",
+  "slug": "riverton-library",
+  "institution": "public",
+  "wifiProfileId": "canning",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "confirmed",
+      "sourceId": "facility-wheelchairAccess"
+    }
+  },
+  "content": {
+    "name": "Riverton Library",
+    "address": "67 Riley Road, Riverton",
+    "suburbId": "riverton",
+    "latitude": -32.03752,
+    "longitude": 115.90333,
+    "description": "Public library in Riverton, operated by City of Canning.",
+    "officialUrl": "https://www.canning.wa.gov.au/things-to-do/libraries/connect-with-us/locations-and-opening-hours/",
+    "photos": [
+      {
+        "url": "/images/libraries/riverton/riverton-library/exterior.webp",
+        "alt": "Exterior of Riverton Library. Photographed 2019-07-10.",
+        "credit": "Sam Wilson  (taken with LG G6) / Wikimedia Commons / CC BY-SA 2.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "yes"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 0,
+            "startMinute": 840,
+            "endMinute": 1020
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 0,
+              "startMinute": 840,
+              "endMinute": 1020
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Canning: library information",
+        "url": "https://www.canning.wa.gov.au/things-to-do/libraries/connect-with-us/locations-and-opening-hours/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.canning.wa.gov.au/things-to-do/libraries/connect-with-us/locations-and-opening-hours/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-wheelchairAccess",
+        "label": "Step-free access information",
+        "url": "https://www.canning.wa.gov.au/things-to-do/libraries/using-your-library/accessibility-at-the-libraries/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Sam Wilson  (taken with LG G6) / Wikimedia Commons / CC BY-SA 2.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Riverton_Library_entrance.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 2.0",
+        "url": "https://creativecommons.org/licenses/by-sa/2.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

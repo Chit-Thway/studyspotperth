@@ -1,0 +1,158 @@
+{
+  "id": "catalogue-thornlie-library",
+  "slug": "thornlie-library",
+  "institution": "public",
+  "wifiProfileId": "gosnells",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Thornlie Library",
+    "address": "1 Culross Avenue, Thornlie",
+    "suburbId": "thornlie",
+    "latitude": -32.05528,
+    "longitude": 115.96523,
+    "description": "Public library in Thornlie, operated by City of Gosnells.",
+    "officialUrl": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
+    "photos": [
+      {
+        "url": "/images/libraries/thornlie/thornlie-library/exterior.webp",
+        "alt": "Exterior of Thornlie Library. Photographed 2007-04-14.",
+        "credit": "SeanMack / Wikimedia Commons / CC BY 2.5. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 600,
+            "endMinute": 840
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 840
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Gosnells: library information",
+        "url": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: SeanMack / Wikimedia Commons / CC BY 2.5",
+        "url": "https://commons.wikimedia.org/wiki/File:Thornlie_Library_07_SMC.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY 2.5",
+        "url": "https://creativecommons.org/licenses/by/2.5",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

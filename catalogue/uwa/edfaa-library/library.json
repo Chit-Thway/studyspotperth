@@ -1,0 +1,191 @@
+{
+  "id": "launch-edfaa-library",
+  "slug": "edfaa-library",
+  "institution": "uwa",
+  "content": {
+    "latitude": -31.976614,
+    "longitude": 115.813374,
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "unknown",
+      "networks": []
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "unknown",
+        "sourceId": null,
+        "recurring": [],
+        "overrides": [
+          {
+            "id": "verified-october-dates",
+            "kind": "period",
+            "startDate": "2026-10-05",
+            "endDate": "2026-10-18",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 2,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 3,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 4,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 5,
+                "startMinute": 480,
+                "endMinute": 960
+              },
+              {
+                "weekday": 0,
+                "startMinute": 780,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 6,
+                "startMinute": 780,
+                "endMinute": 1020
+              }
+            ],
+            "sourceId": "hours"
+          }
+        ]
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 960
+                },
+                {
+                  "weekday": 0,
+                  "startMinute": 780,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 780,
+                  "endMinute": 1020
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "EDFAA Library",
+    "address": "UWA Nedlands campus, Nedlands",
+    "suburbId": "nedlands",
+    "description": "Education, Fine Arts and Architecture Library. Reopened with building works continuing on the south side.",
+    "officialUrl": "https://www.uwa.edu.au/facilities/edfaa-library",
+    "sources": [
+      {
+        "id": "venue",
+        "kind": "official",
+        "label": "EDFAA Library",
+        "url": "https://www.uwa.edu.au/facilities/edfaa-library",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "Public hours 5–18 October 2026 and CampusCard policy",
+        "url": "https://www.uwa.edu.au/library/visit-our-libraries/opening-hours",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: © The University of Western Australia · via CAUL",
+        "url": "https://clatac.wordpress.com/caul-library-and-learning-spaces-image-gallery/university-of-western-australia/edfaa-library-collaborative-zone/",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "Reuse with attribution",
+        "url": "https://clatac.wordpress.com/caul-library-and-learning-spaces-image-gallery/university-of-western-australia/",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "UWA official campus map reference point",
+        "url": "https://link.mazemap.com/JcdzU2RG",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/edfaa-library.webp",
+        "alt": "Collaborative study area inside EDFAA Library at UWA's Nedlands campus, photographed in 2012.",
+        "credit": "© The University of Western Australia · via CAUL",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "unknown"
+    },
+    "groupStudy": {
+      "kind": "unknown"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

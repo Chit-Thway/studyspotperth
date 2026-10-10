@@ -1,0 +1,249 @@
+{
+  "id": "launch-beasley-law-library",
+  "slug": "beasley-law-library",
+  "institution": "uwa",
+  "content": {
+    "latitude": -31.979791,
+    "longitude": 115.819864,
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "yes"
+    },
+    "wifi": {
+      "status": "unknown",
+      "networks": []
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "unknown",
+        "sourceId": null,
+        "recurring": [],
+        "overrides": [
+          {
+            "id": "verified-october-dates",
+            "kind": "period",
+            "startDate": "2026-10-05",
+            "endDate": "2026-10-18",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 420,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 2,
+                "startMinute": 420,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 3,
+                "startMinute": 420,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 4,
+                "startMinute": 420,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 5,
+                "startMinute": 420,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 0,
+                "startMinute": 540,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 1020
+              }
+            ],
+            "sourceId": "hours"
+          }
+        ]
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 0,
+                  "startMinute": 780,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 780,
+                  "endMinute": 1020
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        },
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 420,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 420,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 420,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 420,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 420,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 0,
+                  "startMinute": 540,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 1020
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "uwa",
+          "requirement": "UWA card required",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "Beasley Law Library",
+    "address": "UWA Crawley campus, 35 Stirling Highway, Crawley",
+    "suburbId": "crawley",
+    "description": "Silent and group study spaces. No longer 24/7; UWA CampusCard holders have earlier semester entry.",
+    "officialUrl": "https://www.uwa.edu.au/facilities/beasley-law-library",
+    "sources": [
+      {
+        "id": "venue",
+        "kind": "official",
+        "label": "Beasley Law Library",
+        "url": "https://www.uwa.edu.au/facilities/beasley-law-library",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "Public hours 5–18 October 2026 and CampusCard policy",
+        "url": "https://www.uwa.edu.au/library/visit-our-libraries/opening-hours",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Orderinchaos",
+        "url": "https://commons.wikimedia.org/wiki/File:UWA_Law_Building_Beasley_Law_Library_entrance.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "UWA official campus map reference point",
+        "url": "https://link.mazemap.com/kAH9lsr7",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/beasley-law-library.webp",
+        "alt": "Beasley Law Library entrance in the UWA Law Building.",
+        "credit": "Orderinchaos",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    },
+    "wheelchairAccess": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "id": "catalogue-guildford-library",
+  "slug": "guildford-library",
+  "institution": "public",
+  "wifiProfileId": "swan",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-groupStudy"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Guildford Library",
+    "address": "97 James Street, Guildford",
+    "suburbId": "guildford",
+    "latitude": -31.89953,
+    "longitude": 115.97226,
+    "description": "Public library in Guildford, operated by City of Swan.",
+    "officialUrl": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/guildford-public-library",
+    "photos": [
+      {
+        "url": "/images/libraries/guildford/guildford-library/exterior.webp",
+        "alt": "Exterior of Guildford Library. Photographed 2026-08-11.",
+        "credit": "Calistemon / Wikimedia Commons / CC BY-SA 4.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 600,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 3,
+            "startMinute": 600,
+            "endMinute": 840
+          },
+          {
+            "weekday": 4,
+            "startMinute": 900,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 600,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 600,
+            "endMinute": 840
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 600,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 3,
+              "startMinute": 600,
+              "endMinute": 840
+            },
+            {
+              "weekday": 4,
+              "startMinute": 900,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 600,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 840
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Swan: library information",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/guildford-public-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/guildford-public-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-groupStudy",
+        "label": "Group study information",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours/guildford-public-library",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Calistemon / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Former_Guildford_Council_Chambers_(now_Guildford_Public_Library),_August_2026_01.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "id": "catalogue-mary-davies-library-and-community-centre",
+  "slug": "mary-davies-library-and-community-centre",
+  "institution": "public",
+  "wifiProfileId": "rockingham",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "confirmed",
+      "sourceId": "facility-wheelchairAccess"
+    }
+  },
+  "content": {
+    "name": "Mary Davies Library and Community Centre",
+    "address": "17 Settlers Avenue, Baldivis",
+    "suburbId": "baldivis",
+    "latitude": -32.33236,
+    "longitude": 115.81375,
+    "description": "Public library in Baldivis, operated by City of Rockingham.",
+    "officialUrl": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "yes"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          },
+          {
+            "weekday": 0,
+            "startMinute": 780,
+            "endMinute": 960
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            },
+            {
+              "weekday": 0,
+              "startMinute": 780,
+              "endMinute": 960
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Rockingham: library information",
+        "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-wheelchairAccess",
+        "label": "Step-free access information",
+        "url": "https://rockingham.wa.gov.au/community/people-with-disability/accessible-community-facilities",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  }
+}

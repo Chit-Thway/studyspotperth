@@ -1,0 +1,137 @@
+{
+  "id": "catalogue-kelmscott-library",
+  "slug": "kelmscott-library",
+  "institution": "public",
+  "wifiProfileId": "armadale",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Kelmscott Library",
+    "address": "2784 Albany Highway, Kelmscott",
+    "suburbId": "kelmscott",
+    "latitude": -32.11352201,
+    "longitude": 116.0147291,
+    "description": "Public library in Kelmscott, operated by City of Armadale.",
+    "officialUrl": "https://library.armadale.wa.gov.au/find-us",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Armadale: library information",
+        "url": "https://library.armadale.wa.gov.au/find-us",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://library.armadale.wa.gov.au/find-us",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      }
+    ]
+  }
+}

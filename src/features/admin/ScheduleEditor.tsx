@@ -38,7 +38,13 @@ export function ScheduleEditor({ title, value, sources, onChange }: { title: str
   return <Section title={title}>
     <div className={styles.row}><Choice label="Recurring hours" value={value.status} options={[["unknown", 'Unknown'], ["known", 'Known']]} onChange={(status) => onChange({ ...value, status, recurring: status === 'unknown' ? [] : value.recurring })} />
       <SourceChoice sources={sources} value={value.sourceId} onChange={(sourceId) => onChange({ ...value, sourceId })} /></div>
-    {value.status === 'known' && <><p className={styles.note}>Days without hours are closed. Use Full day for midnight to midnight.</p><IntervalEditor value={value.recurring} onChange={(recurring) => onChange({ ...value, recurring })} /></>}
+    {value.status === 'known' && <><p className={styles.note}>Days without hours are closed unless marked unconfirmed. Use Full day for midnight to midnight.</p>
+      <div className={styles.row}>{DAYS.map((label, day) => <Check key={label} label={`${label} hours unconfirmed`} checked={value.unknownWeekdays?.includes(day) ?? false} onChange={(checked) => {
+        const unknownWeekdays = checked ? [...(value.unknownWeekdays ?? []), day] : (value.unknownWeekdays ?? []).filter((item) => item !== day);
+        onChange({ ...value, unknownWeekdays, recurring: checked ? value.recurring.filter((item) => item.weekday !== day) : value.recurring });
+      }} />)}</div>
+      <IntervalEditor value={value.recurring} onChange={(recurring) => onChange({ ...value, recurring,
+        unknownWeekdays: (value.unknownWeekdays ?? []).filter((day) => !recurring.some((interval) => interval.weekday === day)) })} /></>}
     <h3>Closures and overrides</h3>
     {value.overrides.map((item, index) => <Section title={`Exception ${index + 1}`} key={item.id}>
       <div className={styles.row}>

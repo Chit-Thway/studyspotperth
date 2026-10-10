@@ -8,7 +8,7 @@ The app opens directly to a responsive library finder, with a filter sidebar on 
 
 Guest search is connected to the backend. Visitors can use their device location and choose a study time, filter for public access, 24/7 access and facilities, and declare university cards to personalise results. Public access includes university libraries with confirmed visitor hours on the selected day. Combining public access with UWA, for example, shows only publicly accessible UWA libraries. Library details show opening and entry hours, Wi-Fi requirements, sources, and directions. Filter selections stay in the URL when moving between the finder and a library.
 
-Google sign-in lets visitors save libraries and keep declared university cards in their profile. Saved cards personalise results without automatically restricting the finder. An initial catalogue of 13 Perth libraries is available through the local import command, with dated sources. Twelve listings include reusable photos; missing photos use a dark placeholder. [Photo credits and licences](public/images/libraries/CREDITS.md) are included with the images.
+Google sign-in lets visitors save libraries and keep declared university cards in their profile. Saved cards personalise results without automatically restricting the finder. The authored catalogue contains 82 libraries with dated sources in readable suburb and university folders under `catalogue/`. Forty-four listings have licensed photos; missing photos use a dark placeholder. Credits and licence links appear in each listing and its source JSON.
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
@@ -16,7 +16,7 @@ The finder shows ten cards per page. [Catalogue maintenance](docs/catalogue-impo
 
 Authorised administrators can edit library details, photos, facilities, Wi-Fi and opening hours, add closures or date ranges, and preview changes before publishing. The public version stays unchanged while a draft is edited.
 
-The search backend evaluates Perth opening hours, entry rules, 24/7 access, Wi-Fi, and distance for the selected date and time. Declared university cards personalise ranking and requirement labels; only selected filters restrict results.
+The browser evaluates Perth opening hours, entry rules, 24/7 access, Wi-Fi, and distance using the versioned public D1 catalogue. Declared university cards personalise ranking and requirement labels; only selected filters restrict results. Unconfirmed opening hours remain visible and labelled Unknown.
 
 ## Built with
 
@@ -36,6 +36,7 @@ npm run dev:setup
 npm run types:cloudflare
 npm run db:migrate
 npm run db:launch
+npm run db:catalogue -- --catalogue --link-suburbs --apply
 npm run dev:pages
 ```
 
@@ -47,7 +48,7 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 
 `npm run db:seed` loads clearly labelled fictional examples into the local database for testing. These are not real library listings, and public data reads exclude them by default.
 
-`npm run db:launch` imports the initial public catalogue locally. It also upgrades untouched original records with sourced map points; drafts, administrator edits and unpublished entries are preserved. Update edited records through the admin editor. Unconfirmed details remain unknown; photo permissions still need confirmation. UWA public hours and TL Robertson's calendar are verified for 5–18 October 2026 only, so their dated hours need refreshing before later dates. The standing 24/7 card policies are recorded separately where confirmed. The CGSB entry is available on its detail page but stays out of open-library results until its hours are confirmed.
+`npm run db:launch` imports the initial 13 published listings locally. `db:catalogue` adds the other 69 as drafts for review and publication in Manage libraries. Repeated imports preserve edits and archived entries. Unconfirmed details remain unknown. UWA public hours, TL Robertson's calendar and Notre Dame's hours are verified for 5–18 October 2026, so their dated hours need refreshing before later dates. Standing 24/7 card policies are recorded separately where confirmed.
 
 ## Checks and commands
 
@@ -58,6 +59,7 @@ The setup command creates `.dev.vars` with a random local secret and preserves a
 | `npm run build` | Create a production build |
 | `npm run db:migrate` | Apply database changes locally |
 | `npm run db:launch` | Import the initial public library catalogue locally |
+| `npm run db:catalogue -- --catalogue` | Preview the authored 82-library catalogue locally |
 | `npm run db:seed` | Load fictional local test data |
 | `npm run db:admin -- --email "your-email"` | Grant administrator access to an existing local account |
 | `npm run typecheck` | Check TypeScript types |
@@ -110,12 +112,13 @@ Use **Preview draft** to check guest or university-card access at a selected tim
 ## Library API
 
 - `GET /api/libraries` searches published libraries. No account is needed.
+- `GET /api/catalogue` returns the versioned public catalogue and supports ETag revalidation; browser search uses this endpoint.
 - `GET /api/libraries/:slug` returns a published library and its opening/access explanations, including when closed.
 - `GET /api/suburbs` lists available search origins; Perth CBD is the default.
 
-Search and detail accept `start` in Perth local time (`YYYY-MM-DDTHH:mm`), `suburb`, comma-separated `cards` and university `institutions`, plus `publicAccess=true` for confirmed public hours on the selected day. Supported university codes are `uwa`, `curtin`, `ecu`, and `murdoch`. Public access and university selections combine with AND; multiple universities combine with OR. Public-access results sort nearest first, while other searches retain declared-card priority. Omitting `start` uses the current time. Older links containing `end` still work; that parameter is ignored. Legacy `institutions=public` selections migrate to the public-access filter.
+Search and detail accept `start` in Perth local time (`YYYY-MM-DDTHH:mm`), `suburb`, comma-separated `cards` and university `institutions`, plus `publicAccess=true` for confirmed public hours on the selected day. Supported university codes are `uwa`, `curtin`, `ecu`, `murdoch`, and `notre-dame`. Public access and university selections combine with AND; multiple universities combine with OR. Public-access results sort nearest first, while other searches retain declared-card priority. Omitting `start` uses the current time. Older links containing `end` still work; that parameter is ignored. Legacy `institutions=public` selections migrate to the public-access filter.
 
-Search switches are `open24Hours`, `usableWifi`, `quietStudy`, `groupStudy`, and `wheelchairAccess`; each accepts `true` or `false` and defaults to off. `limit` (1–100, default 50) and `offset` paginate the ranked results. For example: `/api/libraries?cards=uwa&open24Hours=true&start=2026-10-02T14:00`.
+Search switches are `open24Hours`, `usableWifi`, `quietStudy`, `groupStudy`, and `wheelchairAccess`; each accepts `true` or `false` and defaults to off. `limit` (1–100, default 10) and `offset` paginate the ranked results. For example: `/api/libraries?cards=uwa&open24Hours=true&start=2026-10-02T14:00`.
 
 Responses keep building hours, personal access, and Wi-Fi separate. A 24/7 explanation covers seven consecutive local dates starting on the search date; closures or restricted periods can prevent qualification. Continuous windows are bounded to 32 local dates and identify a closure, unknown hours, or the evaluation limit. Profile matches remain self-reported and do not guarantee entry or working credentials. Invalid searches return a clear validation error; empty searches keep the selected filters.
 

@@ -9,7 +9,7 @@ export interface SourceRecord {
   url: string | null;
   checkedOn: string | null;
 }
-export interface LibraryPhoto { url: string; alt: string; credit: string; sourceId: string | null }
+export interface LibraryPhoto { url: string; alt: string; credit: string; sourceId: string | null; caption?: string }
 export interface WifiNetwork {
   name: string;
   kind: 'public' | 'institution' | 'eduroam' | 'restricted-guest' | 'unknown';

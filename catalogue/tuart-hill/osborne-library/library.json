@@ -1,0 +1,158 @@
+{
+  "id": "catalogue-osborne-library",
+  "slug": "osborne-library",
+  "institution": "public",
+  "wifiProfileId": "stirling",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Osborne Library",
+    "address": "9 Royal Street, Tuart Hill",
+    "suburbId": "tuart-hill",
+    "latitude": -31.89621,
+    "longitude": 115.82933,
+    "description": "Public library in Tuart Hill, operated by City of Stirling.",
+    "officialUrl": "https://www.stirling.wa.gov.au/attractions-and-recreation/libraries-and-hubs/locations-and-opening-hours",
+    "photos": [
+      {
+        "url": "/images/libraries/tuart-hill/osborne-library/exterior.webp",
+        "alt": "Exterior of Osborne Library. Photographed 2012-05-18.",
+        "credit": "User:Orderinchaos / Wikimedia Commons / CC BY-SA 3.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Stirling: library information",
+        "url": "https://www.stirling.wa.gov.au/attractions-and-recreation/libraries-and-hubs/locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.stirling.wa.gov.au/attractions-and-recreation/libraries-and-hubs/locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: User:Orderinchaos / Wikimedia Commons / CC BY-SA 3.0",
+        "url": "https://commons.wikimedia.org/wiki/File:OIC_osborne_park_library_front_1.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

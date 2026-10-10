@@ -1,0 +1,137 @@
+{
+  "id": "catalogue-kalamunda-library",
+  "slug": "kalamunda-library",
+  "institution": "public",
+  "wifiProfileId": "kalamunda",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Kalamunda Library",
+    "address": "7 Williams Street, Kalamunda",
+    "suburbId": "kalamunda",
+    "latitude": -31.97128,
+    "longitude": 116.05984,
+    "description": "Public library in Kalamunda, operated by City of Kalamunda.",
+    "officialUrl": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Kalamunda: library information",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      }
+    ]
+  }
+}

@@ -8,6 +8,7 @@ import { parseSearchRequest } from '../../src/domain/search-request';
 import { parsePerthTime } from '../../src/domain/perth-time';
 import type { LibraryRecord } from '../../src/domain/library';
 import { launchPhotos } from './launch-photos';
+import { readCatalogueFiles } from './catalogue-files';
 
 const records: LibraryRecord[] = launchLibraries.map((record) => ({ ...record, isFixture: false,
   status: 'published', revisionId: `${record.id}-initial` }));
@@ -34,7 +35,8 @@ describe('initial public catalogue', () => {
     expect(uwaPublic.results.every((result) => result.library.institution === 'uwa' && result.publicAccessOnDay)).toBe(true);
     expect(searchLibraries(records, selected('publicAccess=true&institutions=uwa&start=2026-10-11T14:00')).total).toBe(4);
   });
-  it('contains exactly the 13 selected, source-backed entries and reusable bundled photos', () => {
+  it('contains exactly the 13 selected, source-backed entries and reusable bundled photos', async () => {
+    const { assets } = await readCatalogueFiles();
     expect(records).toHaveLength(13);
     expect(new Set(records.map((record) => record.slug)).size).toBe(13);
     expect(records.filter((record) => record.institution === 'uwa')).toHaveLength(5);
@@ -44,7 +46,7 @@ describe('initial public catalogue', () => {
       expect(() => validateAdminPublication(record.content)).not.toThrow();
       expect(record.content.sources.filter((source) => !source.id.startsWith('map-') && !source.id.startsWith('photo')).every((source) => source.kind === 'official' && source.checkedOn === '2026-10-05')).toBe(true);
       for (const photo of record.content.photos) {
-        const asset = readFileSync(`public${photo.url}`);
+        const asset = readFileSync(assets.get(photo.url)!);
         expect(asset.subarray(0, 4).toString()).toBe('RIFF');
         expect(asset.subarray(8, 12).toString()).toBe('WEBP');
         expect(asset.length).toBeLessThan(500_000);

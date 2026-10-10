@@ -1,0 +1,145 @@
+{
+  "id": "catalogue-warnbro-community-library",
+  "slug": "warnbro-community-library",
+  "institution": "public",
+  "wifiProfileId": "warnbro",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "confirmed",
+      "sourceId": "facility-wheelchairAccess"
+    }
+  },
+  "content": {
+    "name": "Warnbro Community Library",
+    "address": "Warnbro Community High School, Swallowtail Parade, Warnbro",
+    "suburbId": "warnbro",
+    "latitude": -32.34543,
+    "longitude": 115.7586,
+    "description": "Public library in Warnbro, operated by City of Rockingham.",
+    "officialUrl": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "yes"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 0,
+            "startMinute": 780,
+            "endMinute": 960
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 0,
+              "startMinute": 780,
+              "endMinute": 960
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Rockingham: library information",
+        "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-wheelchairAccess",
+        "label": "Step-free access information",
+        "url": "https://rockingham.wa.gov.au/community/people-with-disability/accessible-community-facilities",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  }
+}

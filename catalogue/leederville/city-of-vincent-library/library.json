@@ -1,0 +1,145 @@
+{
+  "id": "catalogue-city-of-vincent-library",
+  "slug": "city-of-vincent-library",
+  "institution": "public",
+  "wifiProfileId": "vincent",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "confirmed",
+      "sourceId": "facility-wheelchairAccess"
+    }
+  },
+  "content": {
+    "name": "City of Vincent Library",
+    "address": "99 Loftus Street, Leederville",
+    "suburbId": "leederville",
+    "latitude": -31.93451,
+    "longitude": 115.84569,
+    "description": "Public library in Leederville, operated by City of Vincent.",
+    "officialUrl": "https://library.vincent.wa.gov.au/about/opening-hours.aspx",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "yes"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 780
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 780
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Vincent: library information",
+        "url": "https://library.vincent.wa.gov.au/about/opening-hours.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://library.vincent.wa.gov.au/about/opening-hours.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-wheelchairAccess",
+        "label": "Step-free access information",
+        "url": "https://library.vincent.wa.gov.au/events/perth-poetry-festival-2025/3481",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  }
+}

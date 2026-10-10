@@ -1,0 +1,174 @@
+{
+  "id": "catalogue-bassendean-memorial-library",
+  "slug": "bassendean-memorial-library",
+  "institution": "public",
+  "wifiProfileId": "bassendean",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-quietStudy"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-groupStudy"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Bassendean Memorial Library",
+    "address": "46 Old Perth Road, Bassendean",
+    "suburbId": "bassendean",
+    "latitude": -31.90403,
+    "longitude": 115.94928,
+    "description": "Public library in Bassendean, operated by Town of Bassendean.",
+    "officialUrl": "https://library.bassendean.wa.gov.au/library.aspx",
+    "photos": [
+      {
+        "url": "/images/libraries/bassendean/bassendean-memorial-library/exterior.webp",
+        "alt": "Exterior of Bassendean Memorial Library.",
+        "credit": "Evad37 / Wikimedia Commons / CC BY-SA 3.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 960
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 780
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 960
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 780
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "Town of Bassendean: library information",
+        "url": "https://library.bassendean.wa.gov.au/library.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://library.bassendean.wa.gov.au/library.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-quietStudy",
+        "label": "Quiet study information",
+        "url": "https://library.bassendean.wa.gov.au/library.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "facility-groupStudy",
+        "label": "Group study information",
+        "url": "https://library.bassendean.wa.gov.au/library.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Evad37 / Wikimedia Commons / CC BY-SA 3.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Bassendean_Public_Library.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 3.0",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

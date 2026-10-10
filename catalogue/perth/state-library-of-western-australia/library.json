@@ -1,0 +1,310 @@
+{
+  "id": "launch-state-library-of-western-australia",
+  "slug": "state-library-of-western-australia",
+  "institution": "public",
+  "content": {
+    "latitude": -31.949,
+    "longitude": 115.86047,
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "WIFI-Guest",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept the terms to connect; no password required.",
+          "limits": null,
+          "helpUrl": "https://slwa.wa.gov.au/plan-my-visit/services/computers-internet",
+          "sourceId": "wifi"
+        }
+      ]
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1200
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1200
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1200
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1200
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 0,
+            "startMinute": 600,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 6,
+            "startMinute": 600,
+            "endMinute": 1050
+          }
+        ],
+        "overrides": [
+          {
+            "id": "closure-2026-12-25",
+            "kind": "date",
+            "startDate": "2026-12-25",
+            "endDate": "2026-12-25",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "hours"
+          },
+          {
+            "id": "closure-2026-12-26",
+            "kind": "date",
+            "startDate": "2026-12-26",
+            "endDate": "2026-12-26",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "hours"
+          },
+          {
+            "id": "holiday-2026-09-28",
+            "kind": "date",
+            "startDate": "2026-09-28",
+            "endDate": "2026-09-28",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 600,
+                "endMinute": 1050
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "holiday-2026-12-24",
+            "kind": "date",
+            "startDate": "2026-12-24",
+            "endDate": "2026-12-24",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 4,
+                "startMinute": 600,
+                "endMinute": 1050
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "holiday-2026-12-28",
+            "kind": "date",
+            "startDate": "2026-12-28",
+            "endDate": "2026-12-28",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 600,
+                "endMinute": 1050
+              }
+            ],
+            "sourceId": "hours"
+          }
+        ]
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 0,
+              "startMinute": 600,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 1050
+            }
+          ],
+          "overrides": [
+            {
+              "id": "closure-2026-12-25",
+              "kind": "date",
+              "startDate": "2026-12-25",
+              "endDate": "2026-12-25",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "hours"
+            },
+            {
+              "id": "closure-2026-12-26",
+              "kind": "date",
+              "startDate": "2026-12-26",
+              "endDate": "2026-12-26",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "hours"
+            },
+            {
+              "id": "holiday-2026-09-28",
+              "kind": "date",
+              "startDate": "2026-09-28",
+              "endDate": "2026-09-28",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 600,
+                  "endMinute": 1050
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "holiday-2026-12-24",
+              "kind": "date",
+              "startDate": "2026-12-24",
+              "endDate": "2026-12-24",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 4,
+                  "startMinute": 600,
+                  "endMinute": 1050
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "holiday-2026-12-28",
+              "kind": "date",
+              "startDate": "2026-12-28",
+              "endDate": "2026-12-28",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 600,
+                  "endMinute": 1050
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "State Library of Western Australia",
+    "address": "Perth Cultural Centre, 25 Francis Street, Perth",
+    "suburbId": "perth",
+    "description": "Public study space in the Perth Cultural Centre with free guest Wi-Fi.",
+    "officialUrl": "https://slwa.wa.gov.au/plan-my-visit/hours-transport-access/opening-hours",
+    "sources": [
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "State Library regular and 2026 holiday hours",
+        "url": "https://slwa.wa.gov.au/plan-my-visit/hours-transport-access/opening-hours",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "wifi",
+        "kind": "official",
+        "label": "State Library guest Wi-Fi",
+        "url": "https://slwa.wa.gov.au/plan-my-visit/services/computers-internet",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: -wuppertaler",
+        "url": "https://commons.wikimedia.org/wiki/File:AUS_Perth,_Central_Business_District,_State_Library_of_Western_Australia_001.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "State Library of WA public-library location dataset, CC BY 4.0; address confirmed by State Library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/state-library-of-western-australia.webp",
+        "alt": "State Library of Western Australia exterior in the Perth Cultural Centre.",
+        "credit": "-wuppertaler",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "unknown"
+    },
+    "groupStudy": {
+      "kind": "unknown"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

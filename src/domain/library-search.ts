@@ -122,7 +122,7 @@ export function rankLibraryCandidates<T extends LibrarySearchRecord>(libraries: 
       const building = dayTimeline(library.content.schedule.building);
       const publicAccessOnDay = request.filters.publicAccess && library.content.schedule.access.some((entry) =>
         entry.group === 'public' && intersectIntervals(building.intervals, dayTimeline(entry).intervals).length > 0);
-      if (request.filters.publicAccess ? !publicAccessOnDay : intervalAt(building.unknown, request.start)) return [];
+      if (request.filters.publicAccess && !publicAccessOnDay) return [];
       const matchingInstitution = library.institution !== 'public' && request.cards.includes(library.institution);
       let priority = false;
       if (request.filters.open24Hours || !request.filters.publicAccess && matchingInstitution) {
@@ -150,7 +150,7 @@ export function rankLibraryCandidates<T extends LibrarySearchRecord>(libraries: 
 export function pageLibraryCandidates<T extends LibrarySearchRecord>(ranked: readonly T[], request: SearchRequest) {
   return { results: ranked.slice(request.offset, request.offset + request.limit), total: ranked.length,
     offset: request.offset, limit: request.limit, nextOffset: request.offset + request.limit < ranked.length ? request.offset + request.limit : null,
-    emptyReason: ranked.length === 0 ? 'No published libraries have confirmed hours and satisfy your selected filters. Try another time or adjust the filters.'
+    emptyReason: ranked.length === 0 ? 'No published libraries satisfy your selected filters. Try another time or adjust the filters.'
       : request.offset >= ranked.length ? 'There are no more results on this page.' : null };
 }
 

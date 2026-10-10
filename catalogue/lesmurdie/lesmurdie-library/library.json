@@ -1,0 +1,866 @@
+{
+  "id": "catalogue-lesmurdie-library",
+  "slug": "lesmurdie-library",
+  "institution": "public",
+  "wifiProfileId": "lesmurdie",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Lesmurdie Library",
+    "address": "Lesmurdie Senior High School, 21 Reid Road, Lesmurdie",
+    "suburbId": "lesmurdie",
+    "latitude": -32.01252,
+    "longitude": 116.05164,
+    "description": "Public library in Lesmurdie, operated by City of Kalamunda. Located on Lesmurdie Senior High School grounds. Weekday opening hours are shorter during school holidays.",
+    "officialUrl": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 495,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 2,
+            "startMinute": 495,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 495,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 4,
+            "startMinute": 495,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 5,
+            "startMinute": 495,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          }
+        ],
+        "overrides": [
+          {
+            "id": "school-holidays-1",
+            "kind": "period",
+            "startDate": "2026-01-01",
+            "endDate": "2026-02-01",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-2",
+            "kind": "period",
+            "startDate": "2026-04-03",
+            "endDate": "2026-04-19",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-3",
+            "kind": "period",
+            "startDate": "2026-07-04",
+            "endDate": "2026-07-19",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-4",
+            "kind": "period",
+            "startDate": "2026-09-26",
+            "endDate": "2026-10-11",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-5",
+            "kind": "period",
+            "startDate": "2026-12-18",
+            "endDate": "2027-01-31",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-6",
+            "kind": "period",
+            "startDate": "2027-04-10",
+            "endDate": "2027-04-25",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-7",
+            "kind": "period",
+            "startDate": "2027-07-03",
+            "endDate": "2027-07-18",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-8",
+            "kind": "period",
+            "startDate": "2027-09-25",
+            "endDate": "2027-10-10",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          },
+          {
+            "id": "school-holidays-9",
+            "kind": "period",
+            "startDate": "2027-12-17",
+            "endDate": "2028-02-01",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 780
+              },
+              {
+                "weekday": 6,
+                "startMinute": 540,
+                "endMinute": 720
+              }
+            ],
+            "sourceId": "hours"
+          }
+        ]
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 495,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 2,
+              "startMinute": 495,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 495,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 4,
+              "startMinute": 495,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 5,
+              "startMinute": 495,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            }
+          ],
+          "overrides": [
+            {
+              "id": "school-holidays-1",
+              "kind": "period",
+              "startDate": "2026-01-01",
+              "endDate": "2026-02-01",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-2",
+              "kind": "period",
+              "startDate": "2026-04-03",
+              "endDate": "2026-04-19",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-3",
+              "kind": "period",
+              "startDate": "2026-07-04",
+              "endDate": "2026-07-19",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-4",
+              "kind": "period",
+              "startDate": "2026-09-26",
+              "endDate": "2026-10-11",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-5",
+              "kind": "period",
+              "startDate": "2026-12-18",
+              "endDate": "2027-01-31",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-6",
+              "kind": "period",
+              "startDate": "2027-04-10",
+              "endDate": "2027-04-25",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-7",
+              "kind": "period",
+              "startDate": "2027-07-03",
+              "endDate": "2027-07-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-8",
+              "kind": "period",
+              "startDate": "2027-09-25",
+              "endDate": "2027-10-10",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            },
+            {
+              "id": "school-holidays-9",
+              "kind": "period",
+              "startDate": "2027-12-17",
+              "endDate": "2028-02-01",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 780
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 540,
+                  "endMinute": 720
+                }
+              ],
+              "sourceId": "hours"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Kalamunda: library information",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "term-dates",
+        "label": "WA public school term dates used for the documented holiday-hours variant",
+        "url": "https://www.education.wa.edu.au/future-term-dates",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      }
+    ]
+  }
+}

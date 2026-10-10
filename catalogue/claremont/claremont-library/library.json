@@ -1,0 +1,144 @@
+{
+  "id": "catalogue-claremont-library",
+  "slug": "claremont-library",
+  "institution": "public",
+  "wifiProfileId": "claremont",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Claremont Library",
+    "address": "Bay View Community Centre, 64 Bay View Terrace, Claremont",
+    "suburbId": "claremont",
+    "latitude": -31.9852987,
+    "longitude": 115.7818045,
+    "description": "Public library in Claremont, operated by Town of Claremont.",
+    "officialUrl": "https://www.claremont.wa.gov.au/places/bay-view-community-centre/",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 780
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 780
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "Town of Claremont: library information",
+        "url": "https://www.claremont.wa.gov.au/places/bay-view-community-centre/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.claremont.wa.gov.au/places/bay-view-community-centre/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "Approximate venue/building point © OpenStreetMap contributors, ODbL",
+        "url": "https://www.openstreetmap.org/way/48537592",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "map-license",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

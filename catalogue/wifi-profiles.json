@@ -1,0 +1,823 @@
+[
+  {
+    "id": "stirling",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Stirling-Free-WiFi",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept the connection terms.",
+          "limits": null,
+          "helpUrl": "https://www.stirling.wa.gov.au/residential-services/free-wi-fi-zones",
+          "sourceId": "wifi-stirling"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-stirling",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.stirling.wa.gov.au/residential-services/free-wi-fi-zones",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "joondalup",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi across all four branches; SSID/login steps not published on the service page. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/library-services-and-events",
+          "sourceId": "wifi-joondalup"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-joondalup",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/library-services-and-events",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "wanneroo",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Council confirms free Wi-Fi at all libraries; SSID/login steps not published. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.wanneroo.wa.gov.au/info/20200/homelessness_and_hardship_support",
+          "sourceId": "wifi-wanneroo"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-wanneroo",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.wanneroo.wa.gov.au/info/20200/homelessness_and_hardship_support",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "bassendean",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi documented in the official welcome brochure; current login steps are not confirmed. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://library.bassendean.wa.gov.au/Profiles/library/Assets/ClientData/2022_Library_Welcome_Brochure.pdf",
+          "sourceId": "wifi-bassendean"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-bassendean",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://library.bassendean.wa.gov.au/Profiles/library/Assets/ClientData/2022_Library_Welcome_Brochure.pdf",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "bayswater",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "unknown",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Council promotes free Wi-Fi at Bayswater, Maylands and Morley; the brochure associates it with joining a library. Guest authentication remains unresolved. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.bayswater.wa.gov.au/CityOfBayswater/media/Documents/Community/COB1812-Caring-for-our-community-A5booklet_Sep2025.pdf",
+          "sourceId": "wifi-bayswater"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-bayswater",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.bayswater.wa.gov.au/CityOfBayswater/media/Documents/Community/COB1812-Caring-for-our-community-A5booklet_Sep2025.pdf",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "belmont",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free public Wi-Fi is listed for visitors using personal devices. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.belmont.wa.gov.au/discover/places-to-go/ruth-faulkner-library-and-belmont-museum/your-library/library-spaces/public-spaces",
+          "sourceId": "wifi-belmont"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-belmont",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.belmont.wa.gov.au/discover/places-to-go/ruth-faulkner-library-and-belmont-museum/your-library/library-spaces/public-spaces",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "cambridge",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi for anyone with their own Wi-Fi-enabled device; computer member/guest tickets are separate.",
+          "limits": null,
+          "helpUrl": "https://library.cambridge.wa.gov.au/Library-Services",
+          "sourceId": "wifi-cambridge"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-cambridge",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://library.cambridge.wa.gov.au/Library-Services",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "claremont",
+    "wifi": {
+      "status": "unknown",
+      "networks": []
+    },
+    "sources": [
+      {
+        "id": "wifi-claremont",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.claremont.wa.gov.au/places/bay-view-community-centre/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "grove",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Library publishes public Wi-Fi terms; current SSID and detailed login process remain unresolved. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.thegrovelibrary.net/grove-library/about-us.aspx",
+          "sourceId": "wifi-grove"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-grove",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.thegrovelibrary.net/grove-library/about-us.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "nedlands",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi is available to visitors and members at both branches.",
+          "limits": null,
+          "helpUrl": "https://www.nedlands.wa.gov.au/community/libraries/library-services.aspx",
+          "sourceId": "wifi-nedlands"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-nedlands",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.nedlands.wa.gov.au/community/libraries/library-services.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "subiaco",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi inside and outside the library; SSID/login steps not published. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/library-services/",
+          "sourceId": "wifi-subiaco"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-subiaco",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/library-services/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "vincent",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "City of Vincent Public WIFI",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Open network; no password. Select the network and use Get Online; accept terms.",
+          "limits": "Online services end 15 minutes before closing. PC session limits do not establish a Wi-Fi data limit.",
+          "helpUrl": "https://library.vincent.wa.gov.au/services/tech-services.aspx",
+          "sourceId": "wifi-vincent"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-vincent",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://library.vincent.wa.gov.au/services/tech-services.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "vicpark",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Public Wi-Fi Vic Park",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "No password; accept browser terms.",
+          "limits": null,
+          "helpUrl": "https://www.victoriaparklibrary.wa.gov.au/services/computers-printers-technology.aspx",
+          "sourceId": "wifi-vicpark"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-vicpark",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.victoriaparklibrary.wa.gov.au/services/computers-printers-technology.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "swan",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Each current branch page lists free Wi-Fi. Exact SSIDs/login steps are not published. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours",
+          "sourceId": "wifi-swan"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-swan",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.swan.wa.gov.au/explore-and-do/libraries/locations-and-hours",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "kalamunda",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Kalamunda Library - Public WiFi",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept browser terms.",
+          "limits": null,
+          "helpUrl": "https://www.kalamunda.wa.gov.au/legal/wi-fi",
+          "sourceId": "wifi-kalamunda"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-kalamunda",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.kalamunda.wa.gov.au/legal/wi-fi",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "forrestfield",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "FField Library - Public WiFi",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept browser terms.",
+          "limits": null,
+          "helpUrl": "https://www.kalamunda.wa.gov.au/legal/wi-fi",
+          "sourceId": "wifi-forrestfield"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-forrestfield",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.kalamunda.wa.gov.au/legal/wi-fi",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "high-wycombe",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "HW Library - Public WiFi",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept browser terms.",
+          "limits": null,
+          "helpUrl": "https://www.kalamunda.wa.gov.au/legal/wi-fi",
+          "sourceId": "wifi-high-wycombe"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-high-wycombe",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.kalamunda.wa.gov.au/legal/wi-fi",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "lesmurdie",
+    "wifi": {
+      "status": "known",
+      "networks": []
+    },
+    "sources": [
+      {
+        "id": "wifi-lesmurdie",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.kalamunda.wa.gov.au/legal/wi-fi",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "mundaring",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi at both libraries; users agree to the public internet conditions. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": "Under-16 internet users need library membership and parental consent.",
+          "helpUrl": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/library-services.aspx",
+          "sourceId": "wifi-mundaring"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-mundaring",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/library-services.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "melville",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "melvillewifi",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept connection terms.",
+          "limits": "Four-hour sessions; reconnection allowed.",
+          "helpUrl": "https://www.melvillecity.com.au/things-to-do/libraries/about-libraries",
+          "sourceId": "wifi-melville"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-melville",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.melvillecity.com.au/things-to-do/libraries/about-libraries",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "canning",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Council explicitly permits free Wi-Fi on personal devices without a library card.",
+          "limits": null,
+          "helpUrl": "https://www.canning.wa.gov.au/things-to-do/libraries/using-your-library/accessibility-at-the-libraries/",
+          "sourceId": "wifi-canning"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-canning",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.canning.wa.gov.au/things-to-do/libraries/using-your-library/accessibility-at-the-libraries/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "gosnells",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Council confirms free Wi-Fi at the libraries; SSID and login details were not located. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Library-collections/For-tweens-to-teens",
+          "sourceId": "wifi-gosnells"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-gosnells",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Library-collections/For-tweens-to-teens",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "armadale",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi during normal library hours; accept displayed terms. PC membership/guest fees are separate.",
+          "limits": null,
+          "helpUrl": "https://library.armadale.wa.gov.au/computers-wi-fi",
+          "sourceId": "wifi-armadale"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-armadale",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://library.armadale.wa.gov.au/computers-wi-fi",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "cockburn",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Cockburn Free Wi-Fi",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "No login required.",
+          "limits": null,
+          "helpUrl": "https://www.cockburnlibraries.com.au/services/internet-access-computers-free-wifi/",
+          "sourceId": "wifi-cockburn"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-cockburn",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.cockburnlibraries.com.au/services/internet-access-computers-free-wifi/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "fremantle",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Public Wi-Fi listed among current library services; exact network/login terms not published. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.fremantle.wa.gov.au/services-and-support/fremantle-library/about-fremantle-library/",
+          "sourceId": "wifi-fremantle"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-fremantle",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.fremantle.wa.gov.au/services-and-support/fremantle-library/about-fremantle-library/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "kwinana",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi throughout Darius Wells Centre. The city-wide network is City of Kwinana - Guest; the library-specific SSID was not independently confirmed. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://www.kwinana.wa.gov.au/city-life/facilities-and-public-spaces/venues-and-facilities-for-hire/darius-wells-library-and-resource-centre",
+          "sourceId": "wifi-kwinana"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-kwinana",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.kwinana.wa.gov.au/city-life/facilities-and-public-spaces/venues-and-facilities-for-hire/darius-wells-library-and-resource-centre",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "southperth",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Both libraries offer free Wi-Fi; connection requirements are governed by the Wi-Fi terms. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": null,
+          "helpUrl": "https://southperth.wa.gov.au/community/libraries/about-our-libraries/wifi",
+          "sourceId": "wifi-southperth"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-southperth",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://southperth.wa.gov.au/community/libraries/about-our-libraries/wifi",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "rockingham",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Wi-Fi at Rockingham, Safety Bay and Mary Davies does not require a library membership card; accept internet conditions.",
+          "limits": null,
+          "helpUrl": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-membership-and-services",
+          "sourceId": "wifi-rockingham"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-rockingham",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-membership-and-services",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "warnbro",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "restricted-guest",
+          "eligibleCards": [],
+          "needsActiveCredentials": true,
+          "requirements": "A library membership card is required for Wi-Fi. This is not a university card or an entry requirement.",
+          "limits": null,
+          "helpUrl": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-membership-and-services",
+          "sourceId": "wifi-warnbro"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-warnbro",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-membership-and-services",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "sj",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Library Wi-Fi (network name not published)",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Free Wi-Fi within the library; ask staff for connection help. Library membership requirements for Wi-Fi are unconfirmed.",
+          "limits": "1 GB and up to two hours per day.",
+          "helpUrl": "https://www.sjshire.wa.gov.au/community/library/computers-printing-and-wifi.aspx",
+          "sourceId": "wifi-sj"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-sj",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.sjshire.wa.gov.au/community/library/computers-printing-and-wifi.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  },
+  {
+    "id": "notre-dame",
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "eduroam",
+          "kind": "eduroam",
+          "eligibleCards": [
+            "uwa",
+            "curtin",
+            "ecu",
+            "murdoch",
+            "notre-dame"
+          ],
+          "needsActiveCredentials": true,
+          "requirements": "Active Notre Dame credentials or active home-institution credentials from an eduroam participant are required. No unrestricted public guest network was confirmed.",
+          "limits": null,
+          "helpUrl": "https://www.notredame.edu.au/students/support/it-support/wi-fi",
+          "sourceId": "wifi-notre-dame"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "wifi-notre-dame",
+        "label": "Wi-Fi availability and connection conditions",
+        "url": "https://www.notredame.edu.au/students/support/it-support/wi-fi",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  }
+]

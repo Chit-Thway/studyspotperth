@@ -2,14 +2,21 @@ import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { createCataloguePlan, parseCatalogueImport } from '../server/data/catalogue-import.ts';
+import { readCatalogueFiles } from '../server/data/catalogue-files.ts';
+import { createCatalogueSuburbLinks } from '../server/data/catalogue-suburbs.ts';
 
 const args = process.argv.slice(2);
-if (![2, 3].includes(args.length) || args[0] !== '--file' || args.length === 3 && args[2] !== '--apply') {
-  throw new Error('Use npm run db:catalogue -- --file <manifest.json> [--apply]. This command only targets local D1.');
+const fromFolders = args[0] === '--catalogue' && args.length <= 3 && new Set(args).size === args.length && args.slice(1).every((arg) => ['--apply', '--link-suburbs'].includes(arg));
+const fromFile = args[0] === '--file' && [2, 3].includes(args.length) && (args.length === 2 || args[2] === '--apply');
+if (!fromFolders && !fromFile) throw new Error('Use npm run db:catalogue -- --catalogue [--link-suburbs] [--apply], or --file <manifest.json> [--apply]. Only local D1 is targeted.');
+const apply = args.includes('--apply');
+let catalogue;
+if (fromFolders) ({ catalogue } = await readCatalogueFiles());
+else {
+  const file = resolve(args[1]);
+  if ((await stat(file)).size > 5_000_000) throw new Error('The catalogue manifest must be at most 5 MB.');
+  catalogue = parseCatalogueImport(JSON.parse(await readFile(file, 'utf8')));
 }
-const file = resolve(args[1]);
-if ((await stat(file)).size > 5_000_000) throw new Error('The catalogue manifest must be at most 5 MB.');
-const catalogue = parseCatalogueImport(JSON.parse(await readFile(file, 'utf8')));
 const wrangler = resolve('node_modules/wrangler/bin/wrangler.js');
 await mkdir('.runtime-check/wrangler-logs', { recursive: true });
 const commandEnv = { ...process.env, WRANGLER_SEND_METRICS: 'false', WRANGLER_LOG_PATH: resolve('.runtime-check/wrangler-logs') };
@@ -21,15 +28,18 @@ const existingLibraries = query('SELECT id,slug,institution_id AS institution,is
 const existingSuburbs = query('SELECT id,name,latitude,longitude,is_fixture AS isFixture FROM suburb')
   .map((suburb) => ({ ...suburb, isFixture: Boolean(suburb.isFixture) }));
 const plan = createCataloguePlan(catalogue, existingLibraries, existingSuburbs);
-for (const library of plan.libraries) for (const photo of library.content.photos) if (photo.url.startsWith('/images/libraries/')) {
+const suburbLinks = args.includes('--link-suburbs') ? createCatalogueSuburbLinks(catalogue,
+  query("SELECT l.id,l.slug,r.id AS revisionId,r.content FROM library l JOIN library_revision r ON r.library_id=l.id WHERE l.is_fixture=0 AND r.status='published' AND r.rowid=(SELECT MAX(last.rowid) FROM library_revision last WHERE last.library_id=l.id)")) : { statements: [], linked: [] };
+for (const library of plan.libraries) for (const photo of library.content.photos) if (!fromFolders && photo.url.startsWith('/images/libraries/')) {
   await stat(resolve('public', photo.url.slice(1)));
 }
-console.log(JSON.stringify({ mode: args[2] === '--apply' ? 'apply-local-drafts' : 'preview',
+console.log(JSON.stringify({ mode: apply ? 'apply-local-drafts' : 'preview',
   newLibraries: plan.libraries.map((library) => library.slug), newSuburbs: plan.suburbs.map((suburb) => suburb.id),
+  physicalSuburbLinks: suburbLinks.linked,
   preservedLibraries: plan.skipped }, null, 2));
-if (args[2] === '--apply' && plan.statements.length) {
+if (apply && (plan.statements.length || suburbLinks.statements.length)) {
   const sqlFile = resolve('.runtime-check/catalogue-import.sql');
-  await writeFile(sqlFile, plan.statements.join('\n'));
+  await writeFile(sqlFile, [...plan.statements, ...suburbLinks.statements].join('\n'));
   execute(['--file', sqlFile, '--yes']);
-  console.log('Imported missing records as local drafts. Review and publish through Manage libraries.');
-} else if (args[2] !== '--apply') console.log('Preview only. Add --apply to import missing records as local drafts.');
+  console.log('Imported missing records as local drafts. Requested physical suburb links preserve existing facts. Review and publish new drafts through Manage libraries.');
+} else if (!apply) console.log('Preview only. Add --apply to import missing records as local drafts.');

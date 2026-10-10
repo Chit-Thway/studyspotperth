@@ -1,0 +1,137 @@
+{
+  "id": "catalogue-high-wycombe-library",
+  "slug": "high-wycombe-library",
+  "institution": "public",
+  "wifiProfileId": "high-wycombe",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "High Wycombe Library",
+    "address": "15 Markham Road, High Wycombe",
+    "suburbId": "high-wycombe",
+    "latitude": -31.94027,
+    "longitude": 116.00407,
+    "description": "Public library in High Wycombe, operated by City of Kalamunda.",
+    "officialUrl": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Kalamunda: library information",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      }
+    ]
+  }
+}

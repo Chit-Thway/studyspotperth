@@ -1,0 +1,292 @@
+{
+  "id": "launch-tl-robertson-library",
+  "slug": "tl-robertson-library",
+  "institution": "curtin",
+  "content": {
+    "latitude": -32.005425,
+    "longitude": 115.893881,
+    "facilities": {
+      "quietStudy": "yes",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "eduroam",
+          "kind": "eduroam",
+          "eligibleCards": [
+            "uwa",
+            "curtin",
+            "ecu",
+            "murdoch"
+          ],
+          "needsActiveCredentials": true,
+          "requirements": "Active participating-institution credentials required.",
+          "limits": null,
+          "helpUrl": "https://www.curtin.edu.au/students/essentials/it/internet-computers-printing/wireless/",
+          "sourceId": "wifi"
+        }
+      ]
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "unknown",
+        "sourceId": null,
+        "recurring": [],
+        "overrides": [
+          {
+            "id": "verified-october-dates",
+            "kind": "period",
+            "startDate": "2026-10-05",
+            "endDate": "2026-10-18",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 0,
+                "startMinute": 0,
+                "endMinute": 1440
+              },
+              {
+                "weekday": 1,
+                "startMinute": 0,
+                "endMinute": 1440
+              },
+              {
+                "weekday": 2,
+                "startMinute": 0,
+                "endMinute": 1440
+              },
+              {
+                "weekday": 3,
+                "startMinute": 0,
+                "endMinute": 1440
+              },
+              {
+                "weekday": 4,
+                "startMinute": 0,
+                "endMinute": 1440
+              },
+              {
+                "weekday": 5,
+                "startMinute": 0,
+                "endMinute": 1440
+              },
+              {
+                "weekday": 6,
+                "startMinute": 0,
+                "endMinute": 1440
+              }
+            ],
+            "sourceId": "venue"
+          }
+        ]
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 0,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                }
+              ],
+              "sourceId": "venue"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        },
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [
+            {
+              "id": "verified-october-dates",
+              "kind": "period",
+              "startDate": "2026-10-05",
+              "endDate": "2026-10-18",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 0,
+                  "startMinute": 0,
+                  "endMinute": 1440
+                },
+                {
+                  "weekday": 1,
+                  "startMinute": 0,
+                  "endMinute": 1440
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 0,
+                  "endMinute": 1440
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 0,
+                  "endMinute": 1440
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 0,
+                  "endMinute": 1440
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 0,
+                  "endMinute": 1440
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 0,
+                  "endMinute": 1440
+                }
+              ],
+              "sourceId": "venue"
+            }
+          ],
+          "group": "curtin",
+          "requirement": "CURTIN card required",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "TL Robertson Library",
+    "address": "Building 105, Curtin Bentley campus, Bentley",
+    "suburbId": "bentley",
+    "description": "Levels 2–3 offer 24-hour study. Curtin card required before 8 am and after 8 pm; upper floors have shorter hours.",
+    "officialUrl": "https://www.curtin.edu.au/library/using-the-library/tl-robertson-library/",
+    "sources": [
+      {
+        "id": "venue",
+        "kind": "official",
+        "label": "TL Robertson hours 5–18 October 2026, entry and study spaces",
+        "url": "https://www.curtin.edu.au/library/using-the-library/tl-robertson-library/",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Orderinchaos",
+        "url": "https://commons.wikimedia.org/wiki/File:TL_Robertson_Library_2023_from_Henderson_Court.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "ecu-eduroam",
+        "kind": "official",
+        "label": "ECU eduroam membership and roaming",
+        "url": "https://www.ecu.edu.au/centres/digital-services/wireless-network-access",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "curtin-eduroam",
+        "kind": "official",
+        "label": "Curtin eduroam membership and roaming",
+        "url": "https://www.curtin.edu.au/students/essentials/it/internet-computers-printing/wireless/",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "murdoch-eduroam",
+        "kind": "official",
+        "label": "Murdoch eduroam membership and roaming",
+        "url": "https://www.murdoch.edu.au/mymurdoch/support-advice/learning-study/student-it/internet-and-wifi",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "uwa-roaming",
+        "kind": "official",
+        "label": "UWA eduroam roaming",
+        "url": "https://ipoint.uwa.edu.au/app/answers/detail/a_id/1045/~/accessing-wifi-at-other-universities-%28eduroam%29",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "wifi",
+        "kind": "official",
+        "label": "Curtin Library Wi-Fi for WA university visitors",
+        "url": "https://students.connect.curtin.edu.au/app/faq/a_id/1974",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "Curtin official library map reference point",
+        "url": "https://use.mazemap.com/#v=1&config=curtinuniversity&zlevel=1&center=115.893881,-32.005425&zoom=18&sharepoitype=poi&sharepoi=1000462610&campusid=296",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/tl-robertson-library.webp",
+        "alt": "TL Robertson Library exterior viewed from Henderson Court.",
+        "credit": "Orderinchaos",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

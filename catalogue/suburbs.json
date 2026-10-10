@@ -1,0 +1,578 @@
+[
+  {
+    "id": "applecross",
+    "name": "Applecross",
+    "latitude": -32.01087,
+    "longitude": 115.85059,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "armadale",
+    "name": "Armadale",
+    "latitude": -32.152266,
+    "longitude": 116.0147457,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "baldivis",
+    "name": "Baldivis",
+    "latitude": -32.33236,
+    "longitude": 115.81375,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "ballajura",
+    "name": "Ballajura",
+    "latitude": -31.83941,
+    "longitude": 115.89483,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "bassendean",
+    "name": "Bassendean",
+    "latitude": -31.90403,
+    "longitude": 115.94928,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "bayswater",
+    "name": "Bayswater",
+    "latitude": -31.92022,
+    "longitude": 115.91395,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "beckenham",
+    "name": "Beckenham",
+    "latitude": -32.023888,
+    "longitude": 115.9672901,
+    "sourceUrl": "https://www.openstreetmap.org/way/1214273525",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "beechboro",
+    "name": "Beechboro",
+    "latitude": -31.87487,
+    "longitude": 115.93994,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "bentley",
+    "name": "Bentley",
+    "latitude": -32.005425,
+    "longitude": 115.893881,
+    "sourceUrl": "https://use.mazemap.com/#v=1&config=curtinuniversity&zlevel=1&center=115.893881,-32.005425&zoom=18&sharepoitype=poi&sharepoi=1000462610&campusid=296",
+    "checkedOn": "2026-10-06"
+  },
+  {
+    "id": "booragoon",
+    "name": "Booragoon",
+    "latitude": -32.03329,
+    "longitude": 115.83332,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "bull-creek",
+    "name": "Bull Creek",
+    "latitude": -32.06373,
+    "longitude": 115.85558,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "bullsbrook",
+    "name": "Bullsbrook",
+    "latitude": -31.66754529,
+    "longitude": 116.032024,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "byford",
+    "name": "Byford",
+    "latitude": -32.22044,
+    "longitude": 116.00905,
+    "sourceUrl": "https://slwa.wa.gov.au/public-library/serpentine-jarrahdale-public-library",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "cannington",
+    "name": "Cannington",
+    "latitude": -32.01029,
+    "longitude": 115.94095,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "claremont",
+    "name": "Claremont",
+    "latitude": -31.9852987,
+    "longitude": 115.7818045,
+    "sourceUrl": "https://www.openstreetmap.org/way/48537592",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "clarkson",
+    "name": "Clarkson",
+    "latitude": -31.68937,
+    "longitude": 115.71749,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "cloverdale",
+    "name": "Cloverdale",
+    "latitude": -31.9630187,
+    "longitude": 115.934266,
+    "sourceUrl": "https://www.openstreetmap.org/way/1205901373",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "coolbellup",
+    "name": "Coolbellup",
+    "latitude": -32.08295,
+    "longitude": 115.809,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "crawley",
+    "name": "Crawley",
+    "latitude": -31.978945,
+    "longitude": 115.817794,
+    "sourceUrl": "https://link.mazemap.com/Azn2U8oJ",
+    "checkedOn": "2026-10-06"
+  },
+  {
+    "id": "dianella",
+    "name": "Dianella",
+    "latitude": -31.89624,
+    "longitude": 115.8732,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "duncraig",
+    "name": "Duncraig",
+    "latitude": -31.8356,
+    "longitude": 115.76523,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "east-victoria-park",
+    "name": "East Victoria Park",
+    "latitude": -31.98431,
+    "longitude": 115.90002,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "ellenbrook",
+    "name": "Ellenbrook",
+    "latitude": -31.78373,
+    "longitude": 115.96469,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "floreat",
+    "name": "Floreat",
+    "latitude": -31.93669,
+    "longitude": 115.79336,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "forrestfield",
+    "name": "Forrestfield",
+    "latitude": -31.985379,
+    "longitude": 116.009285,
+    "sourceUrl": "https://slwa.wa.gov.au/public-library/forrestfield-public-library",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "fremantle",
+    "name": "Fremantle",
+    "latitude": -32.054226,
+    "longitude": 115.748352,
+    "sourceUrl": "https://www.openstreetmap.org/way/1071226373",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "girrawheen",
+    "name": "Girrawheen",
+    "latitude": -31.83968,
+    "longitude": 115.83871,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "gosnells",
+    "name": "Gosnells",
+    "latitude": -32.07075,
+    "longitude": 116.00188,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "guildford",
+    "name": "Guildford",
+    "latitude": -31.89953,
+    "longitude": 115.97226,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "helena-valley",
+    "name": "Helena Valley",
+    "latitude": -31.91818239,
+    "longitude": 116.048238,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "high-wycombe",
+    "name": "High Wycombe",
+    "latitude": -31.94027,
+    "longitude": 116.00407,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "hillarys",
+    "name": "Hillarys",
+    "latitude": -31.79721,
+    "longitude": 115.75341,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "inglewood",
+    "name": "Inglewood",
+    "latitude": -31.92092,
+    "longitude": 115.88541,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "joondalup",
+    "name": "Joondalup",
+    "latitude": -31.74354,
+    "longitude": 115.7735,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "kalamunda",
+    "name": "Kalamunda",
+    "latitude": -31.97128,
+    "longitude": 116.05984,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "karrinyup",
+    "name": "Karrinyup",
+    "latitude": -31.87608,
+    "longitude": 115.77908,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "kelmscott",
+    "name": "Kelmscott",
+    "latitude": -32.11352201,
+    "longitude": 116.0147291,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "kwinana-town-centre",
+    "name": "Kwinana Town Centre",
+    "latitude": -32.24307,
+    "longitude": 115.814,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "landsdale",
+    "name": "Landsdale",
+    "latitude": -31.8070059,
+    "longitude": 115.8633629,
+    "sourceUrl": "https://www.openstreetmap.org/way/1531554267",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "leederville",
+    "name": "Leederville",
+    "latitude": -31.93451,
+    "longitude": 115.84569,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "lesmurdie",
+    "name": "Lesmurdie",
+    "latitude": -32.01252,
+    "longitude": 116.05164,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "manning",
+    "name": "Manning",
+    "latitude": -32.0154479,
+    "longitude": 115.8674699,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "maylands",
+    "name": "Maylands",
+    "latitude": -31.93084,
+    "longitude": 115.89531,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "melville",
+    "name": "Melville",
+    "latitude": -32.03446,
+    "longitude": 115.79552,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "midland",
+    "name": "Midland",
+    "latitude": -31.88937,
+    "longitude": 116.00272,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "mirrabooka",
+    "name": "Mirrabooka",
+    "latitude": -31.8691,
+    "longitude": 115.85946,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "morley",
+    "name": "Morley",
+    "latitude": -31.89594362,
+    "longitude": 115.8959794,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "mount-claremont",
+    "name": "Mount Claremont",
+    "latitude": -31.96221,
+    "longitude": 115.776421,
+    "sourceUrl": "https://slwa.wa.gov.au/public-library/mount-claremont-public-library",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "mundaring",
+    "name": "Mundaring",
+    "latitude": -31.90303,
+    "longitude": 116.16561,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "murdoch",
+    "name": "Murdoch",
+    "latitude": -32.0670199,
+    "longitude": 115.8349379,
+    "sourceUrl": "https://api.mazemap.com/api/pois/?identifier=350&campusid=603&srid=4326",
+    "checkedOn": "2026-10-06"
+  },
+  {
+    "id": "nedlands",
+    "name": "Nedlands",
+    "latitude": -31.97882,
+    "longitude": 115.80699,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "peppermint-grove",
+    "name": "Peppermint Grove",
+    "latitude": -31.99745,
+    "longitude": 115.76404,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "perth",
+    "name": "Perth",
+    "latitude": -31.9541242,
+    "longitude": 115.8631822,
+    "sourceUrl": "https://www.openstreetmap.org/way/147108686",
+    "checkedOn": "2026-10-06"
+  },
+  {
+    "id": "piara-waters",
+    "name": "Piara Waters",
+    "latitude": -32.1248378,
+    "longitude": 115.9230868,
+    "sourceUrl": "https://www.openstreetmap.org/node/12454427111",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "riverton",
+    "name": "Riverton",
+    "latitude": -32.03752,
+    "longitude": 115.90333,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "rockingham",
+    "name": "Rockingham",
+    "latitude": -32.27782,
+    "longitude": 115.75187,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "safety-bay",
+    "name": "Safety Bay",
+    "latitude": -32.30106,
+    "longitude": 115.71024,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "scarborough",
+    "name": "Scarborough",
+    "latitude": -31.89466,
+    "longitude": 115.77464,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "seville-grove",
+    "name": "Seville Grove",
+    "latitude": -32.13172,
+    "longitude": 116.00191,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "south-perth",
+    "name": "South Perth",
+    "latitude": -31.98788,
+    "longitude": 115.86678,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "southern-river",
+    "name": "Southern River",
+    "latitude": -32.08966,
+    "longitude": 115.94393,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "spearwood",
+    "name": "Spearwood",
+    "latitude": -32.1005,
+    "longitude": 115.78404,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "subiaco",
+    "name": "Subiaco",
+    "latitude": -31.9508,
+    "longitude": 115.82372,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "success",
+    "name": "Success",
+    "latitude": -32.12971,
+    "longitude": 115.85298,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "thornlie",
+    "name": "Thornlie",
+    "latitude": -32.05528,
+    "longitude": 115.96523,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "tuart-hill",
+    "name": "Tuart Hill",
+    "latitude": -31.89621,
+    "longitude": 115.82933,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "two-rocks",
+    "name": "Two Rocks",
+    "latitude": -31.49621,
+    "longitude": 115.58865,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "wanneroo",
+    "name": "Wanneroo",
+    "latitude": -31.75065,
+    "longitude": 115.80533,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "warnbro",
+    "name": "Warnbro",
+    "latitude": -32.34543,
+    "longitude": 115.7586,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "willagee",
+    "name": "Willagee",
+    "latitude": -32.05262,
+    "longitude": 115.80589,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "willetton",
+    "name": "Willetton",
+    "latitude": -32.05573,
+    "longitude": 115.87904,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  },
+  {
+    "id": "woodvale",
+    "name": "Woodvale",
+    "latitude": -31.79798,
+    "longitude": 115.79532,
+    "sourceUrl": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+    "checkedOn": "2026-10-10"
+  }
+]

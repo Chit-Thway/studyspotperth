@@ -1,0 +1,161 @@
+{
+  "id": "launch-honourable-michael-murray-law-library",
+  "slug": "honourable-michael-murray-law-library",
+  "institution": "murdoch",
+  "content": {
+    "latitude": -32.0674979,
+    "longitude": 115.835109,
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "unknown",
+      "networks": []
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 480,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 480,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 480,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 480,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 480,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 6,
+            "startMinute": 780,
+            "endMinute": 1020
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 480,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 480,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 480,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 480,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 480,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 6,
+              "startMinute": 780,
+              "endMinute": 1020
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "Honourable Michael Murray Law Library",
+    "address": "Level 3, South Wing, Building 354, 90 South Street, Murdoch",
+    "suburbId": "murdoch",
+    "description": "Law collection and study space; closed on Sundays.",
+    "officialUrl": "https://www.murdoch.edu.au/library/visit-us",
+    "sources": [
+      {
+        "id": "hours",
+        "kind": "official",
+        "label": "Murdoch library locations and hours",
+        "url": "https://www.murdoch.edu.au/library/visit-us",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "visitors",
+        "kind": "official",
+        "label": "Visitor study-space eligibility",
+        "url": "https://www.murdoch.edu.au/library/borrow/join-the-library",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Orderinchaos",
+        "url": "https://commons.wikimedia.org/wiki/File:Murdoch_Library_Michael_Murray_Law_Library_entrance.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "Murdoch official map building 354 point",
+        "url": "https://api.mazemap.com/api/pois/?identifier=354&campusid=603&srid=4326",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/honourable-michael-murray-law-library.webp",
+        "alt": "Entrance to the Honourable Michael Murray Law Library inside Murdoch Library.",
+        "credit": "Orderinchaos",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "unknown"
+    },
+    "groupStudy": {
+      "kind": "unknown"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

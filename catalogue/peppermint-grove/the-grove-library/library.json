@@ -1,0 +1,168 @@
+{
+  "id": "catalogue-the-grove-library",
+  "slug": "the-grove-library",
+  "institution": "public",
+  "wifiProfileId": "grove",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "The Grove Library",
+    "address": "1 Leake Street, Peppermint Grove",
+    "suburbId": "peppermint-grove",
+    "latitude": -31.99745,
+    "longitude": 115.76404,
+    "description": "Public library in Peppermint Grove, operated by The Grove shared library service.",
+    "officialUrl": "https://www.thegrovelibrary.net/contact-us.aspx",
+    "photos": [
+      {
+        "url": "/images/libraries/peppermint-grove/the-grove-library/exterior.webp",
+        "alt": "Exterior of The Grove Library. Photographed 2011-04-14.",
+        "credit": "The Grove Library / Wikimedia Commons / CC BY-SA 2.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 600,
+            "endMinute": 960
+          },
+          {
+            "weekday": 0,
+            "startMinute": 720,
+            "endMinute": 960
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 960
+            },
+            {
+              "weekday": 0,
+              "startMinute": 720,
+              "endMinute": 960
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "The Grove shared library service: library information",
+        "url": "https://www.thegrovelibrary.net/contact-us.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.thegrovelibrary.net/contact-us.aspx",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: The Grove Library / Wikimedia Commons / CC BY-SA 2.0",
+        "url": "https://commons.wikimedia.org/wiki/File:The_Grove_Library.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 2.0",
+        "url": "https://creativecommons.org/licenses/by-sa/2.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

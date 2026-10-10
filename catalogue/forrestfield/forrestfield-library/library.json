@@ -1,0 +1,137 @@
+{
+  "id": "catalogue-forrestfield-library",
+  "slug": "forrestfield-library",
+  "institution": "public",
+  "wifiProfileId": "forrestfield",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Forrestfield Library",
+    "address": "Shops 26 and 27F, Hawaiian's Shopping Centre, 20 Strelitzia Avenue, Forrestfield",
+    "suburbId": "forrestfield",
+    "latitude": -31.985379,
+    "longitude": 116.009285,
+    "description": "Public library in Forrestfield, operated by City of Kalamunda.",
+    "officialUrl": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1020
+          },
+          {
+            "weekday": 6,
+            "startMinute": 540,
+            "endMinute": 720
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1020
+            },
+            {
+              "weekday": 6,
+              "startMinute": 540,
+              "endMinute": 720
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Kalamunda: library information",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "Approximate map point from the current State Library of WA directory",
+        "url": "https://slwa.wa.gov.au/public-library/forrestfield-public-library",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      }
+    ]
+  }
+}

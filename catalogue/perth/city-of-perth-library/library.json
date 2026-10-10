@@ -1,0 +1,678 @@
+{
+  "id": "launch-city-of-perth-library",
+  "slug": "city-of-perth-library",
+  "institution": "public",
+  "content": {
+    "latitude": -31.95515,
+    "longitude": 115.86129,
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "yes"
+    },
+    "wifi": {
+      "status": "known",
+      "networks": [
+        {
+          "name": "Perth WiFi",
+          "kind": "public",
+          "eligibleCards": [],
+          "needsActiveCredentials": false,
+          "requirements": "Accept the wireless conditions to connect.",
+          "limits": "2 GB per day, reset at midnight.",
+          "helpUrl": "https://www.perth.wa.gov.au/community/community-services-and-facilities/city-of-perth-library/computers-wifi-print-and-copy",
+          "sourceId": "wifi"
+        }
+      ]
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "venue",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 2,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 3,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 4,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 5,
+            "startMinute": 480,
+            "endMinute": 1080
+          },
+          {
+            "weekday": 6,
+            "startMinute": 600,
+            "endMinute": 960
+          },
+          {
+            "weekday": 0,
+            "startMinute": 720,
+            "endMinute": 960
+          }
+        ],
+        "overrides": [
+          {
+            "id": "holiday-2026-01-01",
+            "kind": "date",
+            "startDate": "2026-01-01",
+            "endDate": "2026-01-01",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-01-26",
+            "kind": "date",
+            "startDate": "2026-01-26",
+            "endDate": "2026-01-26",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-03-02",
+            "kind": "date",
+            "startDate": "2026-03-02",
+            "endDate": "2026-03-02",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-04-03",
+            "kind": "date",
+            "startDate": "2026-04-03",
+            "endDate": "2026-04-03",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-04-05",
+            "kind": "date",
+            "startDate": "2026-04-05",
+            "endDate": "2026-04-05",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-04-06",
+            "kind": "date",
+            "startDate": "2026-04-06",
+            "endDate": "2026-04-06",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-04-25",
+            "kind": "date",
+            "startDate": "2026-04-25",
+            "endDate": "2026-04-25",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-04-27",
+            "kind": "date",
+            "startDate": "2026-04-27",
+            "endDate": "2026-04-27",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-06-01",
+            "kind": "date",
+            "startDate": "2026-06-01",
+            "endDate": "2026-06-01",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-09-28",
+            "kind": "date",
+            "startDate": "2026-09-28",
+            "endDate": "2026-09-28",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-12-25",
+            "kind": "date",
+            "startDate": "2026-12-25",
+            "endDate": "2026-12-25",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-12-26",
+            "kind": "date",
+            "startDate": "2026-12-26",
+            "endDate": "2026-12-26",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2026-12-28",
+            "kind": "date",
+            "startDate": "2026-12-28",
+            "endDate": "2026-12-28",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-01-01",
+            "kind": "date",
+            "startDate": "2027-01-01",
+            "endDate": "2027-01-01",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-01-26",
+            "kind": "date",
+            "startDate": "2027-01-26",
+            "endDate": "2027-01-26",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-03-01",
+            "kind": "date",
+            "startDate": "2027-03-01",
+            "endDate": "2027-03-01",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-03-26",
+            "kind": "date",
+            "startDate": "2027-03-26",
+            "endDate": "2027-03-26",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-03-28",
+            "kind": "date",
+            "startDate": "2027-03-28",
+            "endDate": "2027-03-28",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-03-29",
+            "kind": "date",
+            "startDate": "2027-03-29",
+            "endDate": "2027-03-29",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-04-25",
+            "kind": "date",
+            "startDate": "2027-04-25",
+            "endDate": "2027-04-25",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-04-26",
+            "kind": "date",
+            "startDate": "2027-04-26",
+            "endDate": "2027-04-26",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-06-07",
+            "kind": "date",
+            "startDate": "2027-06-07",
+            "endDate": "2027-06-07",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-09-27",
+            "kind": "date",
+            "startDate": "2027-09-27",
+            "endDate": "2027-09-27",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-12-25",
+            "kind": "date",
+            "startDate": "2027-12-25",
+            "endDate": "2027-12-25",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-12-26",
+            "kind": "date",
+            "startDate": "2027-12-26",
+            "endDate": "2027-12-26",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-12-27",
+            "kind": "date",
+            "startDate": "2027-12-27",
+            "endDate": "2027-12-27",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          },
+          {
+            "id": "holiday-2027-12-28",
+            "kind": "date",
+            "startDate": "2027-12-28",
+            "endDate": "2027-12-28",
+            "status": "closed",
+            "intervals": [],
+            "sourceId": "holidays"
+          }
+        ]
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "venue",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 2,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 3,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 4,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 5,
+              "startMinute": 480,
+              "endMinute": 1080
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 960
+            },
+            {
+              "weekday": 0,
+              "startMinute": 720,
+              "endMinute": 960
+            }
+          ],
+          "overrides": [
+            {
+              "id": "holiday-2026-01-01",
+              "kind": "date",
+              "startDate": "2026-01-01",
+              "endDate": "2026-01-01",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-01-26",
+              "kind": "date",
+              "startDate": "2026-01-26",
+              "endDate": "2026-01-26",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-03-02",
+              "kind": "date",
+              "startDate": "2026-03-02",
+              "endDate": "2026-03-02",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-04-03",
+              "kind": "date",
+              "startDate": "2026-04-03",
+              "endDate": "2026-04-03",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-04-05",
+              "kind": "date",
+              "startDate": "2026-04-05",
+              "endDate": "2026-04-05",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-04-06",
+              "kind": "date",
+              "startDate": "2026-04-06",
+              "endDate": "2026-04-06",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-04-25",
+              "kind": "date",
+              "startDate": "2026-04-25",
+              "endDate": "2026-04-25",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-04-27",
+              "kind": "date",
+              "startDate": "2026-04-27",
+              "endDate": "2026-04-27",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-06-01",
+              "kind": "date",
+              "startDate": "2026-06-01",
+              "endDate": "2026-06-01",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-09-28",
+              "kind": "date",
+              "startDate": "2026-09-28",
+              "endDate": "2026-09-28",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-12-25",
+              "kind": "date",
+              "startDate": "2026-12-25",
+              "endDate": "2026-12-25",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-12-26",
+              "kind": "date",
+              "startDate": "2026-12-26",
+              "endDate": "2026-12-26",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2026-12-28",
+              "kind": "date",
+              "startDate": "2026-12-28",
+              "endDate": "2026-12-28",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-01-01",
+              "kind": "date",
+              "startDate": "2027-01-01",
+              "endDate": "2027-01-01",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-01-26",
+              "kind": "date",
+              "startDate": "2027-01-26",
+              "endDate": "2027-01-26",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-03-01",
+              "kind": "date",
+              "startDate": "2027-03-01",
+              "endDate": "2027-03-01",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-03-26",
+              "kind": "date",
+              "startDate": "2027-03-26",
+              "endDate": "2027-03-26",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-03-28",
+              "kind": "date",
+              "startDate": "2027-03-28",
+              "endDate": "2027-03-28",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-03-29",
+              "kind": "date",
+              "startDate": "2027-03-29",
+              "endDate": "2027-03-29",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-04-25",
+              "kind": "date",
+              "startDate": "2027-04-25",
+              "endDate": "2027-04-25",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-04-26",
+              "kind": "date",
+              "startDate": "2027-04-26",
+              "endDate": "2027-04-26",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-06-07",
+              "kind": "date",
+              "startDate": "2027-06-07",
+              "endDate": "2027-06-07",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-09-27",
+              "kind": "date",
+              "startDate": "2027-09-27",
+              "endDate": "2027-09-27",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-12-25",
+              "kind": "date",
+              "startDate": "2027-12-25",
+              "endDate": "2027-12-25",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-12-26",
+              "kind": "date",
+              "startDate": "2027-12-26",
+              "endDate": "2027-12-26",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-12-27",
+              "kind": "date",
+              "startDate": "2027-12-27",
+              "endDate": "2027-12-27",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            },
+            {
+              "id": "holiday-2027-12-28",
+              "kind": "date",
+              "startDate": "2027-12-28",
+              "endDate": "2027-12-28",
+              "status": "closed",
+              "intervals": [],
+              "sourceId": "holidays"
+            }
+          ],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "City of Perth Library",
+    "address": "573 Hay Street, Perth",
+    "suburbId": "perth",
+    "description": "Public library in the city centre. Closed on public holidays.",
+    "officialUrl": "https://perth.wa.gov.au/Library",
+    "sources": [
+      {
+        "id": "venue",
+        "kind": "official",
+        "label": "City library hours and accessibility",
+        "url": "https://perth.wa.gov.au/Library",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "wifi",
+        "kind": "official",
+        "label": "Library Perth WiFi",
+        "url": "https://www.perth.wa.gov.au/community/community-services-and-facilities/city-of-perth-library/computers-wifi-print-and-copy",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "holidays",
+        "kind": "official",
+        "label": "Perth public holiday dates 2026–2027",
+        "url": "https://www.wa.gov.au/service/employment/workplace-arrangements/public-holidays-western-australia",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Photographs by JarrahTree · commons.wikimedia.org",
+        "url": "https://commons.wikimedia.org/wiki/File:Perth_City_Library_from_Hay_Street.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY 2.5 AU",
+        "url": "https://creativecommons.org/licenses/by/2.5/au/deed.en",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "map-location",
+        "kind": "official",
+        "label": "State Library of WA public-library location dataset, CC BY 4.0; address confirmed by City of Perth",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/city-of-perth-library.webp",
+        "alt": "City of Perth Library exterior viewed from Hay Street.",
+        "credit": "Photographs by JarrahTree · commons.wikimedia.org",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "unknown"
+    },
+    "groupStudy": {
+      "kind": "unknown"
+    },
+    "wheelchairAccess": {
+      "kind": "confirmed",
+      "sourceId": "venue"
+    }
+  }
+}

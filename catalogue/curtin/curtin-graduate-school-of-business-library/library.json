@@ -1,0 +1,99 @@
+{
+  "id": "launch-curtin-graduate-school-of-business-library",
+  "slug": "curtin-graduate-school-of-business-library",
+  "institution": "curtin",
+  "content": {
+    "latitude": -31.9541242,
+    "longitude": 115.8631822,
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "wifi": {
+      "status": "unknown",
+      "networks": []
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "unknown",
+        "sourceId": null,
+        "recurring": [],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "unknown",
+          "sourceId": null,
+          "recurring": [],
+          "overrides": [],
+          "group": "curtin",
+          "requirement": "CURTIN card required",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "name": "Curtin Graduate School of Business Library",
+    "address": "78 Murray Street, Perth",
+    "suburbId": "perth",
+    "description": "Curtin staff and student swipe-card access. Opening hours await confirmation from CGSB.",
+    "officialUrl": "https://www.curtin.edu.au/library/using-the-library/cgsb/",
+    "sources": [
+      {
+        "id": "venue",
+        "kind": "official",
+        "label": "CGSB location and swipe-card access; hours not published",
+        "url": "https://www.curtin.edu.au/library/using-the-library/cgsb/",
+        "checkedOn": "2026-10-05"
+      },
+      {
+        "id": "photo",
+        "kind": "confirmation",
+        "label": "Photo: Calistemon",
+        "url": "https://commons.wikimedia.org/wiki/File:Government_Printing_Office,_Perth,_January_2021_01.jpg",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "photo-license",
+        "kind": "confirmation",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-07"
+      },
+      {
+        "id": "map-location",
+        "kind": "confirmation",
+        "label": "Approximate building point © OpenStreetMap contributors, ODbL",
+        "url": "https://www.openstreetmap.org/way/147108686",
+        "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "map-license",
+        "kind": "confirmation",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-06"
+      }
+    ],
+    "photos": [
+      {
+        "url": "/images/libraries/curtin-graduate-school-of-business-library.webp",
+        "alt": "Former Government Printing Office at 78 Murray Street, housing Curtin Graduate School of Business.",
+        "credit": "Calistemon",
+        "sourceId": "photo"
+      }
+    ]
+  },
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "unknown"
+    },
+    "groupStudy": {
+      "kind": "unknown"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  }
+}

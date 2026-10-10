@@ -1,0 +1,155 @@
+{
+  "id": "catalogue-evelyn-h-parker-library",
+  "slug": "evelyn-h-parker-library",
+  "institution": "public",
+  "wifiProfileId": "subiaco",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "confirmed",
+      "sourceId": "facility-groupStudy"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Evelyn H Parker Library",
+    "address": "237 Rokeby Road, Subiaco",
+    "suburbId": "subiaco",
+    "latitude": -31.9508,
+    "longitude": 115.82372,
+    "description": "Public library in Subiaco, operated by City of Subiaco.",
+    "officialUrl": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/",
+    "photos": [],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "yes",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 570,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 2,
+            "startMinute": 570,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 570,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 570,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 570,
+            "endMinute": 1050
+          },
+          {
+            "weekday": 6,
+            "startMinute": 570,
+            "endMinute": 960
+          },
+          {
+            "weekday": 0,
+            "startMinute": 840,
+            "endMinute": 1020
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 570,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 2,
+              "startMinute": 570,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 570,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 570,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 570,
+              "endMinute": 1050
+            },
+            {
+              "weekday": 6,
+              "startMinute": 570,
+              "endMinute": 960
+            },
+            {
+              "weekday": 0,
+              "startMinute": 840,
+              "endMinute": 1020
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Subiaco: library information",
+        "url": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "State Library of WA public-library location dataset (2021), CC BY 4.0; current address confirmed by the library",
+        "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
+        "checkedOn": "2026-10-10",
+        "kind": "official"
+      },
+      {
+        "id": "facility-groupStudy",
+        "label": "Group study information",
+        "url": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/library-services/",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      }
+    ]
+  }
+}

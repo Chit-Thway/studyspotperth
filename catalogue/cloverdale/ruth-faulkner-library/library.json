@@ -1,0 +1,175 @@
+{
+  "id": "catalogue-ruth-faulkner-library",
+  "slug": "ruth-faulkner-library",
+  "institution": "public",
+  "wifiProfileId": "belmont",
+  "facilityEvidence": {
+    "quietStudy": {
+      "kind": "assumed"
+    },
+    "groupStudy": {
+      "kind": "assumed"
+    },
+    "wheelchairAccess": {
+      "kind": "unknown"
+    }
+  },
+  "content": {
+    "name": "Ruth Faulkner Library",
+    "address": "Belmont Hub, 213 Wright Street, Cloverdale",
+    "suburbId": "cloverdale",
+    "latitude": -31.9630187,
+    "longitude": 115.934266,
+    "description": "Public library in Cloverdale, operated by City of Belmont.",
+    "officialUrl": "https://www.belmont.wa.gov.au/discover/places-to-go/ruth-faulkner-library-and-belmont-museum/contact-the-library-and-museum",
+    "photos": [
+      {
+        "url": "/images/libraries/cloverdale/ruth-faulkner-library/exterior.webp",
+        "alt": "Belmont Hub, home of Ruth Faulkner Library. Photographed 2022-08-07.",
+        "credit": "Orderinchaos / Wikimedia Commons / CC BY-SA 4.0. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
+    "facilities": {
+      "quietStudy": "unknown",
+      "groupStudy": "unknown",
+      "wheelchairAccess": "unknown"
+    },
+    "schedule": {
+      "timeZone": "Australia/Perth",
+      "building": {
+        "status": "known",
+        "sourceId": "hours",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 2,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 3,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 4,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 5,
+            "startMinute": 540,
+            "endMinute": 1140
+          },
+          {
+            "weekday": 6,
+            "startMinute": 600,
+            "endMinute": 900
+          },
+          {
+            "weekday": 0,
+            "startMinute": 780,
+            "endMinute": 960
+          }
+        ],
+        "overrides": []
+      },
+      "access": [
+        {
+          "status": "known",
+          "sourceId": "hours",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 2,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 3,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 4,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 5,
+              "startMinute": 540,
+              "endMinute": 1140
+            },
+            {
+              "weekday": 6,
+              "startMinute": 600,
+              "endMinute": 900
+            },
+            {
+              "weekday": 0,
+              "startMinute": 780,
+              "endMinute": 960
+            }
+          ],
+          "overrides": [],
+          "group": "public",
+          "requirement": "Public access",
+          "needsActiveCredentials": false
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "library",
+        "label": "City of Belmont: library information",
+        "url": "https://www.belmont.wa.gov.au/discover/places-to-go/ruth-faulkner-library-and-belmont-museum/contact-the-library-and-museum",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "hours",
+        "label": "Regular public opening hours",
+        "url": "https://www.belmont.wa.gov.au/discover/places-to-go/ruth-faulkner-library-and-belmont-museum/contact-the-library-and-museum",
+        "checkedOn": "2026-10-08",
+        "kind": "official"
+      },
+      {
+        "id": "map-location",
+        "label": "Approximate venue/building point © OpenStreetMap contributors, ODbL",
+        "url": "https://www.openstreetmap.org/way/1205901373",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "map-license",
+        "label": "OpenStreetMap location data © contributors, Open Database License",
+        "url": "https://www.openstreetmap.org/copyright",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Orderinchaos / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Belmont_Hub_from_Wright.jpg",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      }
+    ]
+  }
+}

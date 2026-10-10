@@ -30,6 +30,14 @@ describe('schedule records', () => {
     const unknown = libraryFixtures.find((fixture) => fixture.id === 'fixture-unknown')!;
     expect(selectScheduleForDate(unknown.content.schedule.building, '2026-10-02')).toMatchObject({ status: 'unknown', intervals: [] });
   });
+  it('preserves an unpublished weekday and allows a sourced date override to confirm it', () => {
+    const schedule = { status: 'known' as const, sourceId: 'hours', unknownWeekdays: [0],
+      recurring: [{ weekday: 1, startMinute: 540, endMinute: 1020 }], overrides: [] };
+    expect(selectScheduleForDate(schedule, '2026-10-11')).toMatchObject({ status: 'unknown', intervals: [] });
+    expect(selectScheduleForDate(schedule, '2026-10-12').intervals).toEqual([{ startMinute: 540, endMinute: 1020 }]);
+    expect(selectScheduleForDate({ ...schedule, overrides: [{ id: 'confirmed-sunday', kind: 'date', startDate: '2026-10-11', endDate: '2026-10-11', status: 'closed', intervals: [], sourceId: 'hours' }] }, '2026-10-11')).toMatchObject({ status: 'closed', overrideId: 'confirmed-sunday' });
+    expect(() => validateCalendar({ ...schedule, unknownWeekdays: [1] })).toThrow('confirmed recurring hours');
+  });
   it('rejects ambiguous equal times, invalid dates, and mismatched date weekdays', () => {
     expect(() => mergeIntervals([{ startMinute: 540, endMinute: 540 }])).toThrow('positive duration');
     expect(() => assertLocalDate('2026-02-30')).toThrow('valid');
