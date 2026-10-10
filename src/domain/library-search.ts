@@ -107,7 +107,7 @@ export function evaluateLibrary(library: LibraryRecord, request: SearchRequest,
 }
 export type LibrarySearchResult = ReturnType<typeof evaluateLibrary>;
 
-export function searchLibraryCandidates<T extends LibrarySearchRecord>(libraries: readonly T[], request: SearchRequest) {
+export function rankLibraryCandidates<T extends LibrarySearchRecord>(libraries: readonly T[], request: SearchRequest): T[] {
   const date = formatPerthTime(request.start).slice(0, 10);
   const dayTimeline = createCalendarTimelineReader(date, 1);
   let weekTimeline: ReturnType<typeof createCalendarTimelineReader> | undefined;
@@ -144,11 +144,18 @@ export function searchLibraryCandidates<T extends LibrarySearchRecord>(libraries
     if (distance !== 0 && !Number.isNaN(distance)) return distance;
     return a.library.slug < b.library.slug ? -1 : a.library.slug > b.library.slug ? 1 : 0;
   });
-  const page = results.slice(request.offset, request.offset + request.limit);
-  return { results: page.map(({ library }) => library), total: results.length,
-    offset: request.offset, limit: request.limit, nextOffset: request.offset + request.limit < results.length ? request.offset + request.limit : null,
-    emptyReason: results.length === 0 ? 'No published libraries have confirmed hours and satisfy your selected filters. Try another time or adjust the filters.'
-      : request.offset >= results.length ? 'There are no more results on this page.' : null };
+  return results.map(({ library }) => library);
+}
+
+export function pageLibraryCandidates<T extends LibrarySearchRecord>(ranked: readonly T[], request: SearchRequest) {
+  return { results: ranked.slice(request.offset, request.offset + request.limit), total: ranked.length,
+    offset: request.offset, limit: request.limit, nextOffset: request.offset + request.limit < ranked.length ? request.offset + request.limit : null,
+    emptyReason: ranked.length === 0 ? 'No published libraries have confirmed hours and satisfy your selected filters. Try another time or adjust the filters.'
+      : request.offset >= ranked.length ? 'There are no more results on this page.' : null };
+}
+
+export function searchLibraryCandidates<T extends LibrarySearchRecord>(libraries: readonly T[], request: SearchRequest) {
+  return pageLibraryCandidates(rankLibraryCandidates(libraries, request), request);
 }
 
 export function searchLibraries(libraries: readonly LibraryRecord[], request: SearchRequest) {

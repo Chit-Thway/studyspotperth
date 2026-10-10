@@ -1,6 +1,6 @@
 import { FINDER_PAGE_SIZE, FINDER_QUERY_FIELDS, normalizeSearchParams } from '../../domain/search-request';
 
-/** The finder always shows ten cards; invalid query values still reach API validation. */
+/** The finder always shows ten cards; invalid query values still reach shared validation. */
 export function finderRequestParams(params: URLSearchParams) {
   const next = normalizeSearchParams(params);
   const limits = next.getAll('limit');
@@ -13,7 +13,7 @@ export function finderRequestParams(params: URLSearchParams) {
 const restrictiveFields = ['institutions', 'publicAccess', 'open24Hours', 'usableWifi', 'quietStudy', 'groupStudy', 'wheelchairAccess', 'start', 'offset', 'limit'];
 
 /** Carry finder selections across public pages, excluding route-specific state.
- * Keep values and duplicates intact so API validation remains authoritative.
+ * Keep values and duplicates intact so shared search validation remains authoritative.
  */
 function publicFinderParams(params: URLSearchParams) {
   return new URLSearchParams([...normalizeSearchParams(params)].filter(([field]) => FINDER_QUERY_FIELDS.includes(field)));

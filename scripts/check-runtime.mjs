@@ -33,6 +33,7 @@ await cp(resolve('tests/runtime/admin-check.ts'), `${workDir}/functions/api/_adm
 await cp(resolve('tests/runtime/launch-data-check.ts'), `${workDir}/functions/api/_launch-check.ts`);
 await cp(resolve('tests/runtime/usage-check.ts'), `${workDir}/functions/api/_usage-check.ts`);
 await cp(resolve('tests/runtime/catalogue-scale-check.ts'), `${workDir}/functions/api/_catalogue-scale-check.ts`);
+await cp(resolve('tests/runtime/public-catalogue-check.ts'), `${workDir}/functions/api/_catalogue-check.ts`);
 await cp(resolve('dist'), `${workDir}/dist`, { recursive: true });
 await writeFile(`${workDir}/package.json`, JSON.stringify({ name: 'studyspotperth-runtime-check', private: true, type: 'module' }));
 const config = JSON.parse(await readFile('wrangler.jsonc', 'utf8'));
@@ -89,85 +90,91 @@ try {
   assert.equal(wrongMethod.status, 405);
   assert.equal(wrongMethod.headers.get('allow'), 'GET');
 
-  const auth = await fetch(`${origin}/api/auth/ok`);
-  assert.equal(auth.status, 200, 'Better Auth did not initialise in the Pages runtime.');
-  assert.deepEqual(await auth.json(), { ok: true });
-  const guestSession = await fetch(`${origin}/api/auth/get-session`);
-  assert.equal(guestSession.status, 200);
-  assert.equal(await guestSession.json(), null);
-  const guestAccount = await fetch(`${origin}/api/account`);
-  assert.deepEqual(await guestAccount.json(), { account: null, googleEnabled: true }, 'Pages must load both provider credentials from .dev.vars.');
-  const social = await fetch(`${origin}/api/auth/sign-in/social`, { method: 'POST',
-    headers: { Origin: origin, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ provider: 'google', callbackURL: `${origin}/profile`, disableRedirect: true }),
-  });
-  assert.equal(social.status, 200, 'Configured Google sign-in must generate an authorization URL.');
-  const socialPayload = await social.json();
-  const authorization = new URL(socialPayload.url);
-  assert.equal(authorization.origin, 'https://accounts.google.com');
-  assert.equal(authorization.searchParams.get('client_id'), 'runtime-check-client');
-  assert.equal(authorization.searchParams.get('redirect_uri'), `${origin}/api/auth/callback/google`);
-  assert.equal(authorization.searchParams.get('code_challenge_method'), 'S256');
+  if (process.argv.includes('--catalogue-only')) {
+    const catalogue = await fetch(`${origin}/api/_catalogue-check`);
+    assert.equal(catalogue.status, 200, 'Public catalogue integration failed; see the worker log.');
+    console.log(JSON.stringify(await catalogue.json()));
+  } else {
+    const auth = await fetch(`${origin}/api/auth/ok`);
+    assert.equal(auth.status, 200, 'Better Auth did not initialise in the Pages runtime.');
+    assert.deepEqual(await auth.json(), { ok: true });
+    const guestSession = await fetch(`${origin}/api/auth/get-session`);
+    assert.equal(guestSession.status, 200);
+    assert.equal(await guestSession.json(), null);
+    const guestAccount = await fetch(`${origin}/api/account`);
+    assert.deepEqual(await guestAccount.json(), { account: null, googleEnabled: true }, 'Pages must load both provider credentials from .dev.vars.');
+    const social = await fetch(`${origin}/api/auth/sign-in/social`, { method: 'POST',
+      headers: { Origin: origin, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ provider: 'google', callbackURL: `${origin}/profile`, disableRedirect: true }),
+    });
+    assert.equal(social.status, 200, 'Configured Google sign-in must generate an authorization URL.');
+    const socialPayload = await social.json();
+    const authorization = new URL(socialPayload.url);
+    assert.equal(authorization.origin, 'https://accounts.google.com');
+    assert.equal(authorization.searchParams.get('client_id'), 'runtime-check-client');
+    assert.equal(authorization.searchParams.get('redirect_uri'), `${origin}/api/auth/callback/google`);
+    assert.equal(authorization.searchParams.get('code_challenge_method'), 'S256');
 
-  for (const path of ['/', '/sign-in', '/profile', '/saved', '/admin', '/admin/libraries/new', '/libraries/fictional-uwa-24-hours', '/a-page-that-does-not-exist']) {
-    const page = await fetch(`${origin}${path}`);
-    assert.equal(page.status, 200, `SPA fallback failed for ${path}.`);
-    assert.match(await page.text(), /<title>StudySpot Perth<\/title>/);
+    for (const path of ['/', '/sign-in', '/profile', '/saved', '/admin', '/admin/libraries/new', '/libraries/fictional-uwa-24-hours', '/a-page-that-does-not-exist']) {
+      const page = await fetch(`${origin}${path}`);
+      assert.equal(page.status, 200, `SPA fallback failed for ${path}.`);
+      assert.match(await page.text(), /<title>StudySpot Perth<\/title>/);
+    }
+    const home = await fetch(`${origin}/`);
+    const html = await home.text();
+    const assetPath = html.match(/src="([^"]+\.js)"/)?.[1];
+    assert(assetPath, 'Built app script was not included.');
+    assert.equal((await fetch(`${origin}${assetPath}`)).status, 200);
+    for (const path of ['/api/libraries?start=2026-10-02T14:00', '/api/suburbs']) {
+      const response = await fetch(`${origin}${path}`);
+      assert.equal(response.status, 200, `Public route failed: ${path}`);
+      assert.equal(response.headers.get('cache-control'), 'no-store');
+    }
+    assert.equal((await fetch(`${origin}/api/libraries/fictional-uwa-24-hours`)).status, 404, 'Public route exposed a fictional record.');
+    assert.equal((await fetch(`${origin}/api/libraries?start=bad`)).status, 400);
+    assert.equal((await fetch(`${origin}/api/libraries`, { method: 'POST' })).status, 405);
+    const searchCheck = await fetch(`${origin}/api/_search-check`);
+    assert.equal(searchCheck.status, 200, await searchCheck.text());
+    const accountCheck = await fetch(`${origin}/api/_account-check`);
+    assert.equal(accountCheck.status, 200, 'Account integration checks failed; see the worker log.');
+    const testCookie = accountCheck.headers.get('set-cookie')?.split(';')[0];
+    assert(testCookie, 'The isolated account check must provide a test session.');
+    const protectedProfile = await fetch(`${origin}/api/account`, { headers: { Cookie: testCookie } });
+    assert.equal(protectedProfile.status, 200);
+    assert.equal((await protectedProfile.json()).account.user.id, 'account-check-alice');
+    const emptyPut = await fetch(`${origin}/api/account/favourites/missing-library`, { method: 'PUT', headers: { Origin: origin, Cookie: testCookie } });
+    assert.equal(emptyPut.status, 404, 'A bodyless HTTP PUT must reach library validation.');
+    const expiredPut = await fetch(`${origin}/api/account`, { method: 'PUT', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ suburbId: null, cards: [] }) });
+    assert.equal(expiredPut.status, 401);
+    const adminCheck = await fetch(`${origin}/api/_admin-check`);
+    assert.equal(adminCheck.status, 200, 'Admin integration checks failed; see the worker log.');
+    const adminCookie = adminCheck.headers.get('set-cookie')?.split(';')[0];
+    assert(adminCookie);
+    assert.equal((await fetch(`${origin}/api/admin/libraries`)).status, 401);
+    assert.equal((await fetch(`${origin}/api/admin/libraries`, { headers: { Cookie: testCookie } })).status, 403);
+    const adminList = await fetch(`${origin}/api/admin/libraries`, { headers: { Cookie: adminCookie } });
+    assert.equal(adminList.status, 200);
+    assert((await adminList.json()).libraries.every((item) => !item.record.isFixture));
+    for (const action of ['preview', 'publish', 'unpublish']) {
+      assert.equal((await fetch(`${origin}/api/admin/libraries/missing/${action}`, { method: 'POST', headers: { Cookie: adminCookie, Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ revisionId: 'missing' }) })).status, 404, `Admin ${action} routing failed.`);
+    }
+    const dataCheck = await fetch(`${origin}/api/_data-check`);
+    assert.equal(dataCheck.status, 200, await dataCheck.text());
+    const launchCheck = await fetch(`${origin}/api/_launch-check`);
+    assert.equal(launchCheck.status, 200, await launchCheck.text());
+    const usageCheck = await fetch(`${origin}/api/_usage-check`);
+    assert.equal(usageCheck.status, 200, await usageCheck.text());
+    assert.equal((await fetch(`${origin}/api/admin/usage`)).status, 401);
+    assert.equal((await fetch(`${origin}/api/admin/usage`, { headers: { Cookie: adminCookie } })).status, 200);
+    const noConsent = await fetch(`${origin}/api/usage`, { method: 'POST', headers: { Origin: origin } });
+    assert.equal(noConsent.status, 204);
+    const scaleCheck = await fetch(`${origin}/api/_catalogue-scale-check`);
+    assert.equal(scaleCheck.status, 200, await scaleCheck.clone().text());
+    console.log(`Passed: catalogue capacity checks ${JSON.stringify(await scaleCheck.json())}`);
+    console.log('Passed: optional-cookie consent, anonymous/account separation, duplicate visits/events, returning estimates, retention, and protected usage summaries.');
+    console.log('Passed: 13 public launch listings, repeatable local import, detail routes, 24/7 ranking and explicit UWA filtering.');
+    console.log('Passed: admin permission/CSRF checks, concurrent drafts, preview, publish/unpublish, closures and overrides; local Google credential loading, authorization URL/callback and disabled-provider handling; account ownership, preferences/favourites, session signatures/expiry/revocation/renewal, CSRF and server roles; search/detail regression matrix; fixture exclusion; migration replay; publication and rollback; Pages/D1/auth runtime; SPA and assets. Live Google sign-in is checked separately.');
   }
-  const home = await fetch(`${origin}/`);
-  const html = await home.text();
-  const assetPath = html.match(/src="([^"]+\.js)"/)?.[1];
-  assert(assetPath, 'Built app script was not included.');
-  assert.equal((await fetch(`${origin}${assetPath}`)).status, 200);
-  for (const path of ['/api/libraries?start=2026-10-02T14:00', '/api/suburbs']) {
-    const response = await fetch(`${origin}${path}`);
-    assert.equal(response.status, 200, `Public route failed: ${path}`);
-    assert.equal(response.headers.get('cache-control'), 'no-store');
-  }
-  assert.equal((await fetch(`${origin}/api/libraries/fictional-uwa-24-hours`)).status, 404, 'Public route exposed a fictional record.');
-  assert.equal((await fetch(`${origin}/api/libraries?start=bad`)).status, 400);
-  assert.equal((await fetch(`${origin}/api/libraries`, { method: 'POST' })).status, 405);
-  const searchCheck = await fetch(`${origin}/api/_search-check`);
-  assert.equal(searchCheck.status, 200, await searchCheck.text());
-  const accountCheck = await fetch(`${origin}/api/_account-check`);
-  assert.equal(accountCheck.status, 200, 'Account integration checks failed; see the worker log.');
-  const testCookie = accountCheck.headers.get('set-cookie')?.split(';')[0];
-  assert(testCookie, 'The isolated account check must provide a test session.');
-  const protectedProfile = await fetch(`${origin}/api/account`, { headers: { Cookie: testCookie } });
-  assert.equal(protectedProfile.status, 200);
-  assert.equal((await protectedProfile.json()).account.user.id, 'account-check-alice');
-  const emptyPut = await fetch(`${origin}/api/account/favourites/missing-library`, { method: 'PUT', headers: { Origin: origin, Cookie: testCookie } });
-  assert.equal(emptyPut.status, 404, 'A bodyless HTTP PUT must reach library validation.');
-  const expiredPut = await fetch(`${origin}/api/account`, { method: 'PUT', headers: { Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ suburbId: null, cards: [] }) });
-  assert.equal(expiredPut.status, 401);
-  const adminCheck = await fetch(`${origin}/api/_admin-check`);
-  assert.equal(adminCheck.status, 200, 'Admin integration checks failed; see the worker log.');
-  const adminCookie = adminCheck.headers.get('set-cookie')?.split(';')[0];
-  assert(adminCookie);
-  assert.equal((await fetch(`${origin}/api/admin/libraries`)).status, 401);
-  assert.equal((await fetch(`${origin}/api/admin/libraries`, { headers: { Cookie: testCookie } })).status, 403);
-  const adminList = await fetch(`${origin}/api/admin/libraries`, { headers: { Cookie: adminCookie } });
-  assert.equal(adminList.status, 200);
-  assert((await adminList.json()).libraries.every((item) => !item.record.isFixture));
-  for (const action of ['preview', 'publish', 'unpublish']) {
-    assert.equal((await fetch(`${origin}/api/admin/libraries/missing/${action}`, { method: 'POST', headers: { Cookie: adminCookie, Origin: origin, 'Content-Type': 'application/json' }, body: JSON.stringify({ revisionId: 'missing' }) })).status, 404, `Admin ${action} routing failed.`);
-  }
-  const dataCheck = await fetch(`${origin}/api/_data-check`);
-  assert.equal(dataCheck.status, 200, await dataCheck.text());
-  const launchCheck = await fetch(`${origin}/api/_launch-check`);
-  assert.equal(launchCheck.status, 200, await launchCheck.text());
-  const usageCheck = await fetch(`${origin}/api/_usage-check`);
-  assert.equal(usageCheck.status, 200, await usageCheck.text());
-  assert.equal((await fetch(`${origin}/api/admin/usage`)).status, 401);
-  assert.equal((await fetch(`${origin}/api/admin/usage`, { headers: { Cookie: adminCookie } })).status, 200);
-  const noConsent = await fetch(`${origin}/api/usage`, { method: 'POST', headers: { Origin: origin } });
-  assert.equal(noConsent.status, 204);
-  const scaleCheck = await fetch(`${origin}/api/_catalogue-scale-check`);
-  assert.equal(scaleCheck.status, 200, await scaleCheck.clone().text());
-  console.log(`Passed: catalogue capacity checks ${JSON.stringify(await scaleCheck.json())}`);
-  console.log('Passed: optional-cookie consent, anonymous/account separation, duplicate visits/events, returning estimates, retention, and protected usage summaries.');
-  console.log('Passed: 13 public launch listings, repeatable local import, detail routes, 24/7 ranking and explicit UWA filtering.');
-  console.log('Passed: admin permission/CSRF checks, concurrent drafts, preview, publish/unpublish, closures and overrides; local Google credential loading, authorization URL/callback and disabled-provider handling; account ownership, preferences/favourites, session signatures/expiry/revocation/renewal, CSRF and server roles; search/detail regression matrix; fixture exclusion; migration replay; publication and rollback; Pages/D1/auth runtime; SPA and assets. Live Google sign-in is checked separately.');
 } catch (error) {
   // Wrangler masks secret values in its binding output; never print .dev.vars.
   console.error(output.slice(-6000));
