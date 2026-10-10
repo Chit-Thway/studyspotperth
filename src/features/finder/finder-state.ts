@@ -10,7 +10,7 @@ export function finderRequestParams(params: URLSearchParams) {
   return next;
 }
 
-const restrictiveFields = ['institutions', 'publicAccess', 'open24Hours', 'usableWifi', 'quietStudy', 'groupStudy', 'wheelchairAccess', 'start', 'offset', 'limit'];
+const restrictiveFields = ['institutions', 'sizes', 'publicAccess', 'open24Hours', 'usableWifi', 'quietStudy', 'groupStudy', 'wheelchairAccess', 'start', 'offset', 'limit'];
 
 /** Carry finder selections across public pages, excluding route-specific state.
  * Keep values and duplicates intact so shared search validation remains authoritative.
@@ -25,7 +25,7 @@ export function updateFinderParam(params: URLSearchParams, field: string, value:
   if (field !== 'offset') next.delete('offset');
   return next;
 }
-export function toggleFinderSelection(params: URLSearchParams, field: 'cards' | 'institutions', value: string) {
+export function toggleFinderSelection(params: URLSearchParams, field: 'cards' | 'institutions' | 'sizes', value: string) {
   const selected = (normalizeSearchParams(params).get(field) ?? '').split(',').filter(Boolean);
   const next = selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value];
   const updated = updateFinderParam(params, field, next.join(','));

@@ -1,5 +1,6 @@
 import type { CalendarSchedule } from './schedule';
 import type { Institution, UniversityCard } from './search-context';
+import type { LibrarySize } from './library-size.ts';
 
 export type FactStatus = 'yes' | 'no' | 'unknown';
 export interface SourceRecord {
@@ -33,6 +34,8 @@ export interface LibraryContent {
   latitude: number | null;
   longitude: number | null;
   description: string;
+  /** Estimated usable study-space scale, not a seat count. Legacy records may omit it. */
+  size?: LibrarySize | null;
   officialUrl: string | null;
   photos: LibraryPhoto[];
   facilities: { quietStudy: FactStatus; groupStudy: FactStatus; wheelchairAccess: FactStatus };
@@ -49,5 +52,5 @@ export interface LibraryRecord {
   status: 'draft' | 'published' | 'archived';
   content: LibraryContent;
 }
-export type LibrarySearchContent = Pick<LibraryContent, 'latitude' | 'longitude' | 'facilities' | 'wifi' | 'schedule'>;
+export type LibrarySearchContent = Pick<LibraryContent, 'latitude' | 'longitude' | 'size' | 'facilities' | 'wifi' | 'schedule'>;
 export interface LibrarySearchRecord extends Omit<LibraryRecord, 'content'> { content: LibrarySearchContent }

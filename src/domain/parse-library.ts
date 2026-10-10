@@ -2,6 +2,7 @@ import type { CalendarSchedule, ScheduleOverride, WeeklyInterval } from './sched
 import { assertLocalDate, PERTH_TIME_ZONE, validateCalendar } from './schedule.ts';
 import type { LibraryContent, LibrarySearchContent, SourceRecord } from './library.ts';
 import { UNIVERSITY_CARDS } from './search-context.ts';
+import { LIBRARY_SIZES } from './library-size.ts';
 
 function object(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Expected an object.');
@@ -99,6 +100,7 @@ function searchContent(item: Record<string, unknown>, sourceIds: Set<string>): L
     throw new Error('Coordinates must be a valid pair or both unknown.');
   }
   const result: LibrarySearchContent = { latitude, longitude,
+    ...(item.size === undefined ? {} : { size: item.size === null ? null : choice(item.size, LIBRARY_SIZES) }),
     facilities: { quietStudy: choice(facilities.quietStudy, factStatuses), groupStudy: choice(facilities.groupStudy, factStatuses),
       wheelchairAccess: choice(facilities.wheelchairAccess, factStatuses) },
     wifi: { status: choice(wifi.status, ['known', 'unknown']), networks: list(wifi.networks).map((input) => {

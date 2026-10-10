@@ -34,6 +34,9 @@ add `--apply` to insert missing records as local drafts. Optional
 `--link-suburbs` attaches physical suburb IDs to existing published records
 whose address and map point match. This creates new immutable revisions and
 keeps all existing facts; newer drafts and archived records are preserved.
+Optional `--link-sizes` fills missing estimated sizes in matching published
+records using the same guarded revision workflow. Existing size choices are
+preserved, including administrator edits. Both metadata options can be combined.
 
 Thirty-two additions have 33 licensed photographs. Thirty-seven additions use
 placeholders. Notre Dame's image is labelled as campus context. Photo credits,
@@ -90,7 +93,16 @@ calendar is bounded to its verified dates, like the existing university calendar
 Each physical suburb has `id`, `name`, `latitude`, `longitude`, HTTPS `sourceUrl`
 and `checkedOn`. A library's `content.suburbId` must reference an existing real
 suburb or one in the manifest. Existing suburb records are preserved. Estimated
-size and presentation grouping remain research fields, outside this import.
+size is stored as optional `content.size` (`small`, `medium`, `large`, or null
+when unknown). Presentation grouping remains represented by the folders.
+
+Sizes estimate usable study-space scale: Victoria Park anchors Small, City of
+Perth anchors Medium, and Reid, TL Robertson and State Library anchor Large.
+The 69 additions use the research estimates. The other launch libraries are
+estimated against those anchors using their sourced study-space descriptions.
+These categories are not seat counts or guaranteed capacity. Cards display a
+size line, and the finder supports comma-separated `sizes` selections (OR within
+sizes, AND with other filters). No selection includes every size.
 
 ### Facility evidence
 

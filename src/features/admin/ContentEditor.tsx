@@ -3,6 +3,7 @@ import type { SearchOrigin } from '../../domain/search-request';
 import { emptyCalendar } from '../../domain/admin';
 import { Field, Choice, Check, Remove, Section, SourceChoice } from './Fields';
 import { ScheduleEditor } from './ScheduleEditor';
+import { isLibrarySize, LIBRARY_SIZES, LIBRARY_SIZE_LABELS } from '../../domain/library-size';
 import styles from './Admin.module.css';
 
 import { INSTITUTION_LABELS, UNIVERSITY_CARDS } from '../libraries/presentation';
@@ -14,6 +15,7 @@ export function ContentEditor({ content, onChange, origins }: { content: Library
     <Section title="Library details"><div className={styles.row}>
       <Field label="Library name" value={content.name} onChange={(name) => update({ name })} required />
       <Field label="Address" value={content.address} onChange={(address) => update({ address })} required />
+      <Choice label="Estimated size" value={content.size ?? ''} options={[["", 'Unknown'], ...LIBRARY_SIZES.map((size) => [size, LIBRARY_SIZE_LABELS[size]] as const)]} onChange={(size) => update({ size: isLibrarySize(size) ? size : null })} />
       <Choice label="Suburb" value={content.suburbId ?? ''} options={[["", 'Unknown'], ...origins.filter((item) => item.id !== 'perth-cbd').map((item) => [item.id, item.name] as const)]} onChange={(suburbId) => update({ suburbId: suburbId || null })} />
       <Field label="Latitude" type="number" value={content.latitude === null ? '' : String(content.latitude)} onChange={(latitude) => update({ latitude: latitude === '' ? null : Number(latitude) })} />
       <Field label="Longitude" type="number" value={content.longitude === null ? '' : String(content.longitude)} onChange={(longitude) => update({ longitude: longitude === '' ? null : Number(longitude) })} />

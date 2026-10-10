@@ -114,6 +114,7 @@ export function rankLibraryCandidates<T extends LibrarySearchRecord>(libraries: 
   const weekStart = perthMidnight(date);
   const weekEnd = perthMidnight(shiftDate(date, 7));
   const results = libraries.filter((library) => library.status === 'published')
+    .filter((library) => !request.filters.sizes.length || Boolean(library.content.size && request.filters.sizes.includes(library.content.size)))
     .filter((library) => !request.filters.institutions.length || library.institution !== 'public' && request.filters.institutions.includes(library.institution))
     .filter((library) => (['quietStudy', 'groupStudy', 'wheelchairAccess'] as const).every((facility) => !request.filters[facility] || library.content.facilities[facility] === 'yes'))
     .filter((library) => !request.filters.usableWifi || evaluateWifi(library.content.wifi, request.cards).status === 'eligible')

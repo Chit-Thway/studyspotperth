@@ -7,6 +7,7 @@ import { LibraryFacts } from './LibraryFacts';
 import { institutionCategory, mapsLocationUrl } from './presentation';
 import styles from './Libraries.module.css';
 import { SaveButton } from '../account/SaveButton';
+import { LIBRARY_SIZE_LABELS } from '../../domain/library-size';
 
 export function LibraryCard({ result, params }: { result: LibrarySearchResult; params: URLSearchParams }) {
   const { library } = result;
@@ -29,6 +30,7 @@ export function LibraryCard({ result, params }: { result: LibrarySearchResult; p
       <li><Icon name="book" />{content.facilities.quietStudy === 'no' ? 'Study spaces' : 'Quiet areas'}</li>
       <li><Icon name={content.facilities.wheelchairAccess === 'yes' ? 'access' : 'people'} />{content.facilities.wheelchairAccess === 'yes' ? 'Step-free access' : content.facilities.groupStudy === 'no' ? 'Shared spaces' : 'Group spaces'}</li>
     </ul>
+    <p className={styles.librarySize} title="Estimated usable study-space scale">Size: {content.size ? LIBRARY_SIZE_LABELS[content.size] : 'Unknown'}</p>
     <Link className={styles.viewLink} to={href}>View library <Icon name="arrow" /></Link>
   </article>;
 }

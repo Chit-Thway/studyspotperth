@@ -54,6 +54,7 @@ export function createLibraryRepository(env: Env) {
     const rows = await env.DB.prepare(`SELECT l.id, l.slug, i.id AS institution, l.is_fixture AS isFixture,
       r.id AS revisionId, r.status, json_object(
         'latitude', json_extract(r.content, '$.latitude'), 'longitude', json_extract(r.content, '$.longitude'),
+        'size', json_extract(r.content, '$.size'),
         'facilities', json_extract(r.content, '$.facilities'), 'wifi', json_extract(r.content, '$.wifi'),
         'schedule', json_extract(r.content, '$.schedule'),
         'sourceIds', (SELECT json_group_array(json_extract(value, '$.id')) FROM json_each(r.content, '$.sources'))

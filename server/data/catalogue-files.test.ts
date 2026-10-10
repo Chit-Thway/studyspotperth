@@ -3,8 +3,8 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { readCatalogueFiles } from './catalogue-files';
 import { createCataloguePlan } from './catalogue-import';
-import { createCatalogueSuburbLinks } from './catalogue-suburbs';
-import type { PublishedCatalogueRow } from './catalogue-suburbs';
+import { createCatalogueMetadataLinks } from './catalogue-metadata';
+import type { PublishedCatalogueRow } from './catalogue-metadata';
 import { createLaunchSql, launchLibraries } from './launch-libraries';
 import { searchLibraries } from '../../src/domain/library-search';
 import { parseSearchRequest } from '../../src/domain/search-request';
@@ -22,7 +22,7 @@ describe('authored 82-library catalogue', () => {
       expect(catalogue.suburbs.some((suburb) => suburb.id === library.content.suburbId)).toBe(true);
       expect(library.content.latitude).not.toBeNull();
       expect(library.content.longitude).not.toBeNull();
-      expect(library.content).not.toHaveProperty('size');
+      expect(['small', 'medium', 'large']).toContain(library.content.size);
       for (const photo of library.content.photos) {
         const bytes = readFileSync(assets.get(photo.url)!);
         expect(bytes.subarray(0, 4).toString()).toBe('RIFF');
@@ -32,7 +32,7 @@ describe('authored 82-library catalogue', () => {
     }
     for (const launch of launchLibraries) {
       const source = catalogue.libraries.find((library) => library.id === launch.id)!;
-      expect({ ...source.content, suburbId: null }).toEqual(launch.content);
+      expect({ ...source.content, suburbId: null, size: undefined }).toEqual({ ...launch.content, size: undefined });
     }
   });
   it('retains partial uncertainty, holiday hours and the bounded Notre Dame calendar', async () => {
@@ -67,16 +67,17 @@ describe('authored 82-library catalogue', () => {
       db.exec(`BEGIN;${plan.statements.join('\n')}COMMIT;`);
       const published = db.prepare("SELECT l.id,l.slug,r.id AS revisionId,r.content FROM library l JOIN library_revision r ON r.library_id=l.id WHERE r.status='published'").all() as unknown as PublishedCatalogueRow[];
       // An edited fact survives metadata linkage; a newer draft blocks linkage altogether.
-      const edited = { ...JSON.parse(published[0].content) as object, description: 'Admin description to preserve' };
+      const edited = { ...JSON.parse(published[0].content) as object, description: 'Admin description to preserve', size: 'small' };
       db.prepare("UPDATE library_revision SET status='archived' WHERE id=?").run(published[0].revisionId);
       db.prepare("INSERT INTO library_revision(id,library_id,status,content,created_at,published_at) VALUES ('admin-published',?,'published',?,1,1)").run(published[0].id, JSON.stringify(edited));
       published[0].revisionId = 'admin-published';
       published[0].content = JSON.stringify(edited);
       db.prepare("INSERT INTO library_revision(id,library_id,status,content,created_at) VALUES ('admin-draft',?,'draft',?,1)").run(published[1].id, published[1].content);
-      const links = createCatalogueSuburbLinks(catalogue, published);
+      const links = createCatalogueMetadataLinks(catalogue, published, { suburbs: true, sizes: true });
       db.exec(`BEGIN;${links.statements.join('\n')}COMMIT;`);
       const revised = JSON.parse(db.prepare("SELECT content FROM library_revision WHERE library_id=? AND status='published'").get(published[0].id)!.content as string) as Record<string, unknown>;
       expect({ ...revised, suburbId: null }).toEqual(edited);
+      expect(links.linkedSizes).not.toContain(published[0].slug);
       expect(JSON.parse(db.prepare("SELECT content FROM library_revision WHERE library_id=? AND status='published'").get(published[1].id)!.content as string)).toEqual(JSON.parse(published[1].content));
       expect(db.prepare("SELECT COUNT(*) AS count FROM library_revision WHERE status='draft'").get()?.count).toBe(70);
       expect(db.prepare('PRAGMA foreign_key_check').all()).toEqual([]);
@@ -99,5 +100,13 @@ describe('authored 82-library catalogue', () => {
     expect(new Set(seen).size).toBe(82);
     const onlyNotreDame = searchLibraries(records, parseSearchRequest(new URLSearchParams('institutions=notre-dame'), clock));
     expect(onlyNotreDame.results.map((result) => result.library.slug)).toEqual(['michael-j-m-wright-library']);
+    const small = searchLibraries(records, parseSearchRequest(new URLSearchParams('sizes=small&limit=100'), clock));
+    expect(small.total).toBe(38);
+    expect(small.results.every((result) => result.library.content.size === 'small')).toBe(true);
+    const combined = searchLibraries(records, parseSearchRequest(new URLSearchParams('sizes=small,medium&limit=100'), clock));
+    expect(combined.total).toBe(75);
+    expect(combined.results.every((result) => result.library.content.size !== 'large')).toBe(true);
+    const largeUwa = searchLibraries(records, parseSearchRequest(new URLSearchParams('sizes=large&institutions=uwa'), clock));
+    expect(largeUwa.results.map((result) => result.library.slug).sort()).toEqual(['barry-j-marshall-library', 'reid-library']);
   });
 });

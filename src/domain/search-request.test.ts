@@ -17,6 +17,11 @@ describe('search request validation', () => {
     expect(request('cards=uwa,uwa,curtin')).toMatchObject({ cards: ['uwa', 'curtin'], filters: { institutions: [], open24Hours: false, usableWifi: false } });
     expect(request('institutions=uwa')).toMatchObject({ cards: [], filters: { institutions: ['uwa'] } });
   });
+  it('accepts multiple size selections and rejects unsupported sizes', () => {
+    expect(request('').filters.sizes).toEqual([]);
+    expect(request('sizes=small,large,small').filters.sizes).toEqual(['small', 'large']);
+    expect(() => request('sizes=huge')).toThrow(SearchValidationError);
+  });
   it('migrates public institution links into an independent access filter and resets their old page', () => {
     expect(request('institutions=public,uwa&offset=10')).toMatchObject({ offset: 0, filters: { institutions: ['uwa'], publicAccess: true } });
     expect(request('institutions=public&publicAccess=false')).toMatchObject({ filters: { institutions: [], publicAccess: false } });

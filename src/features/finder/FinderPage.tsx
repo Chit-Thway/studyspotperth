@@ -13,6 +13,7 @@ import { finderRequestParams, resetFinderFilters, toggleFinderSelection, updateF
 import styles from './FinderPage.module.css';
 import { useUserLocation } from '../location/use-location';
 import { useFinderPagination } from './use-finder-pagination';
+import { isLibrarySize, LIBRARY_SIZE_LABELS } from '../../domain/library-size';
 
 export function FinderPage() {
   const [rawParams, setParams] = useSearchParams();
@@ -45,6 +46,7 @@ export function FinderPage() {
   }, []);
   const chips: { key: string; label: string; remove: () => void }[] = [];
   (params.get('institutions') ?? '').split(',').filter(isInstitution).forEach((institution) => chips.push({ key: institution, label: INSTITUTION_LABELS[institution], remove: () => change(toggleFinderSelection(params, 'institutions', institution)) }));
+  (params.get('sizes') ?? '').split(',').filter(isLibrarySize).forEach((size) => chips.push({ key: `size-${size}`, label: `${LIBRARY_SIZE_LABELS[size]} libraries`, remove: () => change(toggleFinderSelection(params, 'sizes', size)) }));
   ([['publicAccess', 'Public access'], ['open24Hours', 'Open 24/7'], ['usableWifi', 'Wi-Fi I can use'], ['quietStudy', 'Quiet areas'], ['groupStudy', 'Group spaces'], ['wheelchairAccess', 'Step-free access']] as const).forEach(([field, label]) => {
     if (params.get(field) === 'true') chips.push({ key: field, label, remove: () => change(updateFinderParam(params, field, null)) });
   });

@@ -20,7 +20,7 @@ export async function handleCatalogueRequest(request: Request, env: Env, options
         'name', json_extract(content, '$.name'), 'address', json_extract(content, '$.address'),
         'suburbId', json_extract(content, '$.suburbId'), 'latitude', json_extract(content, '$.latitude'),
         'longitude', json_extract(content, '$.longitude'), 'description', json_extract(content, '$.description'),
-        'officialUrl', json_extract(content, '$.officialUrl'), 'photos', json_extract(content, '$.photos'),
+        'officialUrl', json_extract(content, '$.officialUrl'), 'size', json_extract(content, '$.size'), 'photos', json_extract(content, '$.photos'),
         'facilities', json_extract(content, '$.facilities'), 'wifi', json_extract(content, '$.wifi'),
         'schedule', json_extract(content, '$.schedule'), 'sources', json_extract(content, '$.sources')
       ))) FROM published)), 'origins', json(origin_document.document)) AS body,

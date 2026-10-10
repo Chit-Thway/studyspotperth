@@ -2,6 +2,17 @@ import { describe, expect, it } from 'vitest';
 import { finderRequestParams, finderUrl, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 
 describe('guest finder selections', () => {
+  it('selects multiple sizes, resets pagination and preserves size selections in detail links', () => {
+    const selected = new URLSearchParams('offset=30&cards=uwa');
+    const small = toggleFinderSelection(selected, 'sizes', 'small');
+    const both = toggleFinderSelection(small, 'sizes', 'large');
+    expect(both.get('sizes')).toBe('small,large');
+    expect(both.has('offset')).toBe(false);
+    expect(new URL(finderUrl(both, '/libraries/reid-library'), 'https://example.invalid').searchParams.get('sizes')).toBe('small,large');
+    expect(toggleFinderSelection(both, 'sizes', 'small').get('sizes')).toBe('large');
+    expect(toggleFinderSelection(small, 'sizes', 'small').has('sizes')).toBe(false);
+    expect(resetFinderFilters(both).toString()).toBe('cards=uwa');
+  });
   it('requests ten cards, including old larger-page links, and preserves return-link state', () => {
     for (const query of ['', 'limit=50', 'limit=100', 'limit=2']) {
       const original = new URLSearchParams(`${query}&offset=20&cards=notre-dame&publicAccess=true`);

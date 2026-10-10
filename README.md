@@ -12,7 +12,7 @@ Google sign-in lets visitors save libraries and keep declared university cards i
 
 The local backend stores versioned library records, opening and entry schedules, dated exceptions, and profile preferences. Draft edits remain separate from published records. Automated checks cover these data rules, database connectivity, and page routing.
 
-The finder shows ten cards per page. [Catalogue maintenance](docs/catalogue-import.md) describes the additive draft importer, shared Wi-Fi profiles, facility evidence and 82/100-record capacity checks.
+The finder shows ten cards per page, with an estimated Small, Medium or Large size below each card's facility icons. The size filter uses one-, two- and four-person icons and supports multiple selections. [Catalogue maintenance](docs/catalogue-import.md) describes the additive importer, size metadata, shared Wi-Fi profiles and facility evidence.
 
 Authorised administrators can edit library details, photos, facilities, Wi-Fi and opening hours, add closures or date ranges, and preview changes before publishing. The public version stays unchanged while a draft is edited.
 

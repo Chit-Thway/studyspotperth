@@ -45,7 +45,7 @@ function unique(values: string[], label: string) {
   if (new Set(values).size !== values.length) throw new Error(`Duplicate ${label} in import.`);
 }
 
-/** Read application facts only. Personal notes, size estimates and grouping metadata are not imported. */
+/** Read application fields only. Personal notes and unsupported research metadata are not imported. */
 export function parseCatalogueImport(value: unknown): CatalogueImport {
   const input = object(value);
   if (input.version !== 1) throw new Error('Use catalogue import version 1.');

@@ -1,3 +1,5 @@
+import type { LibrarySize } from './library-size.ts';
+
 export const UNIVERSITY_CARDS = ['uwa', 'curtin', 'ecu', 'murdoch', 'notre-dame'] as const;
 export const INSTITUTION_CODES = ['public', ...UNIVERSITY_CARDS] as const;
 export type UniversityCard = typeof UNIVERSITY_CARDS[number];
@@ -10,6 +12,7 @@ export interface AccessProfile {
 
 export interface SearchFilters {
   institutions: readonly UniversityCard[];
+  sizes: readonly LibrarySize[];
   publicAccess: boolean;
   open24Hours: boolean;
   usableWifi: boolean;
@@ -27,7 +30,7 @@ export function createSearchContext(profile: AccessProfile): SearchContext {
   return {
     profile,
     filters: {
-      institutions: [], publicAccess: false, open24Hours: false, usableWifi: false,
+      institutions: [], sizes: [], publicAccess: false, open24Hours: false, usableWifi: false,
       quietStudy: false, groupStudy: false, wheelchairAccess: false,
     },
   };

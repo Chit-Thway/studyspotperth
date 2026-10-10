@@ -38,6 +38,11 @@ fieldset.filterSection::after { content: ''; display: block; clear: both; }
 .timeMode + .help { margin-top: var(--space-2); }
 .checkboxRow { display: flex; align-items: center; gap: var(--space-2); margin-top: .3rem; min-height: 1.5rem; font-size: .8rem; cursor: pointer; }
 .checkboxRow input, .cardOptions input { margin: 0; width: 1rem; height: 1rem; accent-color: var(--color-action); flex-shrink: 0; }
+.sizeOptions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; }
+.sizeOptions button { display: grid; place-items: center; min-height: 2.75rem; padding: .4rem; border: 1px solid var(--color-border); border-radius: var(--radius-control); color: var(--color-action); background: var(--color-surface); cursor: pointer; }
+.sizeOptions button[aria-pressed=true] { color: var(--color-surface); border-color: var(--color-action); background: var(--color-action); }
+.sizeOptions button:focus-visible { outline: 3px solid var(--color-action); outline-offset: 2px; }
+.sizeOptions svg { width: 1.75rem; height: 1.75rem; stroke-width: 1.65; }
 .switchRow { display: flex; align-items: flex-start; gap: var(--space-3); position: relative; cursor: pointer; }
 .switchRow + .switchRow { margin-top: .65rem; }
 .switchRow input { position: absolute; top: .1rem; left: 0; width: 2.2rem; height: 1.25rem; margin: 0; opacity: 0; }

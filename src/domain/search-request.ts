@@ -1,6 +1,7 @@
 import type { Institution, SearchFilters, UniversityCard } from './search-context';
 import { INSTITUTION_CODES, UNIVERSITY_CARDS } from './search-context';
 import { formatPerthTime, parsePerthTime } from './perth-time';
+import { isLibrarySize, LIBRARY_SIZES } from './library-size';
 
 export interface SearchOrigin { id: string; name: string; latitude: number; longitude: number }
 export const FINDER_PAGE_SIZE = 10;
@@ -22,7 +23,7 @@ export function isUniversityCard(value: string): value is UniversityCard {
 }
 export function isInstitution(value: string): value is Institution { return value === 'public' || isUniversityCard(value); }
 
-export const FINDER_QUERY_FIELDS: readonly string[] = ['start', 'suburb', 'cards', 'institutions', 'publicAccess', 'open24Hours', 'usableWifi',
+export const FINDER_QUERY_FIELDS: readonly string[] = ['start', 'suburb', 'cards', 'institutions', 'sizes', 'publicAccess', 'open24Hours', 'usableWifi',
   'quietStudy', 'groupStudy', 'wheelchairAccess', 'limit', 'offset'];
 
 /** Migrate retired options without hiding invalid active values or duplicate parameters. */
@@ -66,11 +67,11 @@ export function parseSearchRequest(rawParams: URLSearchParams, clock: number, or
     if (value === 'true') return true;
     throw new SearchValidationError(field, 'Use true or false.');
   };
-  const list = <T extends string>(field: string, accepts: (value: string) => value is T): T[] => {
+  const list = <T extends string>(field: string, accepts: (value: string) => value is T, maximum: number = INSTITUTION_CODES.length, label = 'institution codes'): T[] => {
     const value = params.get(field);
     if (value === null || value === '') return [];
     const items = value.split(',');
-    if (items.length > INSTITUTION_CODES.length || !items.every(accepts)) throw new SearchValidationError(field, 'Use supported institution codes separated by commas.');
+    if (items.length > maximum || !items.every(accepts)) throw new SearchValidationError(field, `Use supported ${label} separated by commas.`);
     return [...new Set(items)];
   };
   const integer = (field: string, fallback: number, min: number, max: number) => {
@@ -83,6 +84,6 @@ export function parseSearchRequest(rawParams: URLSearchParams, clock: number, or
     throw new SearchValidationError('suburb', 'Use a valid suburb ID.');
   }
   return { start, origin, cards: list('cards', isUniversityCard), limit: integer('limit', FINDER_PAGE_SIZE, 1, 100), offset: integer('offset', 0, 0, 10000),
-    filters: { institutions: list('institutions', isUniversityCard), publicAccess: boolean('publicAccess'), open24Hours: boolean('open24Hours'), usableWifi: boolean('usableWifi'),
+    filters: { institutions: list('institutions', isUniversityCard), sizes: list('sizes', isLibrarySize, LIBRARY_SIZES.length, 'library sizes'), publicAccess: boolean('publicAccess'), open24Hours: boolean('open24Hours'), usableWifi: boolean('usableWifi'),
       quietStudy: boolean('quietStudy'), groupStudy: boolean('groupStudy'), wheelchairAccess: boolean('wheelchairAccess') } };
 }
