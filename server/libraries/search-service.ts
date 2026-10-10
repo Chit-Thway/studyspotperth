@@ -1,5 +1,7 @@
-import type { LibraryRecord } from '../../src/domain/library';
-import { evaluateLibrary, searchLibraries } from '../../src/domain/library-search';
+import type { LibrarySearchRecord } from '../../src/domain/library';
+import { evaluateLibrary, searchLibraryCandidates } from '../../src/domain/library-search';
+import { createCalendarTimelineReader } from '../../src/domain/availability';
+import { formatPerthTime } from '../../src/domain/perth-time';
 import { DEFAULT_ORIGIN, parseSearchRequest, SearchValidationError } from '../../src/domain/search-request';
 import { createLibraryRepository } from './repository';
 import type { SearchOrigin } from '../../src/domain/search-request';
@@ -22,16 +24,24 @@ export function createLibrarySearchService(env: Env, options: { includeFixtures?
   }
   async function search(params: URLSearchParams, clock: number, deviceOrigin: SearchOrigin | null = null) {
     const parsed = await request(params, clock, deviceOrigin);
-    const records: LibraryRecord[] = [];
+    const records: LibrarySearchRecord[] = [];
     let afterSlug: string | undefined;
     // Read every published page before ranking; never silently search just the first 100.
     for (;;) {
-      const page = await repository.listPublished({ ...options, afterSlug, limit: 100 });
+      const page = await repository.listPublishedSearchCandidates({ ...options, afterSlug, limit: 100 });
       records.push(...page);
       if (page.length < 100) break;
       afterSlug = page.at(-1)!.slug;
     }
-    return { ...searchLibraries(records, parsed), request: parsed, timeZone: 'Australia/Perth' as const };
+    const page = searchLibraryCandidates(records, parsed);
+    const fullRecords = await repository.getPublishedRevisions(page.results.map((record) => record.revisionId), options);
+    const byRevision = new Map(fullRecords.map((record) => [record.revisionId, record]));
+    const timeline = page.results.length ? createCalendarTimelineReader(formatPerthTime(parsed.start).slice(0, 10)) : undefined;
+    const results = page.results.flatMap((candidate) => {
+      const record = byRevision.get(candidate.revisionId);
+      return record ? [evaluateLibrary(record, parsed, timeline)] : [];
+    });
+    return { ...page, results, request: parsed, timeZone: 'Australia/Perth' as const };
   }
   async function detail(slug: string, params: URLSearchParams, clock: number, deviceOrigin: SearchOrigin | null = null) {
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || slug.length > 120) throw new SearchValidationError('slug', 'Invalid library address.');

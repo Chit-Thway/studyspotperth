@@ -49,3 +49,5 @@ export interface LibraryRecord {
   status: 'draft' | 'published' | 'archived';
   content: LibraryContent;
 }
+export type LibrarySearchContent = Pick<LibraryContent, 'latitude' | 'longitude' | 'facilities' | 'wifi' | 'schedule'>;
+export interface LibrarySearchRecord extends Omit<LibraryRecord, 'content'> { content: LibrarySearchContent }

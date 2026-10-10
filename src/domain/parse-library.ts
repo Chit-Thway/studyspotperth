@@ -1,6 +1,6 @@
 import type { CalendarSchedule, ScheduleOverride, WeeklyInterval } from './schedule.ts';
 import { assertLocalDate, PERTH_TIME_ZONE, validateCalendar } from './schedule.ts';
-import type { LibraryContent, SourceRecord } from './library.ts';
+import type { LibraryContent, LibrarySearchContent, SourceRecord } from './library.ts';
 import { UNIVERSITY_CARDS } from './search-context.ts';
 
 function object(value: unknown): Record<string, unknown> {
@@ -82,16 +82,7 @@ function calendar(value: unknown, sourceIds: Set<string>): CalendarSchedule {
   return result;
 }
 
-/** Builds a canonical document; unrecognised fields never reach public records. */
-export function parseLibraryContent(value: unknown): LibraryContent {
-  const item = object(value);
-  const sources = list(item.sources).map((input): SourceRecord => {
-    const source = object(input);
-    return { id: text(source.id), kind: choice(source.kind, ['official', 'confirmation', 'fixture']),
-      label: text(source.label), url: url(source.url), checkedOn: date(source.checkedOn) };
-  });
-  const sourceIds = new Set(sources.map((source) => source.id));
-  if (sourceIds.size !== sources.length) throw new Error('Duplicate source ID.');
+function searchContent(item: Record<string, unknown>, sourceIds: Set<string>): LibrarySearchContent {
   const source = (input: unknown) => {
     const id = nullableText(input);
     if (id !== null && !sourceIds.has(id)) throw new Error('Unknown source reference.');
@@ -106,13 +97,7 @@ export function parseLibraryContent(value: unknown): LibraryContent {
     || (latitude !== null && Math.abs(latitude) > 90) || (longitude !== null && Math.abs(longitude) > 180)) {
     throw new Error('Coordinates must be a valid pair or both unknown.');
   }
-  const result: LibraryContent = {
-    name: text(item.name), address: text(item.address), suburbId: nullableText(item.suburbId), latitude, longitude,
-    description: text(item.description, true), officialUrl: url(item.officialUrl), sources,
-    photos: list(item.photos).map((input) => {
-      const photo = object(input);
-      return { url: photoUrl(photo.url), alt: text(photo.alt), credit: text(photo.credit), sourceId: source(photo.sourceId) };
-    }),
+  const result: LibrarySearchContent = { latitude, longitude,
     facilities: { quietStudy: choice(facilities.quietStudy, factStatuses), groupStudy: choice(facilities.groupStudy, factStatuses),
       wheelchairAccess: choice(facilities.wheelchairAccess, factStatuses) },
     wifi: { status: choice(wifi.status, ['known', 'unknown']), networks: list(wifi.networks).map((input) => {
@@ -132,4 +117,35 @@ export function parseLibraryContent(value: unknown): LibraryContent {
   if (result.wifi.status === 'unknown' && result.wifi.networks.length) throw new Error('Unknown Wi-Fi cannot list confirmed networks.');
   if (new Set(result.schedule.access.map((access) => access.group)).size !== result.schedule.access.length) throw new Error('Duplicate entry group.');
   return result;
+}
+
+/** Internal D1 projection; full public documents are validated after page selection. */
+export function parseLibrarySearchContent(value: unknown): LibrarySearchContent {
+  const item = object(value);
+  const ids = list(item.sourceIds).map((id) => text(id));
+  const sourceIds = new Set(ids);
+  if (sourceIds.size !== ids.length) throw new Error('Duplicate source ID.');
+  return searchContent(item, sourceIds);
+}
+
+/** Builds a canonical document; unrecognised fields never reach public records. */
+export function parseLibraryContent(value: unknown): LibraryContent {
+  const item = object(value);
+  const sources = list(item.sources).map((input): SourceRecord => {
+    const source = object(input);
+    return { id: text(source.id), kind: choice(source.kind, ['official', 'confirmation', 'fixture']),
+      label: text(source.label), url: url(source.url), checkedOn: date(source.checkedOn) };
+  });
+  const sourceIds = new Set(sources.map((source) => source.id));
+  if (sourceIds.size !== sources.length) throw new Error('Duplicate source ID.');
+  return { ...searchContent(item, sourceIds),
+    name: text(item.name), address: text(item.address), suburbId: nullableText(item.suburbId),
+    description: text(item.description, true), officialUrl: url(item.officialUrl), sources,
+    photos: list(item.photos).map((input) => {
+      const photo = object(input);
+      const sourceId = nullableText(photo.sourceId);
+      if (sourceId !== null && !sourceIds.has(sourceId)) throw new Error('Unknown source reference.');
+      return { url: photoUrl(photo.url), alt: text(photo.alt), credit: text(photo.credit), sourceId };
+    }),
+  };
 }

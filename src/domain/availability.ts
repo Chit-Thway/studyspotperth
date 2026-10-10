@@ -1,6 +1,6 @@
 import type { CalendarSchedule, ScheduleOverride } from './schedule';
 import { calendarSelector } from './schedule';
-import { formatPerthTime, perthMidnight, perthScheduleTime, shiftDate } from './perth-time';
+import { DAY_MS, MINUTE_MS, formatPerthTime, perthMidnight, perthScheduleTime, shiftDate } from './perth-time';
 
 export interface TimeInterval { start: number; end: number }
 export interface ScheduleTimeline {
@@ -28,13 +28,21 @@ export function mergeTimeIntervals(intervals: readonly TimeInterval[]): TimeInte
 }
 
 export function intersectIntervals(a: readonly TimeInterval[], b: readonly TimeInterval[]): TimeInterval[] {
+  // Timelines are already merged. Normalize other callers without re-sorting timelines.
+  const ordered = (intervals: readonly TimeInterval[]) => intervals.some((interval, index) => interval.end <= interval.start
+    || index > 0 && interval.start <= intervals[index - 1].end) ? mergeTimeIntervals(intervals) : intervals;
+  const left = ordered(a);
+  const right = ordered(b);
   const intersections: TimeInterval[] = [];
-  for (const left of a) for (const right of b) {
-    const start = Math.max(left.start, right.start);
-    const end = Math.min(left.end, right.end);
+  let i = 0, j = 0;
+  while (i < left.length && j < right.length) {
+    const start = Math.max(left[i].start, right[j].start);
+    const end = Math.min(left[i].end, right[j].end);
     if (start < end) intersections.push({ start, end });
+    if (left[i].end < right[j].end) i++;
+    else j++;
   }
-  return mergeTimeIntervals(intersections);
+  return intersections;
 }
 
 /** Bound each day separately so an overnight interval cannot bypass an override.
@@ -64,9 +72,11 @@ export function createCalendarTimelineReader(startDate: string, days = 32) {
     for (let day = 0; day < days; day++) {
       const { date, midnight } = boundaries[day];
       const nextMidnight = boundaries[day + 1].midnight;
+      const regularDay = nextMidnight - midnight === DAY_MS;
       const selected = selectDate(date);
       const carry = previous.status === 'known' ? previous.intervals.filter((interval) => interval.endMinute > 1440)
-        .map((interval) => ({ start: midnight, end: perthScheduleTime(date, interval.endMinute - 1440, 'end') })) : [];
+        .map((interval) => ({ start: midnight, end: regularDay ? midnight + (interval.endMinute - 1440) * MINUTE_MS
+          : perthScheduleTime(date, interval.endMinute - 1440, 'end') })) : [];
       if (selected.status === 'unknown') {
         // An unknown ordinary baseline does not erase a confirmed overnight end.
         // Explicit receiving-day overrides remain authoritative.
@@ -77,8 +87,8 @@ export function createCalendarTimelineReader(startDate: string, days = 32) {
       }
       if (selected.status === 'known') {
         const current = selected.intervals.map((interval) => ({
-          start: perthScheduleTime(date, interval.startMinute, 'start'),
-          end: perthScheduleTime(date, Math.min(1440, interval.endMinute), 'end'),
+          start: regularDay ? midnight + interval.startMinute * MINUTE_MS : perthScheduleTime(date, interval.startMinute, 'start'),
+          end: regularDay ? midnight + Math.min(1440, interval.endMinute) * MINUTE_MS : perthScheduleTime(date, Math.min(1440, interval.endMinute), 'end'),
         }));
         const preservesCarry = selected.overrideId === null || selected.overrideId === previous.overrideId;
         intervals.push(...current, ...(preservesCarry ? carry : intersectIntervals(carry, current)));

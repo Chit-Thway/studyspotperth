@@ -1,12 +1,13 @@
 import { and, asc, desc, eq, gt } from 'drizzle-orm';
-import type { LibraryRecord } from '../../src/domain/library';
-import { parseLibraryContent } from '../../src/domain/parse-library';
+import type { LibraryRecord, LibrarySearchRecord } from '../../src/domain/library';
+import { parseLibraryContent, parseLibrarySearchContent } from '../../src/domain/parse-library';
 import type { Institution } from '../../src/domain/search-context';
 import { createDatabase } from '../db/client';
 import { institutions, libraries, libraryRevisions, suburbs } from '../db/library-schema';
 
 interface ReadOptions { includeFixtures?: boolean }
 interface ListOptions extends ReadOptions { limit?: number; afterSlug?: string }
+type SearchRow = Omit<LibrarySearchRecord, 'content' | 'isFixture'> & { content: string; isFixture: number };
 
 /** Internal data boundary. Admin callers must authorise before using write/draft methods. */
 export function createLibraryRepository(env: Env) {
@@ -44,6 +45,33 @@ export function createLibraryRepository(env: Env) {
     const row = await selectRecords().where(and(eq(libraries.slug, slug), eq(libraryRevisions.status, 'published'),
       options.includeFixtures ? undefined : eq(libraries.isFixture, false))).get();
     return row ? canonicalRecord(row) : null;
+  }
+
+  async function listPublishedSearchCandidates(options: ListOptions = {}): Promise<LibrarySearchRecord[]> {
+    const limit = options.limit ?? 100;
+    if (!Number.isInteger(limit) || limit < 1 || limit > 100) throw new Error('Page size must be 1–100.');
+    // Project in D1 so ranking does not transfer descriptions, photos or source documents.
+    const rows = await env.DB.prepare(`SELECT l.id, l.slug, i.id AS institution, l.is_fixture AS isFixture,
+      r.id AS revisionId, r.status, json_object(
+        'latitude', json_extract(r.content, '$.latitude'), 'longitude', json_extract(r.content, '$.longitude'),
+        'facilities', json_extract(r.content, '$.facilities'), 'wifi', json_extract(r.content, '$.wifi'),
+        'schedule', json_extract(r.content, '$.schedule'),
+        'sourceIds', (SELECT json_group_array(json_extract(value, '$.id')) FROM json_each(r.content, '$.sources'))
+      ) AS content FROM library l JOIN institution i ON i.id = l.institution_id JOIN library_revision r ON r.library_id = l.id
+      WHERE r.status = 'published' AND (? = 1 OR l.is_fixture = 0) AND l.slug > ? ORDER BY l.slug LIMIT ?`)
+      .bind(Number(options.includeFixtures === true), options.afterSlug ?? '', limit)
+      .all<SearchRow>();
+    return rows.results.map((row) => ({ ...row, isFixture: row.isFixture === 1, content: parseLibrarySearchContent(JSON.parse(row.content)) }));
+  }
+
+  async function getPublishedRevisions(revisionIds: readonly string[], options: ReadOptions = {}): Promise<LibraryRecord[]> {
+    if (!revisionIds.length) return [];
+    const rows = await env.DB.prepare(`SELECT l.id, l.slug, i.id AS institution, l.is_fixture AS isFixture,
+      r.id AS revisionId, r.status, r.content FROM library l JOIN institution i ON i.id = l.institution_id
+      JOIN library_revision r ON r.library_id = l.id WHERE r.status = 'published'
+      AND (? = 1 OR l.is_fixture = 0) AND r.id IN (${revisionIds.map(() => '?').join(',')})`)
+      .bind(Number(options.includeFixtures === true), ...revisionIds).all<SearchRow>();
+    return rows.results.map((row) => ({ ...row, isFixture: row.isFixture === 1, content: parseLibraryContent(JSON.parse(row.content)) }));
   }
 
   async function listSuburbs(options: ReadOptions = {}) {
@@ -100,5 +128,5 @@ export function createLibraryRepository(env: Env) {
       .where(and(eq(libraryRevisions.libraryId, libraryId), eq(libraryRevisions.status, 'published'))).run();
   }
 
-  return { listPublished, getPublishedBySlug, listSuburbs, getLatestDraft, createLibrary, createDraft, publishDraft, unpublish };
+  return { listPublished, listPublishedSearchCandidates, getPublishedRevisions, getPublishedBySlug, listSuburbs, getLatestDraft, createLibrary, createDraft, publishDraft, unpublish };
 }
