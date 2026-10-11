@@ -24,7 +24,14 @@
     "longitude": 115.79532,
     "description": "Public library in Woodvale, operated by City of Joondalup.",
     "officialUrl": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/library-locations-and-opening-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/woodvale/woodvale-library/exterior.webp",
+        "alt": "Woodvale Library exterior.",
+        "credit": "Australia247 Woodvale Library listing (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "yes",
       "groupStudy": "yes",
@@ -147,6 +154,13 @@
         "url": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/student-resources",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Woodvale Library exterior — Australia247 Woodvale Library listing",
+        "url": "https://www.australia247.info/explore/western_australia/city_of_joondalup/woodvale/woodvale_public_library.html",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

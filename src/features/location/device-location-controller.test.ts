@@ -29,7 +29,7 @@ function harness(state: PermissionState = 'granted', storage = memory(), hasPerm
 }
 
 describe('persistent location lifecycle', () => {
-  it('does not refresh a saved opt-in before the initial permission check completes', async () => {
+  it('waits for the initial permission check, then asks when permission is undecided', async () => {
     const storage = memory(); rememberCoordinates({ latitude: -32, longitude: 115.9 }, storage, 1000);
     let resolvePermission!: (status: PermissionStatus) => void;
     const getCurrentPosition = vi.fn<Geolocation['getCurrentPosition']>();
@@ -38,7 +38,7 @@ describe('persistent location lifecycle', () => {
     const started = controller.start(); controller.refresh();
     expect(getCurrentPosition).not.toHaveBeenCalled();
     resolvePermission(new Permission('prompt')); await started;
-    expect(getCurrentPosition).not.toHaveBeenCalled(); controller.dispose();
+    expect(getCurrentPosition).toHaveBeenCalledTimes(1); controller.dispose();
   });
   it('restores a previous allowed position before refreshing it, without a Perth fallback request', async () => {
     const h = harness(); rememberCoordinates({ latitude: -32, longitude: 115.9 }, h.storage, 1000);
@@ -55,8 +55,25 @@ describe('persistent location lifecycle', () => {
     h.pending[0].success(point()); await settle();
     expect(h.state().ready).toBe(true); h.controller.dispose();
   });
-  it.each(['prompt', 'denied'] as const)('does not restore or automatically prompt when permission is %s', async (state) => {
-    const h = harness(state); rememberCoordinates({ latitude: -32, longitude: 115.9 }, h.storage, 1000);
+  it('asks on the first visit and uses the accepted location without navigation cancelling the prompt', async () => {
+    const h = harness('prompt');
+    await h.controller.start(); h.controller.refresh();
+    expect(h.getCurrentPosition).toHaveBeenCalledTimes(1);
+    expect(h.state()).toMatchObject({ ready: false, loading: true, coordinates: null });
+    h.permission.change('granted'); h.pending[0].success(point()); await settle();
+    expect(h.state()).toMatchObject({ ready: true, loading: false, coordinates: { latitude: -31.979, longitude: 115.818 } });
+    h.controller.dispose();
+  });
+  it('uses the Perth fallback when the first permission prompt is declined', async () => {
+    const h = harness('prompt'); await h.controller.start();
+    h.pending[0].error?.({ code: 1, message: 'denied', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 }); await settle();
+    h.controller.refresh();
+    expect(h.getCurrentPosition).toHaveBeenCalledTimes(1);
+    expect(h.state()).toMatchObject({ ready: true, loading: false, coordinates: null });
+    h.controller.dispose();
+  });
+  it('does not restore a saved location when permission is already denied', async () => {
+    const h = harness('denied'); rememberCoordinates({ latitude: -32, longitude: 115.9 }, h.storage, 1000);
     await h.controller.start(); h.controller.refresh();
     expect(h.getCurrentPosition).not.toHaveBeenCalled();
     expect(h.state()).toMatchObject({ ready: true, coordinates: null });
@@ -73,14 +90,15 @@ describe('persistent location lifecycle', () => {
     h.pending[2].success(point(-32.001)); await settle();
     expect(h.state().coordinates?.latitude).toBe(-32.001); h.controller.dispose();
   });
-  it('turning off is persistent and late callbacks cannot restore location', async () => {
+  it('turning off lasts for this visit, while a new visit uses location by default again', async () => {
     const h = harness(); await h.controller.start(); h.controller.clear();
     h.pending[0].success(point()); await settle(); h.controller.refresh();
     expect(h.state()).toMatchObject({ coordinates: null, ready: true, loading: false });
     expect(locationDisabled(h.storage)).toBe(true);
     expect(savedCoordinates(h.storage, 2000)).toBeNull();
     const reloaded = harness('granted', h.storage); await reloaded.controller.start();
-    expect(reloaded.getCurrentPosition).not.toHaveBeenCalled();
+    expect(reloaded.getCurrentPosition).toHaveBeenCalledTimes(1);
+    expect(locationDisabled(h.storage)).toBe(false);
     h.controller.dispose(); reloaded.controller.dispose();
   });
   it('revocation clears stored coordinates and cancels in-flight refresh callbacks', async () => {
@@ -100,8 +118,8 @@ describe('persistent location lifecycle', () => {
     h.pending[1].error?.({ code: 3, message: 'timeout', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 }); await settle();
     expect(h.state().coordinates).not.toBeNull(); expect(h.state().error).toContain('Using your last location'); h.controller.dispose();
   });
-  it('restores previous opt-in through the native permission gate when Permissions API is unavailable', async () => {
-    const h = harness('granted', memory(), false); rememberCoordinates({ latitude: -32, longitude: 115.9 }, h.storage, 1000);
+  it('asks through the native permission gate on the first visit when Permissions API is unavailable', async () => {
+    const h = harness('prompt', memory(), false);
     await h.controller.start(); expect(h.state().ready).toBe(false);
     h.pending[0].success(point()); await settle(); expect(h.state().ready).toBe(true); h.controller.dispose();
   });

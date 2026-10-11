@@ -22,7 +22,21 @@
     "longitude": 115.809,
     "description": "Public library in Coolbellup, operated by City of Cockburn.",
     "officialUrl": "https://www.cockburnlibraries.com.au/contact/",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/coolbellup/coolbellup-library/interior.webp",
+        "alt": "Coolbellup Library interior.",
+        "credit": "Cockburn Libraries / Flickr (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/coolbellup/coolbellup-library/exterior.webp",
+        "alt": "Coolbellup Library exterior — Coolbellup Community Hub exterior.",
+        "credit": "Cérge / Coolbellup Library visual story (source). Resized and converted to WebP.",
+        "sourceId": "photo-2",
+        "caption": "Coolbellup Community Hub exterior"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +145,27 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Coolbellup Library interior — Cockburn Libraries / Flickr",
+        "url": "https://www.flickr.com/photos/cockburnlibraries/5056838352/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-NC-ND 2.0",
+        "url": "https://creativecommons.org/licenses/by-nc-nd/2.0/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Coolbellup Library exterior — Cérge / Coolbellup Library visual story",
+        "url": "https://cerge.app/inclusive-venues/coolbellup-library/visual-story",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

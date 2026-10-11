@@ -7,9 +7,11 @@ import { launchLibraries } from '../../../server/data/launch-libraries';
 describe('library photo attribution', () => {
   it.each([false, true])('keeps references off the image in the %s large view', (large) => {
     const content = launchLibraries.find((record) => record.slug === 'reid-library')!.content;
-    const html = renderToStaticMarkup(createElement(LibraryPhoto, { photos: content.photos, name: content.name, large }));
+    const photos = content.photos.map((photo) => ({ ...photo, caption: 'Interior views after refurbishment' }));
+    const html = renderToStaticMarkup(createElement(LibraryPhoto, { photos, name: content.name, large }));
     expect(html).toContain('src="/images/libraries/reid-library.webp"');
     expect(html).not.toContain('figcaption');
+    expect(html).not.toContain('Interior views after refurbishment');
     expect(html).not.toContain('Photographs by Gnangarra');
   });
   it('preserves credit, source, licence and modification notice in the references list', () => {

@@ -22,7 +22,14 @@
     "longitude": 116.00191,
     "description": "Public library in Seville Grove, operated by City of Armadale.",
     "officialUrl": "https://library.armadale.wa.gov.au/find-us",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/seville-grove/seville-grove-library/exterior.webp",
+        "alt": "Seville Grove Library exterior.",
+        "credit": "City of Armadale Libraries (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Seville Grove Library exterior — City of Armadale Libraries",
+        "url": "https://library.armadale.wa.gov.au/find-us",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

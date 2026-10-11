@@ -23,7 +23,20 @@
     "longitude": 115.85298,
     "description": "Public library in Success, operated by City of Cockburn.",
     "officialUrl": "https://www.cockburnlibraries.com.au/contact/",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/success/success-library/exterior.webp",
+        "alt": "Success Library exterior at the Cockburn Integrated Health and Community Facility, photographed 12 June 2025.",
+        "credit": "Success Public Library gn — Gnangcomapp / Wikimedia Commons / CC BY-SA 4.0; photographed 2025-06-12. Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/success/success-library/interior.webp",
+        "alt": "Success Library entrance and interior, photographed 12 June 2025.",
+        "credit": "Success Public Library gn1 — Gnangcomapp / Wikimedia Commons / CC BY-SA 4.0; photographed 2025-06-12. Resized and converted to WebP.",
+        "sourceId": "photo-2"
+      }
+    ],
     "facilities": {
       "quietStudy": "yes",
       "groupStudy": "unknown",
@@ -139,6 +152,34 @@
         "url": "https://www.cockburnlibraries.com.au/services/internet-access-computers-free-wifi/",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Success Public Library gn — Gnangcomapp / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Success_Public_Library_gn.jpg",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Success Public Library gn1 — Gnangcomapp / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Success_Public_Library_gn1.jpg",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

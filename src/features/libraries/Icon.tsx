@@ -1,6 +1,7 @@
-export type IconName = 'book' | 'clock' | 'pin' | 'wifi' | 'person' | 'people' | 'crowd' | 'access' | 'heart' | 'arrow' | 'check' | 'filter' | 'close';
+export type IconName = 'book' | 'desk' | 'clock' | 'pin' | 'wifi' | 'person' | 'people' | 'crowd' | 'access' | 'heart' | 'arrow' | 'check' | 'filter' | 'close';
 const paths: Record<IconName, string> = {
   book: 'M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14',
+  desk: 'M3 10h4m7 0h7M3 10v11m18-11v11M16 6h4v4M9 9h3a2 2 0 0 1 2 2v5H7v-5a2 2 0 0 1 2-2Zm-3 7h9M7 16l-1 5m8-5 1 5',
   clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 4v5l4 2',
   pin: 'M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0ZM12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
   wifi: 'M3 8a15 15 0 0 1 18 0M6 12a10 10 0 0 1 12 0M9 16a5 5 0 0 1 6 0M12 20h.01',

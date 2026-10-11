@@ -23,7 +23,20 @@
     "longitude": 115.87904,
     "description": "Public library in Willetton, operated by City of Canning.",
     "officialUrl": "https://www.canning.wa.gov.au/things-to-do/libraries/connect-with-us/locations-and-opening-hours/",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/willetton/willetton-library/exterior.webp",
+        "alt": "Willetton Library exterior.",
+        "credit": "City of Canning / Your Say Canning (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/willetton/willetton-library/interior.webp",
+        "alt": "Willetton Library interior.",
+        "credit": "City of Canning / Your Say Canning (source). Resized and converted to WebP.",
+        "sourceId": "photo-2"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -129,6 +142,20 @@
         "url": "https://www.canning.wa.gov.au/things-to-do/libraries/using-your-library/accessibility-at-the-libraries/",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Willetton Library exterior — City of Canning / Your Say Canning",
+        "url": "https://www.yoursaycanning.com.au/willetton-library-upgrade",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Willetton Library interior — City of Canning / Your Say Canning",
+        "url": "https://www.yoursaycanning.com.au/willetton-library-upgrade",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

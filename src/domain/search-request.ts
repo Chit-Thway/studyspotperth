@@ -23,7 +23,7 @@ export function isUniversityCard(value: string): value is UniversityCard {
 }
 export function isInstitution(value: string): value is Institution { return value === 'public' || isUniversityCard(value); }
 
-export const FINDER_QUERY_FIELDS: readonly string[] = ['start', 'suburb', 'cards', 'institutions', 'sizes', 'publicAccess', 'open24Hours', 'usableWifi',
+export const FINDER_QUERY_FIELDS: readonly string[] = ['start', 'suburb', 'cards', 'institutions', 'sizes', 'publicAccess', 'openNow', 'open24Hours', 'usableWifi',
   'quietStudy', 'groupStudy', 'wheelchairAccess', 'limit', 'offset'];
 
 /** Migrate retired options without hiding invalid active values or duplicate parameters. */
@@ -84,6 +84,6 @@ export function parseSearchRequest(rawParams: URLSearchParams, clock: number, or
     throw new SearchValidationError('suburb', 'Use a valid suburb ID.');
   }
   return { start, origin, cards: list('cards', isUniversityCard), limit: integer('limit', FINDER_PAGE_SIZE, 1, 100), offset: integer('offset', 0, 0, 10000),
-    filters: { institutions: list('institutions', isUniversityCard), sizes: list('sizes', isLibrarySize, LIBRARY_SIZES.length, 'library sizes'), publicAccess: boolean('publicAccess'), open24Hours: boolean('open24Hours'), usableWifi: boolean('usableWifi'),
+    filters: { institutions: list('institutions', isUniversityCard), sizes: list('sizes', isLibrarySize, LIBRARY_SIZES.length, 'library sizes'), publicAccess: boolean('publicAccess'), openNow: boolean('openNow'), open24Hours: boolean('open24Hours'), usableWifi: boolean('usableWifi'),
       quietStudy: boolean('quietStudy'), groupStudy: boolean('groupStudy'), wheelchairAccess: boolean('wheelchairAccess') } };
 }

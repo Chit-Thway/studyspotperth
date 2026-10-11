@@ -22,7 +22,14 @@
     "longitude": 115.79552,
     "description": "Public library in Melville, operated by City of Melville.",
     "officialUrl": "https://www.melvillecity.com.au/things-to-do/libraries/library-contacts-and-opening-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/melville/ah-bracks-library-creative-space/interior.webp",
+        "alt": "AH Bracks Library + Creative Space interior.",
+        "credit": "Buggybuddys / AH Bracks Library review (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -141,6 +148,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: AH Bracks Library + Creative Space interior — Buggybuddys / AH Bracks Library review",
+        "url": "https://buggybuddys.com.au/ah-bracks-library-melville/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

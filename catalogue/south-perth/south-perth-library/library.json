@@ -22,7 +22,14 @@
     "longitude": 115.86678,
     "description": "Public library in South Perth, operated by City of South Perth.",
     "officialUrl": "https://southperth.wa.gov.au/community/libraries/about-our-libraries/contact-us",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/south-perth/south-perth-library/exterior.webp",
+        "alt": "South Perth Library exterior.",
+        "credit": "City of South Perth (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: South Perth Library exterior — City of South Perth",
+        "url": "https://southperth.wa.gov.au/community/libraries",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

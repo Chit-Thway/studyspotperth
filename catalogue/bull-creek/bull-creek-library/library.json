@@ -22,7 +22,14 @@
     "longitude": 115.85558,
     "description": "Public library in Bull Creek, operated by City of Melville.",
     "officialUrl": "https://www.melvillecity.com.au/things-to-do/libraries/library-contacts-and-opening-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/bull-creek/bull-creek-library/interior.webp",
+        "alt": "Computer desks, green chairs and shelving inside Bull Creek Library.",
+        "credit": "City of Melville Libraries and Museums / Facebook (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Bull Creek Library interior — City of Melville Libraries and Museums / Facebook",
+        "url": "https://www.facebook.com/melvillelibrariesandmuseums/photos/3677624468992812/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

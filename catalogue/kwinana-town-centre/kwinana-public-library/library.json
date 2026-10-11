@@ -22,7 +22,14 @@
     "longitude": 115.814,
     "description": "Public library in Kwinana Town Centre, operated by City of Kwinana.",
     "officialUrl": "https://www.kwinana.wa.gov.au/city-life/facilities-and-public-spaces/kwinana-public-library/library-location%2C-opening-hours-and-contacts",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/kwinana-town-centre/kwinana-public-library/exterior.webp",
+        "alt": "Kwinana Public Library exterior.",
+        "credit": "Sound Telegraph / Kwinana city-centre coverage (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Kwinana Public Library exterior — Sound Telegraph / Kwinana city-centre coverage",
+        "url": "https://www.soundtelegraph.com.au/news/sound-telegraph/kwinana-city-centre-20-year-plan-envisages-more-jobs-and-high-rise-c-22450157",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

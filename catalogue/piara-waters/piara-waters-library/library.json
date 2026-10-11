@@ -22,7 +22,14 @@
     "longitude": 115.9230868,
     "description": "Public library in Piara Waters, operated by City of Armadale.",
     "officialUrl": "https://library.armadale.wa.gov.au/find-us",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/piara-waters/piara-waters-library/exterior.webp",
+        "alt": "Piara Waters Library exterior.",
+        "credit": "City of Armadale Libraries (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -147,6 +154,13 @@
         "label": "OpenStreetMap location data © contributors, Open Database License",
         "url": "https://www.openstreetmap.org/copyright",
         "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Piara Waters Library exterior — City of Armadale Libraries",
+        "url": "https://library.armadale.wa.gov.au/find-us",
+        "checkedOn": "2026-10-11",
         "kind": "confirmation"
       }
     ],

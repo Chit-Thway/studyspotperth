@@ -23,7 +23,14 @@
     "longitude": 115.82372,
     "description": "Public library in Subiaco, operated by City of Subiaco.",
     "officialUrl": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/subiaco/evelyn-h-parker-library/interior.webp",
+        "alt": "Reception at Evelyn H Parker Library, from the City of Subiaco website.",
+        "credit": "City of Subiaco (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "yes",
@@ -149,6 +156,13 @@
         "url": "https://www.subiaco.wa.gov.au/see-do/places-to-visit/library/library-services/",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Evelyn H Parker Library interior — City of Subiaco",
+        "url": "https://www.subiaco.wa.gov.au/see-do/good-to-know/news/rediscover-subiaco-library-a1ecda3c/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

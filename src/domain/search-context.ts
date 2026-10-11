@@ -14,6 +14,7 @@ export interface SearchFilters {
   institutions: readonly UniversityCard[];
   sizes: readonly LibrarySize[];
   publicAccess: boolean;
+  openNow: boolean;
   open24Hours: boolean;
   usableWifi: boolean;
   quietStudy: boolean;
@@ -30,7 +31,7 @@ export function createSearchContext(profile: AccessProfile): SearchContext {
   return {
     profile,
     filters: {
-      institutions: [], sizes: [], publicAccess: false, open24Hours: false, usableWifi: false,
+      institutions: [], sizes: [], publicAccess: false, openNow: false, open24Hours: false, usableWifi: false,
       quietStudy: false, groupStudy: false, wheelchairAccess: false,
     },
   };

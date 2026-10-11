@@ -22,7 +22,14 @@
     "longitude": 115.77464,
     "description": "Public library in Scarborough, operated by City of Stirling.",
     "officialUrl": "https://www.stirling.wa.gov.au/attractions-and-recreation/libraries-and-hubs/locations-and-opening-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/scarborough/scarborough-library/interior.webp",
+        "alt": "Scarborough Library interior.",
+        "credit": "Australia247 Stirling Libraries – Scarborough listing (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Scarborough Library interior — Australia247 Stirling Libraries – Scarborough listing",
+        "url": "https://www.australia247.info/explore/western_australia/city_of_stirling/scarborough/stirling-libraries-scarborough-08-9205-7420.html",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

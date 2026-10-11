@@ -20,6 +20,7 @@ export function FilterPanel({ params, change, prefix }: FilterPanelProps) {
   const update = (field: string, value: string | null) => change(updateFinderParam(params, field, value));
   const start = params.get('start');
   const selectedTime = start !== null;
+  const openNow = params.get('openNow') === 'true';
   const startDate = start?.split('T')[0] ?? '';
   const startTime = start?.split('T')[1] ?? '';
   return <>
@@ -28,7 +29,7 @@ export function FilterPanel({ params, change, prefix }: FilterPanelProps) {
       <div className={styles.filterSection}><span className={styles.fieldLabel}>Location</span><LocationControl /></div>
       <div className={styles.filterSection}><span className={styles.fieldLabel} id={`${prefix}-when-label`}>When</span>
         <div className={styles.timeMode} role="group" aria-labelledby={`${prefix}-when-label`}>
-          <button className={!selectedTime ? styles.selectedMode : ''} type="button" aria-pressed={!selectedTime} onClick={() => update('start', null)}>Open now</button>
+          <button className={openNow ? styles.selectedMode : ''} type="button" aria-pressed={openNow} onClick={() => update('openNow', openNow ? null : 'true')}>Open now</button>
           <button className={selectedTime ? styles.selectedMode : ''} type="button" aria-pressed={selectedTime} onClick={() => update('start', formatPerthTime(Date.now()).slice(0, 16))}>Choose a time</button>
         </div><p className={styles.help}>Perth time</p>
         {selectedTime && <div className={styles.timeFields}>

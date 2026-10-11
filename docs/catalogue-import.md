@@ -38,9 +38,11 @@ Optional `--link-sizes` fills missing estimated sizes in matching published
 records using the same guarded revision workflow. Existing size choices are
 preserved, including administrator edits. Both metadata options can be combined.
 
-Thirty-two additions have 33 licensed photographs. Thirty-seven additions use
-placeholders. Notre Dame's image is labelled as campus context. Photo credits,
-licences and source dates are recorded alongside each library's public facts.
+All 82 listings have photos, with 92 source photographs across the catalogue;
+78 of those photographs cover the 69 additions. Notre Dame's
+image is described as campus context; shared-venue context is retained in photo metadata.
+Photo credits, source links, available licences and checked dates are recorded
+alongside each library's public facts.
 Builds validate the catalogue and copy only its photos into static assets;
 library JSON is served through the versioned public D1 catalogue endpoint.
 

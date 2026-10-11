@@ -119,11 +119,16 @@ export function rankLibraryCandidates<T extends LibrarySearchRecord>(libraries: 
     .filter((library) => (['quietStudy', 'groupStudy', 'wheelchairAccess'] as const).every((facility) => !request.filters[facility] || library.content.facilities[facility] === 'yes'))
     .filter((library) => !request.filters.usableWifi || evaluateWifi(library.content.wifi, request.cards).status === 'eligible')
     .flatMap((library) => {
-      // Eligibility needs today's hours; only 24/7 filtering or card priority needs a week.
+      // Open now checks this instant; public access checks confirmed visiting hours across the week.
       const building = dayTimeline(library.content.schedule.building);
-      const publicAccessOnDay = request.filters.publicAccess && library.content.schedule.access.some((entry) =>
-        entry.group === 'public' && intersectIntervals(building.intervals, dayTimeline(entry).intervals).length > 0);
-      if (request.filters.publicAccess && !publicAccessOnDay) return [];
+      if (request.filters.openNow && !intervalAt(building.intervals, request.start)) return [];
+      if (request.filters.publicAccess) {
+        weekTimeline ??= createCalendarTimelineReader(date, 7);
+        const buildingWeek = weekTimeline(library.content.schedule.building);
+        const hasPublicAccess = library.content.schedule.access.some((entry) => entry.group === 'public'
+          && intersectIntervals(buildingWeek.intervals, weekTimeline!(entry).intervals).length > 0);
+        if (!hasPublicAccess) return [];
+      }
       const matchingInstitution = library.institution !== 'public' && request.cards.includes(library.institution);
       let priority = false;
       if (request.filters.open24Hours || !request.filters.publicAccess && matchingInstitution) {

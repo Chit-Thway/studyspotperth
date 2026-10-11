@@ -148,7 +148,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
     const persisted = await repository.getPublishedBySlug(slug, options);
     assert(persisted);
     for (const start of ['2026-10-02T22:00', '2026-10-03T01:00', '2026-10-03T06:00']) {
-      const query = new URLSearchParams({ start, suburb: origin.id });
+      const query = new URLSearchParams({ start, suburb: origin.id, openNow: 'true' });
       const parsed = parseSearchRequest(query, clock, origin);
       const expected = evaluateLibrary(persisted, parsed);
       if (start.endsWith('06:00')) assert.equal(expected.opening.status, 'unknown');

@@ -23,7 +23,15 @@
     "longitude": 116.048238,
     "description": "Public library in Helena Valley, operated by Shire of Mundaring.",
     "officialUrl": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/helena-valley/katharine-susannah-prichard-library/exterior.webp",
+        "alt": "Katharine Susannah Prichard Library exterior — Boya Library at Boya Community Centre.",
+        "credit": "Shire of Mundaring / Boya Community Centre (source). Resized and converted to WebP.",
+        "sourceId": "photo-1",
+        "caption": "Boya Library at Boya Community Centre"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -145,6 +153,13 @@
         "url": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Katharine Susannah Prichard Library exterior — Shire of Mundaring / Boya Community Centre",
+        "url": "https://www.mundaring.wa.gov.au/community/venues-and-facilities-for-hire/boya-community-centre.aspx",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

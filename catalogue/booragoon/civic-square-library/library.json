@@ -22,7 +22,14 @@
     "longitude": 115.83332,
     "description": "Public library in Booragoon, operated by City of Melville.",
     "officialUrl": "https://www.melvillecity.com.au/things-to-do/libraries/library-contacts-and-opening-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/booragoon/civic-square-library/exterior.webp",
+        "alt": "Civic Square Library exterior.",
+        "credit": "Australian Library and Information Association / ALIA in the West (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Civic Square Library exterior — Australian Library and Information Association / ALIA in the West",
+        "url": "https://www.alia.org.au/Web/Web/News/Articles/2023/5-June-2023/ALIA_Blog_ALIA_in_the_West.aspx",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

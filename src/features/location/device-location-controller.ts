@@ -63,6 +63,8 @@ export function createDeviceLocationController({ geolocation, permissions, stora
   const refresh = () => {
     if (disposed || deniedByRequest || !initialized) return;
     if (permission) {
+      // Navigation or focus must not cancel the first permission prompt.
+      if (permission.state === 'prompt' && inFlight) return;
       if (permission.state !== 'granted') { revoke(); return; }
       granted = true;
     } else if (locationEnabled(storage)) granted = true;
@@ -74,6 +76,8 @@ export function createDeviceLocationController({ geolocation, permissions, stora
   };
   const start = async () => {
     if (disposed) return;
+    disabled = false;
+    rememberLocationDisabled(storage, false);
     if (permissions) {
       let timeout: ReturnType<typeof setTimeout> | undefined;
       try {
@@ -83,17 +87,18 @@ export function createDeviceLocationController({ geolocation, permissions, stora
         initialized = true;
         permission = status; permission.addEventListener('change', permissionChanged);
         granted = permission.state === 'granted';
-        if (!granted) { revoke(); return; }
         if (disabled) { forgetCoordinates(storage); publish({ ready: true }); return; }
+        if (permission.state === 'denied') { revoke(); return; }
+        if (!granted) { forgetCoordinates(storage); lookup(true); return; }
         const saved = savedCoordinates(storage, now());
         if (saved) { savedAt = saved.savedAt; publish({ coordinates: saved.coordinates, ready: true }); }
         refresh(); return;
-      } catch { /* Previously enabled browsers can refresh through the native permission gate. */ }
+      } catch { /* Request through the native permission gate when permission lookup is unavailable. */ }
       finally { if (timeout !== undefined) clearTimeout(timeout); }
     }
     if (disposed) return;
     initialized = true;
-    if (!disabled && locationEnabled(storage)) { granted = true; lookup(false); }
+    if (!disabled) lookup(true);
     else publish({ ready: true });
   };
   return {

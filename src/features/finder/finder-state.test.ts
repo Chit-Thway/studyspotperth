@@ -2,6 +2,18 @@ import { describe, expect, it } from 'vitest';
 import { finderRequestParams, finderUrl, queryUrl, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
 
 describe('guest finder selections', () => {
+  it('toggles Open now, replaces a chosen time, resets paging and keeps the filter in return links', () => {
+    const selected = new URLSearchParams('cards=uwa&start=2026-10-02T14:00&offset=30');
+    const on = updateFinderParam(selected, 'openNow', 'true');
+    expect(on.toString()).toBe('cards=uwa&openNow=true');
+    const detail = new URL(finderUrl(on, '/libraries/reid-library'), 'https://example.invalid');
+    expect(finderUrl(detail.searchParams)).toBe('/?cards=uwa&openNow=true');
+    expect(updateFinderParam(on, 'openNow', null).toString()).toBe('cards=uwa');
+    expect(resetFinderFilters(on).toString()).toBe('cards=uwa');
+    const chosenTime = updateFinderParam(on, 'start', '2026-10-03T12:00');
+    expect(chosenTime.has('openNow')).toBe(false);
+    expect(chosenTime.get('start')).toBe('2026-10-03T12:00');
+  });
   it('selects multiple sizes, resets pagination and preserves size selections in detail links', () => {
     const selected = new URLSearchParams('offset=30&cards=uwa');
     const small = toggleFinderSelection(selected, 'sizes', 'small');

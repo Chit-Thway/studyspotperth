@@ -22,7 +22,15 @@
     "longitude": 115.9672901,
     "description": "Public library in Beckenham, operated by City of Gosnells.",
     "officialUrl": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/beckenham/mills-park-library/exterior.webp",
+        "alt": "Mills Park Centre exterior in Beckenham, the community venue housing Mills Park Library, photographed 8 October 2023.",
+        "credit": "Mills Park Centre building — Sam Wilson / Wikimedia Commons / CC BY-SA 4.0; photographed 2023-10-08. Resized and converted to WebP.",
+        "sourceId": "photo-1",
+        "caption": "Mills Park Centre exterior"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -147,6 +155,20 @@
         "label": "OpenStreetMap location data © contributors, Open Database License",
         "url": "https://www.openstreetmap.org/copyright",
         "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Mills Park Centre building — Sam Wilson / Wikimedia Commons / CC BY-SA 4.0",
+        "url": "https://commons.wikimedia.org/wiki/File:Mills_Park_Centre_building.jpg",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1-license",
+        "label": "CC BY-SA 4.0",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0",
+        "checkedOn": "2026-10-11",
         "kind": "confirmation"
       }
     ],

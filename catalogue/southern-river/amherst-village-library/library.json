@@ -22,7 +22,15 @@
     "longitude": 115.94393,
     "description": "Public library in Southern River, operated by City of Gosnells.",
     "officialUrl": "https://www.gosnells.wa.gov.au/Leisure-and-Community/Libraries/Locations-and-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/southern-river/amherst-village-library/interior.webp",
+        "alt": "Collage showing Amherst Village Library shelving, reading chairs and individual computer desks after refurbishment.",
+        "credit": "City of Gosnells Libraries / Facebook (source). Resized and converted to WebP.",
+        "sourceId": "photo-1",
+        "caption": "Interior views after refurbishment"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +139,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Amherst Village Library interior — City of Gosnells Libraries / Facebook",
+        "url": "https://www.facebook.com/cityofgosnellslibraries/photos/862731109661603/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

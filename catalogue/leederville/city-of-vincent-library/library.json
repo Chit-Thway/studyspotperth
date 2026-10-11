@@ -23,7 +23,14 @@
     "longitude": 115.84569,
     "description": "Public library in Leederville, operated by City of Vincent.",
     "officialUrl": "https://library.vincent.wa.gov.au/about/opening-hours.aspx",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/leederville/city-of-vincent-library/interior.webp",
+        "alt": "City of Vincent Library interior.",
+        "credit": "City of Vincent Library website (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -139,6 +146,13 @@
         "url": "https://library.vincent.wa.gov.au/events/perth-poetry-festival-2025/3481",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: City of Vincent Library interior — City of Vincent Library website",
+        "url": "https://library.vincent.wa.gov.au/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

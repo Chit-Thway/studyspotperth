@@ -8,6 +8,8 @@ describe('search request validation', () => {
   it('uses an explicit clock for open-now, in Perth regardless of host timezone', () => {
     expect(request('').limit).toBe(10);
     expect(request('').start).toBe(clock);
+    expect(request('').filters.openNow).toBe(false);
+    expect(request('openNow=true')).toMatchObject({ start: clock, filters: { openNow: true } });
     expect(formatPerthTime(clock)).toBe('2026-10-02T14:00:30+08:00');
     expect(parsePerthTime('2026-10-02T14:00')).toBe(Date.parse('2026-10-02T06:00:00Z'));
   });
@@ -35,7 +37,7 @@ describe('search request validation', () => {
   it.each([
     'start=2026-02-30T14:00', 'start=2026-10-02T24:00', 'start=2026-10-02T14:60', 'start=2026-10-02T14:00Z',
     'start=',
-    'open24Hours=1', 'usableWifi=yes', 'cards=public', 'institutions=unknown', 'institutions=uwa,',
+    'openNow=1', 'open24Hours=1', 'usableWifi=yes', 'cards=public', 'institutions=unknown', 'institutions=uwa,',
     'limit=0', 'limit=101', 'offset=-1', 'offset=1.5', 'suburb=', 'suburb=../private',
     'cards=uwa&cards=curtin', 'includeFixtures=true', 'start=1999-12-31T14:00',
   ])('rejects invalid query %s with a validation error', (query) => {

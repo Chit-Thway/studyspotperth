@@ -22,7 +22,14 @@
     "longitude": 116.05984,
     "description": "Public library in Kalamunda, operated by City of Kalamunda.",
     "officialUrl": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/kalamunda/kalamunda-library/exterior.webp",
+        "alt": "Kalamunda Library exterior.",
+        "credit": "City of Kalamunda (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Kalamunda Library exterior — City of Kalamunda",
+        "url": "https://www.kalamunda.wa.gov.au/facility-details/kalamunda-library",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

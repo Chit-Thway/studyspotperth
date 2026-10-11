@@ -22,7 +22,14 @@
     "longitude": 115.776421,
     "description": "Public library in Mount Claremont, operated by City of Nedlands.",
     "officialUrl": "https://www.nedlands.wa.gov.au/community/libraries/library-services.aspx",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/mount-claremont/mt-claremont-library/exterior.webp",
+        "alt": "Mt Claremont Library exterior.",
+        "credit": "City of Nedlands (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://slwa.wa.gov.au/public-library/mount-claremont-public-library",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Mt Claremont Library exterior — City of Nedlands",
+        "url": "https://www.nedlands.wa.gov.au/community",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

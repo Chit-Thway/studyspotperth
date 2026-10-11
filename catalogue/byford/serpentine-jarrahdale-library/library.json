@@ -22,7 +22,20 @@
     "longitude": 116.00905,
     "description": "Public library in Byford, operated by Shire of Serpentine Jarrahdale.",
     "officialUrl": "https://www.sjshire.wa.gov.au/community/library/location-and-opening-hours.aspx",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/byford/serpentine-jarrahdale-library/exterior.webp",
+        "alt": "Serpentine Jarrahdale Library exterior.",
+        "credit": "Shire of Serpentine Jarrahdale (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/byford/serpentine-jarrahdale-library/interior.webp",
+        "alt": "Serpentine Jarrahdale Library interior.",
+        "credit": "Sound Telegraph / Serpentine Jarrahdale Library opening coverage (source). Resized and converted to WebP.",
+        "sourceId": "photo-2"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +144,20 @@
         "url": "https://slwa.wa.gov.au/public-library/serpentine-jarrahdale-public-library",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Serpentine Jarrahdale Library exterior — Shire of Serpentine Jarrahdale",
+        "url": "https://www.sjshire.wa.gov.au/community",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Serpentine Jarrahdale Library interior — Sound Telegraph / Serpentine Jarrahdale Library opening coverage",
+        "url": "https://www.soundtelegraph.com.au/news/sound-telegraph/265-million-refurbished-space-marks-arrival-of-new-serpentine-jarrahdale-library-in-byford-c-7572228",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

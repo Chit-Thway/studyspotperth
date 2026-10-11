@@ -39,6 +39,16 @@ function earlyResult(date: string) {
 }
 
 describe('entry badges on library cards', () => {
+  it('shows a 24/7 library as open under Open now while retaining unmatched card requirements', () => {
+    const evaluated = result('uwa');
+    const params = new URLSearchParams('openNow=true');
+    const html = renderToStaticMarkup(createElement(AccountContext.Provider, { value: guestAccount },
+      createElement(MemoryRouter, {}, createElement(LibraryCard, { result: evaluated, params }))));
+    expect(html).toContain('<strong>Open 24 hours Fri</strong>');
+    expect(html).toContain('24/7 · UWA card');
+    expect(html).toContain('Not in your declared cards');
+    expect(html).not.toContain('Closed · Open');
+  });
   it.each(launchLibraries.map((library) => [library.slug, library] as const))('keeps the real card and detail consistent for every access profile at %s', (_slug, library) => {
     for (const start of ['2026-10-07T14:00', '2026-10-07T23:48']) for (const cards of ['', ...UNIVERSITY_CARDS]) {
       const params = new URLSearchParams({ start, cards });

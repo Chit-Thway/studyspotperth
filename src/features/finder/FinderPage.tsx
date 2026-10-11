@@ -6,7 +6,7 @@ import { useAccount } from '../account/use-account';
 import { Icon } from '../libraries/Icon';
 import { LibraryCard } from '../libraries/LibraryCard';
 import { INSTITUTION_LABELS, UNIVERSITY_CARDS, readableDate } from '../libraries/presentation';
-import { LibraryApiError } from '../libraries/api';
+import { LibraryApiError, type SearchResponse } from '../libraries/api';
 import { useLibrarySearch } from '../libraries/use-catalogue-search';
 import { FilterPanel } from './FilterPanel';
 import { finderRequestParams, resetFinderFilters, toggleFinderSelection, updateFinderParam } from './finder-state';
@@ -47,7 +47,7 @@ export function FinderPage() {
   const chips: { key: string; label: string; remove: () => void }[] = [];
   (params.get('institutions') ?? '').split(',').filter(isInstitution).forEach((institution) => chips.push({ key: institution, label: INSTITUTION_LABELS[institution], remove: () => change(toggleFinderSelection(params, 'institutions', institution)) }));
   (params.get('sizes') ?? '').split(',').filter(isLibrarySize).forEach((size) => chips.push({ key: `size-${size}`, label: `${LIBRARY_SIZE_LABELS[size]} libraries`, remove: () => change(toggleFinderSelection(params, 'sizes', size)) }));
-  ([['publicAccess', 'Public access'], ['open24Hours', 'Open 24/7'], ['usableWifi', 'Wi-Fi I can use'], ['quietStudy', 'Quiet areas'], ['groupStudy', 'Group spaces'], ['wheelchairAccess', 'Step-free access']] as const).forEach(([field, label]) => {
+  ([['publicAccess', 'Public access'], ['openNow', 'Open now'], ['open24Hours', 'Open 24/7'], ['usableWifi', 'Wi-Fi I can use'], ['quietStudy', 'Quiet areas'], ['groupStudy', 'Group spaces'], ['wheelchairAccess', 'Step-free access']] as const).forEach(([field, label]) => {
     if (params.get(field) === 'true') chips.push({ key: field, label, remove: () => change(updateFinderParam(params, field, null)) });
   });
   if (params.get('start') && !Number.isNaN(Date.parse(`${params.get('start')}:00+08:00`))) chips.push({ key: 'start', label: `${readableDate(params.get('start')!.slice(0, 10))} · ${params.get('start')!.slice(11)}`, remove: () => change(updateFinderParam(params, 'start', null)) });
@@ -79,11 +79,20 @@ export function FinderPage() {
         {resource.error && !result && <div className={styles.statePanel} role="alert"><Icon name="book" /><h3>{resource.error instanceof LibraryApiError && resource.error.status === 400 ? 'Check your search' : 'Libraries couldn’t load'}</h3><p>{resource.error.message}</p>
           {resource.error instanceof LibraryApiError && resource.error.status === 400 ? <button type="button" className={styles.applyButton} onClick={() => change(resource.error instanceof LibraryApiError && resource.error.field === 'query' ? new URLSearchParams() : resource.error instanceof LibraryApiError && resource.error.field ? updateFinderParam(params, resource.error.field, null) : resetFinderFilters(params))}>Remove invalid selection</button> : <button type="button" className={styles.applyButton} onClick={resource.retry}>Try again</button>}</div>}
         {result && result.results.length === 0 && <div className={styles.statePanel} role="status"><div className={styles.bookMark}><Icon name="book" /></div><span className={styles.pendingLabel}>No matching libraries</span><h3>Let’s find another study window.</h3><p>{result.emptyReason}</p><button type="button" className={styles.applyButton} onClick={() => change(resetFinderFilters(params))}>Clear filters</button><p className={styles.emptyNote}>Only published library information appears here.</p></div>}
-        {result && result.results.length > 0 && <><div className={styles.cardGrid}>{result.results.map((item) => <LibraryCard key={item.library.id} result={item} params={rawParams} />)}</div>
-          <div className={styles.pagination} aria-label="Results pages">{result.offset > 0 && <button type="button" onClick={() => change(updateFinderParam(params, 'offset', Math.max(0, result.offset - result.limit).toString()))}>Previous</button>}
-            <p role="status">Showing {result.offset + 1}–{result.offset + result.results.length} of {result.total}</p>
-            {result.nextOffset !== null && <button type="button" onClick={() => change(updateFinderParam(params, 'offset', result.nextOffset!.toString()))}>Next</button>}</div></>}
+        {result && result.results.length > 0 && <>
+          <ResultsPagination result={result} changePage={(offset) => change(updateFinderParam(params, 'offset', offset.toString()))} position="top" />
+          <div className={styles.cardGrid}>{result.results.map((item) => <LibraryCard key={item.library.id} result={item} params={rawParams} />)}</div>
+          <ResultsPagination result={result} changePage={(offset) => change(updateFinderParam(params, 'offset', offset.toString()))} position="bottom" />
+        </>}
       </section>
     </div>
   </>;
+}
+
+function ResultsPagination({ result, changePage, position }: { result: SearchResponse; changePage: (offset: number) => void; position: 'top' | 'bottom' }) {
+  return <nav className={`${styles.pagination} ${position === 'top' ? styles.paginationTop : ''}`} aria-label={`Results pages (${position})`}>
+    {result.offset > 0 && <button type="button" onClick={() => changePage(Math.max(0, result.offset - result.limit))}>Previous</button>}
+    <p role={position === 'bottom' ? 'status' : undefined}>Showing {result.offset + 1}–{result.offset + result.results.length} of {result.total}</p>
+    {result.nextOffset !== null && <button type="button" onClick={() => changePage(result.nextOffset!)}>Next</button>}
+  </nav>;
 }

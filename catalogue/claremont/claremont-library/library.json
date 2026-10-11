@@ -22,7 +22,21 @@
     "longitude": 115.7818045,
     "description": "Public library in Claremont, operated by Town of Claremont.",
     "officialUrl": "https://www.claremont.wa.gov.au/places/bay-view-community-centre/",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/claremont/claremont-library/interior.webp",
+        "alt": "Claremont Library interior.",
+        "credit": "Town of Claremont (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/claremont/claremont-library/exterior.webp",
+        "alt": "Claremont Library exterior — Bay View Community Centre exterior.",
+        "credit": "Town of Claremont (source). Resized and converted to WebP.",
+        "sourceId": "photo-2",
+        "caption": "Bay View Community Centre exterior"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -137,6 +151,20 @@
         "label": "OpenStreetMap location data © contributors, Open Database License",
         "url": "https://www.openstreetmap.org/copyright",
         "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Claremont Library interior — Town of Claremont",
+        "url": "https://www.claremont.wa.gov.au/places/bay-view-community-centre/library/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Claremont Library exterior — Town of Claremont",
+        "url": "https://www.claremont.wa.gov.au/places/bay-view-community-centre/what-s-on-at-the-centre/",
+        "checkedOn": "2026-10-11",
         "kind": "confirmation"
       }
     ],

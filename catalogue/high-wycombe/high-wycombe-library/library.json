@@ -22,7 +22,14 @@
     "longitude": 116.00407,
     "description": "Public library in High Wycombe, operated by City of Kalamunda.",
     "officialUrl": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/high-wycombe/high-wycombe-library/exterior.webp",
+        "alt": "High Wycombe Library exterior.",
+        "credit": "City of Kalamunda (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: High Wycombe Library exterior — City of Kalamunda",
+        "url": "https://kalamunda.azurewebsites.net/facility-details/high-wycombelibrary",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

@@ -23,7 +23,20 @@
     "longitude": 115.8674699,
     "description": "Public library in Manning, operated by City of South Perth.",
     "officialUrl": "https://southperth.wa.gov.au/community/libraries/about-our-libraries/contact-us",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/manning/manning-library/exterior.webp",
+        "alt": "Manning Library exterior.",
+        "credit": "City of South Perth (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/manning/manning-library/interior.webp",
+        "alt": "Manning Library interior.",
+        "credit": "City of South Perth (source). Resized and converted to WebP.",
+        "sourceId": "photo-2"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "yes",
@@ -139,6 +152,20 @@
         "url": "https://southperth.wa.gov.au/community/libraries/about-our-libraries/news/news-detail/2026/05/17/manning-library-launches-dedicated-youth-zone",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Manning Library exterior — City of South Perth",
+        "url": "https://southperth.wa.gov.au/community/libraries",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Manning Library interior — City of South Perth",
+        "url": "https://southperth.wa.gov.au/community/libraries/membership/join-the-library",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

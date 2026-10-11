@@ -12,12 +12,51 @@ import { selectScheduleForDate } from '../../src/domain/schedule';
 import type { LibraryRecord } from '../../src/domain/library';
 
 describe('authored 82-library catalogue', () => {
-  it('contains sourced, grouped application facts and valid licensed photos', async () => {
+  it('includes five confirmed public visitor libraries with 24/7 card access even on Sunday', async () => {
+    const { catalogue } = await readCatalogueFiles();
+    const records: LibraryRecord[] = catalogue.libraries.map((library) => ({ ...library,
+      revisionId: `${library.id}-test`, status: 'published', isFixture: false }));
+    const now = Date.parse('2026-10-11T19:00:00+08:00');
+    const query = 'publicAccess=true&open24Hours=true&limit=100';
+    const result = searchLibraries(records, parseSearchRequest(new URLSearchParams(query), now));
+    expect(result.results.map((entry) => entry.library.slug).sort()).toEqual([
+      'ecu-city-library', 'geoffrey-bolton-library', 'j-robin-warren-library', 'reid-library', 'tl-robertson-library',
+    ]);
+    expect(result.results.every((entry) => entry.open24Hours.status === 'qualifies')).toBe(true);
+    expect(result.results.every((entry) => entry.open24Hours.groups.some((group) => group.group !== 'public' && group.match === 'not-in-profile'))).toBe(true);
+    const open = searchLibraries(records, parseSearchRequest(new URLSearchParams(`${query}&openNow=true`), now));
+    expect(open.results.map((entry) => entry.library.id)).toEqual(result.results.map((entry) => entry.library.id));
+    expect(open.results.every((entry) => entry.opening.status === 'open')).toBe(true);
+  });
+  it('keeps all 82 by default and only confirmed open libraries when Open now is enabled', async () => {
+    const { catalogue } = await readCatalogueFiles();
+    const records: LibraryRecord[] = catalogue.libraries.map((library) => ({ ...library,
+      revisionId: `${library.id}-test`, status: 'published', isFixture: false }));
+    const now = Date.parse('2026-10-11T18:30:00+08:00');
+    const all = searchLibraries(records, parseSearchRequest(new URLSearchParams('limit=100'), now));
+    const open = searchLibraries(records, parseSearchRequest(new URLSearchParams('openNow=true&limit=100'), now));
+    expect(all.total).toBe(82);
+    expect(open.total).toBeGreaterThan(0);
+    expect(open.total).toBeLessThan(82);
+    expect(open.results.every((result) => result.opening.status === 'open')).toBe(true);
+    const slugs = open.results.map((result) => result.library.slug);
+    expect(slugs).toEqual(expect.arrayContaining(['reid-library', 'tl-robertson-library', 'ecu-city-library']));
+    expect(slugs).not.toContain('kelmscott-library');
+    expect(slugs).not.toContain('seville-grove-library');
+    expect(slugs).not.toContain('city-of-perth-library');
+    for (const library of all.results.filter((result) => result.open24Hours.status === 'qualifies')) {
+      expect(slugs).toContain(library.library.slug);
+    }
+    expect(open.results.map((result) => result.library.id)).toEqual(all.results
+      .filter((result) => result.opening.status === 'open').map((result) => result.library.id));
+  });
+  it('contains sourced, grouped application facts and attributed photo assets', async () => {
     const { catalogue, assets } = await readCatalogueFiles();
     expect(catalogue.libraries).toHaveLength(82);
     expect(catalogue.libraries.filter((library) => library.id.startsWith('catalogue-'))).toHaveLength(69);
-    expect(catalogue.libraries.filter((library) => library.id.startsWith('catalogue-') && library.content.photos.length)).toHaveLength(32);
-    expect(assets.size).toBe(45);
+    expect(catalogue.libraries.filter((library) => library.id.startsWith('catalogue-') && library.content.photos.length)).toHaveLength(69);
+    expect(catalogue.libraries.filter((library) => library.content.photos.length)).toHaveLength(82);
+    expect(assets.size).toBe(92);
     for (const library of catalogue.libraries) {
       expect(catalogue.suburbs.some((suburb) => suburb.id === library.content.suburbId)).toBe(true);
       expect(library.content.latitude).not.toBeNull();
@@ -27,12 +66,22 @@ describe('authored 82-library catalogue', () => {
         const bytes = readFileSync(assets.get(photo.url)!);
         expect(bytes.subarray(0, 4).toString()).toBe('RIFF');
         expect(bytes.subarray(8, 12).toString()).toBe('WEBP');
-        expect(library.content.sources.some((source) => source.id === `${photo.sourceId}-license`)).toBe(true);
+        expect(library.content.sources.find((source) => source.id === photo.sourceId)?.url).toBeTruthy();
+        expect(photo.credit.trim().length).toBeGreaterThan(0);
       }
     }
     for (const launch of launchLibraries) {
       const source = catalogue.libraries.find((library) => library.id === launch.id)!;
-      expect({ ...source.content, suburbId: null, size: undefined }).toEqual({ ...launch.content, size: undefined });
+      const addedPhotoSources = source.content.photos
+        .filter((photo) => !launch.content.photos.some((original) => original.url === photo.url))
+        .map((photo) => photo.sourceId);
+      expect({
+        ...source.content,
+        suburbId: null,
+        size: undefined,
+        photos: launch.content.photos,
+        sources: source.content.sources.filter((entry) => !addedPhotoSources.includes(entry.id)),
+      }).toEqual({ ...launch.content, size: undefined });
     }
   });
   it('retains partial uncertainty, holiday hours and the bounded Notre Dame calendar', async () => {

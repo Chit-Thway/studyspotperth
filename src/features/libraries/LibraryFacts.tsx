@@ -23,7 +23,7 @@ export function LibraryEntryRequirements({ result }: { result: LibrarySearchResu
   </div>;
 }
 
-export function LibraryFacts({ result, compact = false }: { result: LibrarySearchResult; compact?: boolean }) {
+export function LibraryFacts({ result, compact = false, showBuildingHours = false }: { result: LibrarySearchResult; compact?: boolean; showBuildingHours?: boolean }) {
   const qualifies = result.open24Hours.status === 'qualifies';
   return <div className={`${styles.facts} ${compact ? styles.cardFacts : ''}`}>
     <div className={styles.roundTheClock} data-status={result.open24Hours.status}>
@@ -32,7 +32,7 @@ export function LibraryFacts({ result, compact = false }: { result: LibrarySearc
       </strong>
     </div>
     <LibraryEntryRequirements result={result} />
-    <div className={styles.availability}><Icon name="clock" /><div><strong>{openingDayLabel(result)}</strong>
+    <div className={styles.availability}><Icon name="clock" /><div><strong>{openingDayLabel(result, showBuildingHours)}</strong>
     </div></div>
   </div>;
 }

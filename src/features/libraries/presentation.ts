@@ -121,7 +121,13 @@ export function cardEntryLabel(result: LibrarySearchResult, group: Institution |
   const time = cardTime(perthCalendarMinute(first.start, date));
   return `${time} access · ${INSTITUTION_LABELS[group]} card`;
 }
-export function openingDayLabel(result: LibrarySearchResult) {
+export function openingDayLabel(result: LibrarySearchResult, showBuildingHours = false) {
+  if (showBuildingHours && result.opening.status === 'open') {
+    const date = result.evaluatedAt.slice(0, 10);
+    const timeline = calendarTimeline(result.library.content.schedule.building, date, 1);
+    const day = new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Perth', weekday: 'short' }).format(new Date(`${date}T12:00:00+08:00`));
+    return `Open ${friendlyDayHours(timeline, date)} ${day}`;
+  }
   if (result.access.status === 'unknown') return 'Entry hours unknown';
   const window = result.access.window ?? result.access.nextWindow;
   if (!window) return result.access.requirements.length && result.access.requirements.every((entry) => entry.match === 'not-in-profile')

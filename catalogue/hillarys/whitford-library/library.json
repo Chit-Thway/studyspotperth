@@ -24,7 +24,14 @@
     "longitude": 115.75341,
     "description": "Public library in Hillarys, operated by City of Joondalup.",
     "officialUrl": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/library-locations-and-opening-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/hillarys/whitford-library/exterior.webp",
+        "alt": "Whitford Library exterior.",
+        "credit": "Whitford Senior Citizens Club website (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "yes",
       "groupStudy": "yes",
@@ -147,6 +154,13 @@
         "url": "https://www.joondalup.wa.gov.au/community-and-spaces/libraries/student-resources",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Whitford Library exterior — Whitford Senior Citizens Club website",
+        "url": "https://whitfordseniors.au/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

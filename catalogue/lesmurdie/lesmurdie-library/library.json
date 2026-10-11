@@ -22,7 +22,14 @@
     "longitude": 116.05164,
     "description": "Public library in Lesmurdie, operated by City of Kalamunda. Located on Lesmurdie Senior High School grounds. Weekday opening hours are shorter during school holidays.",
     "officialUrl": "https://www.kalamunda.wa.gov.au/community/libraries/locations",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/lesmurdie/lesmurdie-library/exterior.webp",
+        "alt": "Lesmurdie Library exterior.",
+        "credit": "City of Kalamunda (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -860,6 +867,13 @@
         "url": "https://www.education.wa.edu.au/future-term-dates",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Lesmurdie Library exterior — City of Kalamunda",
+        "url": "https://www.kalamunda.wa.gov.au/facility-details/lesmurdie-library",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

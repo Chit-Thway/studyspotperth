@@ -11,7 +11,6 @@ export function LibraryPhoto({ photos, name, large = false }: { photos: PhotoRec
   return <figure className={`${styles.photo} ${large ? styles.heroPhoto : ''}`}>
     {available ? <img src={photo.url} alt={photo.alt} loading={large ? 'eager' : 'lazy'} referrerPolicy="no-referrer" onError={() => setFailed((urls) => [...urls, photo.url])} />
       : <div className={styles.photoPlaceholder}><Icon name="book" /><span>Photo not available</span></div>}
-    {available && photo.caption && <figcaption className={styles.photoCaption}>{photo.caption}</figcaption>}
     {large && photos.length > 1 && <div className={styles.photoChoices} aria-label="Library photos">
       {photos.slice(0, 6).map((item, index) => <button type="button" key={`${item.url}-${index}`} aria-label={`View photo ${index + 1} of ${name}`} aria-pressed={index === selected} onClick={() => setSelected(index)}>{index + 1}</button>)}
     </div>}

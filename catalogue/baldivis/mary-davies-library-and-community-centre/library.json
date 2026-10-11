@@ -23,7 +23,20 @@
     "longitude": 115.81375,
     "description": "Public library in Baldivis, operated by City of Rockingham.",
     "officialUrl": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/baldivis/mary-davies-library-and-community-centre/exterior.webp",
+        "alt": "Illuminated glass frontage and courtyard of Mary Davies Library and Community Centre at dusk.",
+        "credit": "City of Rockingham / Facebook (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/baldivis/mary-davies-library-and-community-centre/interior.webp",
+        "alt": "Mary Davies Library and Community Centre interior.",
+        "credit": "Australia247 Mary Davies Library listing (source). Resized and converted to WebP.",
+        "sourceId": "photo-2"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -149,6 +162,20 @@
         "url": "https://rockingham.wa.gov.au/community/people-with-disability/accessible-community-facilities",
         "checkedOn": "2026-10-08",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Mary Davies Library and Community Centre exterior — City of Rockingham / Facebook",
+        "url": "https://www.facebook.com/CityofRockingham/photos/1090432814367113/",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "photo-2",
+        "label": "Photo: Mary Davies Library and Community Centre interior — Australia247 Mary Davies Library listing",
+        "url": "https://www.australia247.info/explore/western_australia/city_of_rockingham/baldivis/mary_davies_library_and_community_centre.html",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "medium"

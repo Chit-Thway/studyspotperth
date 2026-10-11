@@ -22,7 +22,14 @@
     "longitude": 115.58865,
     "description": "Public library in Two Rocks, operated by City of Wanneroo.",
     "officialUrl": "https://www.wanneroo.wa.gov.au/info/20040/libraries/712/library_locations",
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/two-rocks/yanchep-two-rocks-library/interior.webp",
+        "alt": "Yanchep/Two Rocks Library interior.",
+        "credit": "Two Rocks Yanchep Family History Group blog (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      }
+    ],
     "facilities": {
       "quietStudy": "unknown",
       "groupStudy": "unknown",
@@ -131,6 +138,13 @@
         "url": "https://catalogue.data.wa.gov.au/dataset/wa-public-libraries",
         "checkedOn": "2026-10-10",
         "kind": "official"
+      },
+      {
+        "id": "photo-1",
+        "label": "Photo: Yanchep/Two Rocks Library interior — Two Rocks Yanchep Family History Group blog",
+        "url": "https://tryfamilyhistory.blogspot.com/2016/08/family-history-at-library.html",
+        "checkedOn": "2026-10-11",
+        "kind": "confirmation"
       }
     ],
     "size": "small"

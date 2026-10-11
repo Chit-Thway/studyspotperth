@@ -239,9 +239,37 @@
         "label": "UWA official campus map reference point",
         "url": "https://link.mazemap.com/ABZFZ4s8",
         "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "photo-1",
+        "kind": "official",
+        "label": "Photo: J. Robin Warren Library exterior — University of Western Australia",
+        "url": "https://www.uwa.edu.au/facilities/j-robin-warren-library",
+        "checkedOn": "2026-10-11"
+      },
+      {
+        "id": "photo-2",
+        "kind": "official",
+        "label": "Photo: J. Robin Warren Library learning suite — University of Western Australia",
+        "url": "https://www.uwa.edu.au/facilities/j-robin-warren-library",
+        "checkedOn": "2026-10-11"
       }
     ],
-    "photos": [],
+    "photos": [
+      {
+        "url": "/images/libraries/uwa/j-robin-warren-library/exterior.webp",
+        "alt": "Exterior of J. Robin Warren Library at UWA's Health Campus, showing the library name and UWA crest.",
+        "credit": "University of Western Australia (source). Resized and converted to WebP.",
+        "sourceId": "photo-1"
+      },
+      {
+        "url": "/images/libraries/uwa/j-robin-warren-library/interior.webp",
+        "alt": "Visitors seated at computer tables in J. Robin Warren Library's learning suite during the library opening.",
+        "credit": "University of Western Australia (source). Resized and converted to WebP.",
+        "sourceId": "photo-2",
+        "caption": "Learning suite during the library opening"
+      }
+    ],
     "size": "medium"
   },
   "facilityEvidence": {
