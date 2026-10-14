@@ -25,10 +25,10 @@
     "photos": [
       {
         "url": "/images/libraries/southern-river/amherst-village-library/interior.webp",
-        "alt": "Collage showing Amherst Village Library shelving, reading chairs and individual computer desks after refurbishment.",
-        "credit": "City of Gosnells Libraries / Facebook (source). Resized and converted to WebP.",
+        "alt": "AI-enhanced source photograph of reading chairs and shelves inside Amherst Village Library.",
+        "credit": "City of Gosnells Libraries / Facebook (source). Reading-area photograph extracted from the source collage and AI-enhanced for clarity; resized and converted to WebP.",
         "sourceId": "photo-1",
-        "caption": "Interior views after refurbishment"
+        "caption": "AI-enhanced source photograph"
       }
     ],
     "facilities": {
@@ -142,9 +142,9 @@
       },
       {
         "id": "photo-1",
-        "label": "Photo: Amherst Village Library interior — City of Gosnells Libraries / Facebook",
+        "label": "Photo: Amherst Village Library reading area — City of Gosnells Libraries; AI-enhanced copy",
         "url": "https://www.facebook.com/cityofgosnellslibraries/photos/862731109661603/",
-        "checkedOn": "2026-10-11",
+        "checkedOn": "2026-10-14",
         "kind": "confirmation"
       }
     ],

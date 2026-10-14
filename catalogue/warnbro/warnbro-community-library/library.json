@@ -26,9 +26,10 @@
     "photos": [
       {
         "url": "/images/libraries/warnbro/warnbro-community-library/exterior.webp",
-        "alt": "Warnbro Community Library exterior.",
-        "credit": "City of Rockingham (source). Resized and converted to WebP.",
-        "sourceId": "photo-1"
+        "alt": "AI-enhanced source photograph of the exterior of Warnbro Community Library.",
+        "credit": "City of Rockingham (source). AI-enhanced for clarity, resized and converted to WebP.",
+        "sourceId": "photo-1",
+        "caption": "AI-enhanced source photograph"
       }
     ],
     "facilities": {
@@ -151,7 +152,7 @@
         "id": "photo-1",
         "label": "Photo: Warnbro Community Library exterior — City of Rockingham",
         "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
-        "checkedOn": "2026-10-11",
+        "checkedOn": "2026-10-14",
         "kind": "confirmation"
       }
     ],

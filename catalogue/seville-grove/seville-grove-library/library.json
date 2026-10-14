@@ -25,8 +25,8 @@
     "photos": [
       {
         "url": "/images/libraries/seville-grove/seville-grove-library/exterior.webp",
-        "alt": "Seville Grove Library exterior.",
-        "credit": "City of Armadale Libraries (source). Resized and converted to WebP.",
+        "alt": "Covered entrance and Seville Grove Library sign, from the official library virtual tour.",
+        "credit": "City of Armadale Libraries, official virtual tour. Photographic view extracted, cropped and converted to WebP.",
         "sourceId": "photo-1"
       }
     ],
@@ -141,9 +141,9 @@
       },
       {
         "id": "photo-1",
-        "label": "Photo: Seville Grove Library exterior — City of Armadale Libraries",
-        "url": "https://library.armadale.wa.gov.au/find-us",
-        "checkedOn": "2026-10-11",
+        "label": "Photo: Seville Grove Library entrance — City of Armadale Libraries virtual tour",
+        "url": "https://armadalewebfiles.z26.web.core.windows.net/vtours/Seville_Grove_Library/sgltour.html",
+        "checkedOn": "2026-10-14",
         "kind": "confirmation"
       }
     ],

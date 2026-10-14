@@ -25,8 +25,8 @@
     "photos": [
       {
         "url": "/images/libraries/piara-waters/piara-waters-library/exterior.webp",
-        "alt": "Piara Waters Library exterior.",
-        "credit": "City of Armadale Libraries (source). Resized and converted to WebP.",
+        "alt": "Entrance and curved terracotta-coloured facade of Piara Waters Library.",
+        "credit": "Silvertone Photography, via Hunt Architects. Resized and converted to WebP.",
         "sourceId": "photo-1"
       }
     ],
@@ -158,9 +158,9 @@
       },
       {
         "id": "photo-1",
-        "label": "Photo: Piara Waters Library exterior — City of Armadale Libraries",
-        "url": "https://library.armadale.wa.gov.au/find-us",
-        "checkedOn": "2026-10-11",
+        "label": "Photo: Piara Waters Library exterior — Hunt Architects / Silvertone Photography",
+        "url": "https://huntarchitects.com.au/project/piara-waters-library/",
+        "checkedOn": "2026-10-14",
         "kind": "confirmation"
       }
     ],

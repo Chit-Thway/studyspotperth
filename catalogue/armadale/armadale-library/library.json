@@ -25,8 +25,8 @@
     "photos": [
       {
         "url": "/images/libraries/armadale/armadale-library/interior.webp",
-        "alt": "Entrance to Armadale Library inside Armadale Central Shopping Centre.",
-        "credit": "City of Armadale Libraries (source). Resized and converted to WebP.",
+        "alt": "Entrance to Armadale Library inside Armadale Central Shopping Centre, from the official library virtual tour.",
+        "credit": "City of Armadale Libraries, official virtual tour. Photographic view extracted, cropped and converted to WebP.",
         "sourceId": "photo-1"
       }
     ],
@@ -151,9 +151,9 @@
       },
       {
         "id": "photo-1",
-        "label": "Photo: Armadale Library interior — City of Armadale Libraries",
-        "url": "https://library.armadale.wa.gov.au/find-us",
-        "checkedOn": "2026-10-11",
+        "label": "Photo: Armadale Library entrance — City of Armadale Libraries virtual tour",
+        "url": "https://armadalewebfiles.z26.web.core.windows.net/vtours/Armadale_Library/altour.html",
+        "checkedOn": "2026-10-14",
         "kind": "confirmation"
       }
     ],
