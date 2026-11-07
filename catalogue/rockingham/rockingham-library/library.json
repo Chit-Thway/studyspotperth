@@ -73,9 +73,6 @@
             "endMinute": 720
           }
         ],
-        "unknownWeekdays": [
-          0
-        ],
         "overrides": []
       },
       "access": [
@@ -114,9 +111,6 @@
               "endMinute": 720
             }
           ],
-          "unknownWeekdays": [
-            0
-          ],
           "overrides": [],
           "group": "public",
           "requirement": "Public access",
@@ -136,7 +130,7 @@
         "id": "hours",
         "label": "Regular public opening hours",
         "url": "https://rockingham.wa.gov.au/facilities-and-recreation/libraries/library-locations-and-opening-hours",
-        "checkedOn": "2026-10-08",
+        "checkedOn": "2026-11-07",
         "kind": "official"
       },
       {
@@ -165,6 +159,13 @@
         "label": "CC BY-SA 4.0",
         "url": "https://creativecommons.org/licenses/by-sa/4.0",
         "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps confirms Sunday closed; weekday and Saturday hours match the council listing",
+        "url": "https://www.google.com/maps/search/?api=1&query=Rockingham%20Library%20Dixon%20Road%20Rockingham%20WA",
+        "checkedOn": "2026-11-07",
         "kind": "confirmation"
       }
     ],

@@ -89,6 +89,86 @@
               }
             ],
             "sourceId": "hours"
+          },
+          {
+            "id": "verified-2026-11-01",
+            "kind": "period",
+            "startDate": "2026-11-01",
+            "endDate": "2026-11-15",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 2,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 3,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 4,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 5,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 0,
+                "startMinute": 600,
+                "endMinute": 1080
+              },
+              {
+                "weekday": 6,
+                "startMinute": 600,
+                "endMinute": 1080
+              }
+            ],
+            "sourceId": "hours-2026-11-07"
+          },
+          {
+            "id": "verified-2026-11-16",
+            "kind": "period",
+            "startDate": "2026-11-16",
+            "endDate": "2026-11-28",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 480,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 2,
+                "startMinute": 480,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 3,
+                "startMinute": 480,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 4,
+                "startMinute": 480,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 5,
+                "startMinute": 480,
+                "endMinute": 1020
+              }
+            ],
+            "sourceId": "hours-2026-11-07"
           }
         ]
       },
@@ -142,6 +222,86 @@
                 }
               ],
               "sourceId": "hours"
+            },
+            {
+              "id": "verified-2026-11-01",
+              "kind": "period",
+              "startDate": "2026-11-01",
+              "endDate": "2026-11-15",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 0,
+                  "startMinute": 600,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 600,
+                  "endMinute": 1080
+                }
+              ],
+              "sourceId": "hours-2026-11-07"
+            },
+            {
+              "id": "verified-2026-11-16",
+              "kind": "period",
+              "startDate": "2026-11-16",
+              "endDate": "2026-11-28",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 1020
+                }
+              ],
+              "sourceId": "hours-2026-11-07"
             }
           ],
           "group": "public",
@@ -212,6 +372,20 @@
         "label": "CC BY-SA 4.0",
         "url": "https://creativecommons.org/licenses/by-sa/4.0",
         "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "hours-2026-11-07",
+        "label": "Notre Dame dated opening-hours calendar, 1–28 November 2026",
+        "url": "https://bookings.library.nd.edu.au/hours/",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps matches the early-November timetable; the university calendar shows the 16 November change",
+        "url": "https://www.google.com/maps/search/?api=1&query=Michael%20J%20M%20Wright%20Library%20Notre%20Dame%20Fremantle%20WA",
+        "checkedOn": "2026-11-07",
         "kind": "confirmation"
       }
     ],

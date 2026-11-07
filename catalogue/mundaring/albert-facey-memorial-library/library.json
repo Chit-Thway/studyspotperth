@@ -73,9 +73,6 @@
             "endMinute": 720
           }
         ],
-        "unknownWeekdays": [
-          0
-        ],
         "overrides": []
       },
       "access": [
@@ -114,9 +111,6 @@
               "endMinute": 720
             }
           ],
-          "unknownWeekdays": [
-            0
-          ],
           "overrides": [],
           "group": "public",
           "requirement": "Public access",
@@ -136,7 +130,7 @@
         "id": "hours",
         "label": "Regular public opening hours",
         "url": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
-        "checkedOn": "2026-10-08",
+        "checkedOn": "2026-11-07",
         "kind": "official"
       },
       {
@@ -165,6 +159,13 @@
         "label": "CC BY 2.5 au",
         "url": "https://creativecommons.org/licenses/by/2.5/au/deed.en",
         "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps confirms Sunday closed; weekday and Saturday hours match the council listing",
+        "url": "https://www.google.com/maps/search/?api=1&query=Mundaring%20Library%201%20Nichol%20Street%20Mundaring%20WA",
+        "checkedOn": "2026-11-07",
         "kind": "confirmation"
       }
     ],

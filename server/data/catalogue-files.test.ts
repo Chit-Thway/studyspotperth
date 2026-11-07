@@ -6,10 +6,11 @@ import { createCataloguePlan } from './catalogue-import';
 import { createCatalogueMetadataLinks } from './catalogue-metadata';
 import type { PublishedCatalogueRow } from './catalogue-metadata';
 import { createLaunchSql, launchLibraries } from './launch-libraries';
-import { searchLibraries } from '../../src/domain/library-search';
+import { evaluateLibrary, searchLibraries } from '../../src/domain/library-search';
 import { parseSearchRequest } from '../../src/domain/search-request';
 import { selectScheduleForDate } from '../../src/domain/schedule';
 import type { LibraryRecord } from '../../src/domain/library';
+import { openingDayLabel } from '../../src/features/libraries/presentation';
 
 describe('authored 82-library catalogue', () => {
   it('includes five confirmed public visitor libraries with 24/7 card access even on Sunday', async () => {
@@ -75,24 +76,54 @@ describe('authored 82-library catalogue', () => {
       const addedPhotoSources = source.content.photos
         .filter((photo) => !launch.content.photos.some((original) => original.url === photo.url))
         .map((photo) => photo.sourceId);
+      const hoursRefreshed = source.content.sources.some((entry) => entry.id === 'hours-2026-11-07');
+      const newHoursSources = ['hours-2026-11-07', 'hours-google-maps-2026-11-07', 'semester-end-2026', 'curtin-24-hour-levels-2026'];
       expect({
         ...source.content,
         suburbId: null,
         size: undefined,
         photos: launch.content.photos,
-        sources: source.content.sources.filter((entry) => !addedPhotoSources.includes(entry.id)),
+        schedule: hoursRefreshed ? launch.content.schedule : source.content.schedule,
+        description: launch.slug === 'curtin-graduate-school-of-business-library' ? launch.content.description : source.content.description,
+        sources: source.content.sources.filter((entry) => !addedPhotoSources.includes(entry.id) && !newHoursSources.includes(entry.id)),
       }).toEqual({ ...launch.content, size: undefined });
     }
+  });
+  it('shows the next Monday opening for the eight verified Sunday closures', async () => {
+    const { catalogue } = await readCatalogueFiles();
+    const request = parseSearchRequest(new URLSearchParams(), Date.parse('2026-11-08T12:00:00+08:00'));
+    for (const slug of ['albert-facey-memorial-library', 'bayswater-library', 'katharine-susannah-prichard-library',
+      'maylands-library', 'morley-library', 'rockingham-library', 'safety-bay-library', 'victoria-park-library']) {
+      const library = catalogue.libraries.find((record) => record.slug === slug)!;
+      const result = evaluateLibrary({ ...library, revisionId: 'hours-test', status: 'published', isFixture: false }, request);
+      expect(result.opening.status, slug).toBe('closed');
+      expect(result.open24Hours.status, slug).toBe('does-not-qualify');
+      expect(result.access.nextWindow?.from, slug).toBe('2026-11-09T09:00:00+08:00');
+      expect(openingDayLabel(result), slug).toMatch(/^Closed · Open 9 am–.+ Mon$/);
+    }
+  });
+  it('uses dated campus calendars without granting public swipe-card access', async () => {
+    const { catalogue } = await readCatalogueFiles();
+    const clock = Date.parse('2026-11-08T12:00:00+08:00');
+    const evaluate = (slug: string, query = '') => {
+      const library = catalogue.libraries.find((record) => record.slug === slug)!;
+      return evaluateLibrary({ ...library, revisionId: 'hours-test', status: 'published', isFixture: false }, parseSearchRequest(new URLSearchParams(query), clock));
+    };
+    expect(openingDayLabel(evaluate('barry-j-marshall-library'))).toBe('Closed · Open 9 am–5 pm Mon');
+    const jrw = evaluate('j-robin-warren-library');
+    expect(openingDayLabel(jrw)).toBe('Closed · Open 8 am–8 pm Mon');
+    expect(jrw.opening.status).toBe('open');
+    expect(jrw.open24Hours.groups.map((entry) => entry.group)).toEqual(['uwa']);
+    expect(evaluate('michael-j-m-wright-library').opening.status).toBe('open');
+    expect(openingDayLabel(evaluate('michael-j-m-wright-library', 'start=2026-11-22T12:00'))).toBe('Closed · Open 8 am–5 pm Mon');
+    expect(openingDayLabel(evaluate('curtin-graduate-school-of-business-library', 'cards=curtin'))).toBe('Closed · Open 8:30 am–4:30 pm Mon');
+    expect(evaluate('curtin-graduate-school-of-business-library', 'start=2026-11-09T12:00').access.status).toBe('unmatched');
+    expect(openingDayLabel(evaluate('ecu-city-library'))).toBe('Closed · Open 8 am–6 pm Mon');
+    expect(evaluate('ecu-joondalup-library').access.status).toBe('unknown');
   });
   it('retains partial uncertainty, holiday hours and the bounded Notre Dame calendar', async () => {
     const { catalogue } = await readCatalogueFiles();
     const find = (slug: string) => catalogue.libraries.find((library) => library.slug === slug)!.content;
-    const uncertain = catalogue.libraries.filter((library) => library.content.schedule.building.unknownWeekdays?.includes(0));
-    expect(uncertain).toHaveLength(8);
-    for (const library of uncertain) {
-      expect(selectScheduleForDate(library.content.schedule.building, '2026-10-11').status).toBe('unknown');
-      expect(selectScheduleForDate(library.content.schedule.building, '2026-10-12').status).toBe('known');
-    }
     const lesmurdie = find('lesmurdie-library');
     expect(selectScheduleForDate(lesmurdie.schedule.building, '2026-10-09').intervals).toEqual([{ startMinute: 540, endMinute: 780 }]);
     expect(selectScheduleForDate(lesmurdie.schedule.building, '2026-10-16').intervals).toEqual([{ startMinute: 495, endMinute: 1020 }]);
@@ -101,6 +132,7 @@ describe('authored 82-library catalogue', () => {
     const notreDame = find('michael-j-m-wright-library');
     expect(selectScheduleForDate(notreDame.schedule.building, '2026-10-12').status).toBe('known');
     expect(selectScheduleForDate(notreDame.schedule.building, '2026-10-19').status).toBe('unknown');
+    expect(selectScheduleForDate(notreDame.schedule.building, '2026-11-29').status).toBe('unknown');
     expect(notreDame.photos[0].credit).toContain('Campus context');
   });
   it('adds 69 drafts and physical suburbs while preserving existing facts and draft revisions', async () => {

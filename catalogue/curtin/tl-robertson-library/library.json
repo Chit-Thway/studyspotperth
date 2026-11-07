@@ -33,9 +33,45 @@
     "schedule": {
       "timeZone": "Australia/Perth",
       "building": {
-        "status": "unknown",
-        "sourceId": null,
-        "recurring": [],
+        "status": "known",
+        "sourceId": "hours-2026-11-07",
+        "recurring": [
+          {
+            "weekday": 0,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 1,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 2,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 3,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 4,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 5,
+            "startMinute": 0,
+            "endMinute": 1440
+          },
+          {
+            "weekday": 6,
+            "startMinute": 0,
+            "endMinute": 1440
+          }
+        ],
         "overrides": [
           {
             "id": "verified-october-dates",
@@ -86,9 +122,45 @@
       },
       "access": [
         {
-          "status": "unknown",
-          "sourceId": null,
-          "recurring": [],
+          "status": "known",
+          "sourceId": "hours-2026-11-07",
+          "recurring": [
+            {
+              "weekday": 0,
+              "startMinute": 480,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 1,
+              "startMinute": 480,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 2,
+              "startMinute": 480,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 3,
+              "startMinute": 480,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 4,
+              "startMinute": 480,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 5,
+              "startMinute": 480,
+              "endMinute": 1200
+            },
+            {
+              "weekday": 6,
+              "startMinute": 480,
+              "endMinute": 1200
+            }
+          ],
           "overrides": [
             {
               "id": "verified-october-dates",
@@ -141,9 +213,45 @@
           "needsActiveCredentials": false
         },
         {
-          "status": "unknown",
-          "sourceId": null,
-          "recurring": [],
+          "status": "known",
+          "sourceId": "hours-2026-11-07",
+          "recurring": [
+            {
+              "weekday": 0,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 1,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 2,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 3,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 4,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 5,
+              "startMinute": 0,
+              "endMinute": 1440
+            },
+            {
+              "weekday": 6,
+              "startMinute": 0,
+              "endMinute": 1440
+            }
+          ],
           "overrides": [
             {
               "id": "verified-october-dates",
@@ -265,6 +373,27 @@
         "label": "Curtin official library map reference point",
         "url": "https://use.mazemap.com/#v=1&config=curtinuniversity&zlevel=1&center=115.893881,-32.005425&zoom=18&sharepoitype=poi&sharepoi=1000462610&campusid=296",
         "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "hours-2026-11-07",
+        "label": "Curtin TL Robertson entry policy: a Curtin card is required before 8 am and after 8 pm",
+        "url": "https://www.curtin.edu.au/library/using-the-library/tl-robertson-library/",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "curtin-24-hour-levels-2026",
+        "label": "Curtin 2026 library guide confirms 24-hour access to levels 2 and 3",
+        "url": "https://www.curtin.edu.au/news/oasis-news/your-guide-to-curtin-library-spaces-in-2026/",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps confirms the building operates 24 hours; Curtin supplies the public entry restrictions",
+        "url": "https://www.google.com/maps/search/?api=1&query=TL%20Robertson%20Library%20Curtin%20Bentley%20WA",
+        "checkedOn": "2026-11-07",
+        "kind": "confirmation"
       }
     ],
     "photos": [

@@ -74,9 +74,6 @@
             "endMinute": 720
           }
         ],
-        "unknownWeekdays": [
-          0
-        ],
         "overrides": []
       },
       "access": [
@@ -115,9 +112,6 @@
               "endMinute": 720
             }
           ],
-          "unknownWeekdays": [
-            0
-          ],
           "overrides": [],
           "group": "public",
           "requirement": "Public access",
@@ -137,7 +131,7 @@
         "id": "hours",
         "label": "Regular public opening hours",
         "url": "https://www.mundaring.wa.gov.au/leisure-lifestyle/libraries/our-libraries.aspx",
-        "checkedOn": "2026-10-08",
+        "checkedOn": "2026-11-07",
         "kind": "official"
       },
       {
@@ -159,6 +153,13 @@
         "label": "Photo: Katharine Susannah Prichard Library exterior — Shire of Mundaring / Boya Community Centre",
         "url": "https://www.mundaring.wa.gov.au/community/venues-and-facilities-for-hire/boya-community-centre.aspx",
         "checkedOn": "2026-10-11",
+        "kind": "confirmation"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps confirms Sunday closed; weekday and Saturday hours match the council listing",
+        "url": "https://www.google.com/maps/search/?api=1&query=Boya%20Library%20135%20Scott%20Street%20Helena%20Valley%20WA",
+        "checkedOn": "2026-11-07",
         "kind": "confirmation"
       }
     ],

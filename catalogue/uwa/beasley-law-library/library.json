@@ -65,6 +65,81 @@
               }
             ],
             "sourceId": "hours"
+          },
+          {
+            "id": "verified-2026-11-02",
+            "kind": "period",
+            "startDate": "2026-11-02",
+            "endDate": "2026-11-08",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 1320
+              },
+              {
+                "weekday": 6,
+                "startMinute": 780,
+                "endMinute": 1020
+              }
+            ],
+            "sourceId": "hours-2026-11-07"
+          },
+          {
+            "id": "verified-2026-11-09",
+            "kind": "period",
+            "startDate": "2026-11-09",
+            "endDate": "2026-11-15",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 540,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 2,
+                "startMinute": 540,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 3,
+                "startMinute": 540,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 4,
+                "startMinute": 540,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 5,
+                "startMinute": 540,
+                "endMinute": 1020
+              }
+            ],
+            "sourceId": "hours-2026-11-07"
           }
         ]
       },
@@ -118,6 +193,81 @@
                 }
               ],
               "sourceId": "hours"
+            },
+            {
+              "id": "verified-2026-11-02",
+              "kind": "period",
+              "startDate": "2026-11-02",
+              "endDate": "2026-11-08",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 1320
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 780,
+                  "endMinute": 1020
+                }
+              ],
+              "sourceId": "hours-2026-11-07"
+            },
+            {
+              "id": "verified-2026-11-09",
+              "kind": "period",
+              "startDate": "2026-11-09",
+              "endDate": "2026-11-15",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 540,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 540,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 540,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 540,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 540,
+                  "endMinute": 1020
+                }
+              ],
+              "sourceId": "hours-2026-11-07"
             }
           ],
           "group": "public",
@@ -221,6 +371,20 @@
         "label": "UWA official campus map reference point",
         "url": "https://link.mazemap.com/kAH9lsr7",
         "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "hours-2026-11-07",
+        "label": "UWA public opening-hours calendar, 2–15 November 2026",
+        "url": "https://www.uwa.edu.au/facilities/beasley-law-library",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps listing checked against the dated UWA public-hours calendar",
+        "url": "https://www.google.com/maps/search/?api=1&query=Beasley%20Law%20Library%20UWA%20Crawley%20WA",
+        "checkedOn": "2026-11-07",
+        "kind": "confirmation"
       }
     ],
     "photos": [

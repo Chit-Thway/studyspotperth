@@ -125,6 +125,41 @@
                 }
               ],
               "sourceId": "hours"
+            },
+            {
+              "id": "verified-2026-11-02",
+              "kind": "period",
+              "startDate": "2026-11-02",
+              "endDate": "2026-11-15",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 960
+                }
+              ],
+              "sourceId": "hours-2026-11-07"
             }
           ],
           "group": "public",
@@ -253,6 +288,20 @@
         "label": "Photo: J. Robin Warren Library learning suite — University of Western Australia",
         "url": "https://www.uwa.edu.au/facilities/j-robin-warren-library",
         "checkedOn": "2026-10-11"
+      },
+      {
+        "id": "hours-2026-11-07",
+        "label": "UWA public opening-hours calendar, 2–15 November 2026",
+        "url": "https://www.uwa.edu.au/facilities/j-robin-warren-library",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps listing checked against the dated UWA public-hours calendar",
+        "url": "https://www.google.com/maps/search/?api=1&query=J%20Robin%20Warren%20Library%20UWA%20Nedlands%20WA",
+        "checkedOn": "2026-11-07",
+        "kind": "confirmation"
       }
     ],
     "photos": [

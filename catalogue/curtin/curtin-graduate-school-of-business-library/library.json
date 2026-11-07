@@ -17,16 +17,68 @@
     "schedule": {
       "timeZone": "Australia/Perth",
       "building": {
-        "status": "unknown",
-        "sourceId": null,
-        "recurring": [],
+        "status": "known",
+        "sourceId": "hours-google-maps-2026-11-07",
+        "recurring": [
+          {
+            "weekday": 1,
+            "startMinute": 510,
+            "endMinute": 990
+          },
+          {
+            "weekday": 2,
+            "startMinute": 510,
+            "endMinute": 990
+          },
+          {
+            "weekday": 3,
+            "startMinute": 510,
+            "endMinute": 990
+          },
+          {
+            "weekday": 4,
+            "startMinute": 510,
+            "endMinute": 990
+          },
+          {
+            "weekday": 5,
+            "startMinute": 510,
+            "endMinute": 990
+          }
+        ],
         "overrides": []
       },
       "access": [
         {
-          "status": "unknown",
-          "sourceId": null,
-          "recurring": [],
+          "status": "known",
+          "sourceId": "hours-google-maps-2026-11-07",
+          "recurring": [
+            {
+              "weekday": 1,
+              "startMinute": 510,
+              "endMinute": 990
+            },
+            {
+              "weekday": 2,
+              "startMinute": 510,
+              "endMinute": 990
+            },
+            {
+              "weekday": 3,
+              "startMinute": 510,
+              "endMinute": 990
+            },
+            {
+              "weekday": 4,
+              "startMinute": 510,
+              "endMinute": 990
+            },
+            {
+              "weekday": 5,
+              "startMinute": 510,
+              "endMinute": 990
+            }
+          ],
           "overrides": [],
           "group": "curtin",
           "requirement": "CURTIN card required",
@@ -37,7 +89,7 @@
     "name": "Curtin Graduate School of Business Library",
     "address": "78 Murray Street, Perth",
     "suburbId": "perth",
-    "description": "Curtin staff and student swipe-card access. Opening hours await confirmation from CGSB.",
+    "description": "Curtin staff and students can enter by swipe card during the graduate school’s opening hours.",
     "officialUrl": "https://www.curtin.edu.au/library/using-the-library/cgsb/",
     "sources": [
       {
@@ -74,6 +126,20 @@
         "label": "OpenStreetMap location data © contributors, Open Database License",
         "url": "https://www.openstreetmap.org/copyright",
         "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "hours-2026-11-07",
+        "label": "Curtin confirms library entry follows the graduate school’s hours and requires staff/student swipe access",
+        "url": "https://www.curtin.edu.au/library/using-the-library/cgsb/",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Graduate school opening hours: weekdays 8:30 am–4:30 pm, weekends closed",
+        "url": "https://www.google.com/maps/search/?api=1&query=Curtin%20Graduate%20School%20of%20Business%2078%20Murray%20Street%20Perth%20WA",
+        "checkedOn": "2026-11-07",
+        "kind": "confirmation"
       }
     ],
     "photos": [

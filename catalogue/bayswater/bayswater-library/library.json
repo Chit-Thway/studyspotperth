@@ -72,9 +72,6 @@
             "endMinute": 720
           }
         ],
-        "unknownWeekdays": [
-          0
-        ],
         "overrides": []
       },
       "access": [
@@ -113,9 +110,6 @@
               "endMinute": 720
             }
           ],
-          "unknownWeekdays": [
-            0
-          ],
           "overrides": [],
           "group": "public",
           "requirement": "Public access",
@@ -135,7 +129,7 @@
         "id": "hours",
         "label": "Regular public opening hours",
         "url": "https://www.bayswater.wa.gov.au/contact-our-libraries",
-        "checkedOn": "2026-10-08",
+        "checkedOn": "2026-11-07",
         "kind": "official"
       },
       {
@@ -157,6 +151,13 @@
         "label": "CC0",
         "url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
         "checkedOn": "2026-10-10",
+        "kind": "confirmation"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps confirms Sunday closed; weekday and Saturday hours match the council listing",
+        "url": "https://www.google.com/maps/search/?api=1&query=Bayswater%20Library%2025%20King%20William%20Street%20Bayswater%20WA",
+        "checkedOn": "2026-11-07",
         "kind": "confirmation"
       }
     ],

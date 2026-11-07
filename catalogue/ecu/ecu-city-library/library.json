@@ -124,6 +124,41 @@
                 }
               ],
               "sourceId": "hours"
+            },
+            {
+              "id": "verified-2026-11-02",
+              "kind": "period",
+              "startDate": "2026-11-02",
+              "endDate": "2026-11-20",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 1080
+                }
+              ],
+              "sourceId": "hours-2026-11-07"
             }
           ],
           "group": "public",
@@ -259,6 +294,27 @@
         "label": "OpenStreetMap location data © contributors, Open Database License",
         "url": "https://www.openstreetmap.org/copyright",
         "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "hours-2026-11-07",
+        "label": "ECU City semester public access: weekdays 8 am–6 pm; separate staffed and swipe-card hours",
+        "url": "https://www.ecu.edu.au/centres/library-services/opening-hours",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "semester-end-2026",
+        "label": "ECU semester 2 ends 20 November 2026",
+        "url": "https://www.ecu.edu.au/future-students/applying/important-dates",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps shows staffed hours; ECU publishes a narrower public-entry window",
+        "url": "https://www.google.com/maps/search/?api=1&query=ECU%20City%20Campus%20Library%20Kaarlak%20500%20Wellington%20St%20Perth%20WA",
+        "checkedOn": "2026-11-07",
+        "kind": "confirmation"
       }
     ],
     "photos": [

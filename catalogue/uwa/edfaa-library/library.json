@@ -65,6 +65,51 @@
               }
             ],
             "sourceId": "hours"
+          },
+          {
+            "id": "verified-2026-11-02",
+            "kind": "period",
+            "startDate": "2026-11-02",
+            "endDate": "2026-11-15",
+            "status": "hours",
+            "intervals": [
+              {
+                "weekday": 1,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 2,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 3,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 4,
+                "startMinute": 480,
+                "endMinute": 1200
+              },
+              {
+                "weekday": 5,
+                "startMinute": 480,
+                "endMinute": 960
+              },
+              {
+                "weekday": 6,
+                "startMinute": 780,
+                "endMinute": 1020
+              },
+              {
+                "weekday": 0,
+                "startMinute": 780,
+                "endMinute": 1020
+              }
+            ],
+            "sourceId": "hours-2026-11-07"
           }
         ]
       },
@@ -118,6 +163,51 @@
                 }
               ],
               "sourceId": "hours"
+            },
+            {
+              "id": "verified-2026-11-02",
+              "kind": "period",
+              "startDate": "2026-11-02",
+              "endDate": "2026-11-15",
+              "status": "hours",
+              "intervals": [
+                {
+                  "weekday": 1,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 2,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 3,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 4,
+                  "startMinute": 480,
+                  "endMinute": 1200
+                },
+                {
+                  "weekday": 5,
+                  "startMinute": 480,
+                  "endMinute": 960
+                },
+                {
+                  "weekday": 6,
+                  "startMinute": 780,
+                  "endMinute": 1020
+                },
+                {
+                  "weekday": 0,
+                  "startMinute": 780,
+                  "endMinute": 1020
+                }
+              ],
+              "sourceId": "hours-2026-11-07"
             }
           ],
           "group": "public",
@@ -166,6 +256,20 @@
         "label": "UWA official campus map reference point",
         "url": "https://link.mazemap.com/JcdzU2RG",
         "checkedOn": "2026-10-06"
+      },
+      {
+        "id": "hours-2026-11-07",
+        "label": "UWA public opening-hours calendar, 2–15 November 2026",
+        "url": "https://www.uwa.edu.au/facilities/edfaa-library",
+        "checkedOn": "2026-11-07",
+        "kind": "official"
+      },
+      {
+        "id": "hours-google-maps-2026-11-07",
+        "label": "Google Maps listing checked against the dated UWA public-hours calendar",
+        "url": "https://www.google.com/maps/search/?api=1&query=EDFAA%20Library%20UWA%20Nedlands%20WA",
+        "checkedOn": "2026-11-07",
+        "kind": "confirmation"
       }
     ],
     "photos": [
