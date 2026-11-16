@@ -3,9 +3,11 @@ import { useLocation } from 'react-router-dom';
 import { LocationContext } from './location-context';
 import { LOCATION_PREFERENCE_KEYS } from './device-location';
 import { createDeviceLocationController, INITIAL_LOCATION_STATE } from './device-location-controller';
+import type { Coordinates } from '../../domain/location';
 
 export function LocationProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState(INITIAL_LOCATION_STATE);
+  const [custom, setCustom] = useState<{ coordinates: Coordinates; label: string } | null>(null);
   const controller = useRef<ReturnType<typeof createDeviceLocationController> | null>(null);
   const { key } = useLocation();
   useEffect(() => {
@@ -25,7 +27,12 @@ export function LocationProvider({ children }: { children: ReactNode }) {
     };
   }, []);
   useEffect(() => { controller.current?.refresh(); }, [key]);
-  const request = useCallback(() => controller.current?.request(), []);
-  const clear = useCallback(() => controller.current?.clear(), []);
-  return <LocationContext value={{ ...state, request, clear }}>{children}</LocationContext>;
+  const request = useCallback(() => { setCustom(null); controller.current?.request(); }, []);
+  const clear = useCallback(() => { setCustom(null); controller.current?.clear(); }, []);
+  const chooseCustom = useCallback((coordinates: Coordinates, label: string) => {
+    controller.current?.clear();
+    setCustom({ coordinates, label });
+  }, []);
+  return <LocationContext value={{ ...state, ...(custom ? { coordinates: custom.coordinates, ready: true, loading: false, error: null } : {}),
+    label: custom?.label ?? (state.coordinates ? 'Current location' : 'Perth CBD'), isCustom: Boolean(custom), setCustom: chooseCustom, request, clear }}>{children}</LocationContext>;
 }

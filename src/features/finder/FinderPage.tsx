@@ -14,15 +14,19 @@ import styles from './FinderPage.module.css';
 import { useUserLocation } from '../location/use-location';
 import { useFinderPagination } from './use-finder-pagination';
 import { isLibrarySize, LIBRARY_SIZE_LABELS } from '../../domain/library-size';
+import { LibraryMap } from './LibraryMap';
 
 export function FinderPage() {
   const [rawParams, setParams] = useSearchParams();
   const { account, loading: accountLoading } = useAccount();
   const location = useUserLocation();
+  const [view, setView] = useState<'list' | 'map'>('list');
   const effective = profileFinderParams(rawParams, account?.preferences);
   const params = useFinderPagination(effective, setParams, location.coordinates,
     location.ready && (!accountLoading || Boolean(account) || rawParams.has('cards')));
-  const resource = useLibrarySearch(finderRequestParams(params).toString(), location.coordinates, location.ready);
+  const searchParams = finderRequestParams(params);
+  if (view === 'map') searchParams.delete('offset');
+  const resource = useLibrarySearch(searchParams.toString(), location.coordinates, location.ready, view === 'map');
   const [cardsExpanded, setCardsExpanded] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const filterButton = useRef<HTMLButtonElement>(null);
@@ -72,14 +76,14 @@ export function FinderPage() {
         </div>
       </dialog>
       <section className={styles.results} aria-labelledby="results-title" aria-busy={resource.loading}>
-        <div className={styles.resultsHeader}><h2 id="results-title">{result ? `${result.total} ${result.total === 1 ? 'library' : 'libraries'}` : 'Libraries'}</h2><p><Icon name="pin" />{params.get('publicAccess') === 'true' ? 'Nearest first' : 'Recommended · nearest first'}</p></div>
-        <p className={styles.resultsContext}>{location.coordinates ? 'Near your location · ' : ''}Perth time</p>
+        <div className={styles.resultsHeader}><div><h2 id="results-title">{result ? `${result.total} ${result.total === 1 ? 'library' : 'libraries'}` : 'Libraries'}</h2><p><Icon name="pin" />{location.label ?? 'Perth CBD'} · Perth time</p></div><div className={styles.viewSwitch} role="group" aria-label="Results view"><button type="button" aria-pressed={view === 'list'} onClick={() => setView('list')}><Icon name="book" />List</button><button type="button" aria-pressed={view === 'map'} onClick={() => setView('map')}><Icon name="pin" />Map</button></div></div>
         {resource.loading && <div className={styles.statePanel} role="status"><Icon name="book" /><h3>Finding your study spots…</h3><p>Checking opening hours and entry information.</p></div>}
         {resource.error && result && <p className={styles.originNotice} role="alert">Couldn’t refresh these libraries. Showing the last checked information; current hours may have changed. <button className={styles.textButton} type="button" onClick={resource.retry}>Try again</button></p>}
         {resource.error && !result && <div className={styles.statePanel} role="alert"><Icon name="book" /><h3>{resource.error instanceof LibraryApiError && resource.error.status === 400 ? 'Check your search' : 'Libraries couldn’t load'}</h3><p>{resource.error.message}</p>
           {resource.error instanceof LibraryApiError && resource.error.status === 400 ? <button type="button" className={styles.applyButton} onClick={() => change(resource.error instanceof LibraryApiError && resource.error.field === 'query' ? new URLSearchParams() : resource.error instanceof LibraryApiError && resource.error.field ? updateFinderParam(params, resource.error.field, null) : resetFinderFilters(params))}>Remove invalid selection</button> : <button type="button" className={styles.applyButton} onClick={resource.retry}>Try again</button>}</div>}
         {result && result.results.length === 0 && <div className={styles.statePanel} role="status"><div className={styles.bookMark}><Icon name="book" /></div><span className={styles.pendingLabel}>No matching libraries</span><h3>Let’s find another study window.</h3><p>{result.emptyReason}</p><button type="button" className={styles.applyButton} onClick={() => change(resetFinderFilters(params))}>Clear filters</button><p className={styles.emptyNote}>Only published library information appears here.</p></div>}
-        {result && result.results.length > 0 && <>
+        {result && view === 'map' && <LibraryMap result={result} params={rawParams} />}
+        {result && result.results.length > 0 && view === 'list' && <>
           <ResultsPagination result={result} changePage={(offset) => change(updateFinderParam(params, 'offset', offset.toString()))} position="top" />
           <div className={styles.cardGrid}>{result.results.map((item) => <LibraryCard key={item.library.id} result={item} params={rawParams} />)}</div>
           <ResultsPagination result={result} changePage={(offset) => change(updateFinderParam(params, 'offset', offset.toString()))} position="bottom" />

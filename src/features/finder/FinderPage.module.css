@@ -105,3 +105,9 @@ fieldset.filterSection::after { content: ''; display: block; clear: both; }
 .locationButton { padding: .35rem .5rem; min-height: 2rem; width: 100%; border: 1px solid var(--color-border); border-radius: var(--radius-control); background: var(--color-surface); color: var(--color-action); font-size: .8rem; cursor: pointer; }
 .locationButton:disabled { opacity: .65; cursor: wait; }
 @media (max-width: 48rem) { .locationButton { min-height: 2.75rem; font-size: 1rem; } }
+.viewSwitch { display: inline-flex; padding: .25rem; gap: .2rem; border: 1px solid var(--color-border); background: #e4eddf; border-radius: .65rem; }
+.viewSwitch button { display: flex; align-items: center; gap: .4rem; padding: .5rem .85rem; border: 0; border-radius: .45rem; background: transparent; color: var(--color-muted); cursor: pointer; font-size: .8rem; font-weight: 600; }
+.viewSwitch button[aria-pressed=true] { background: var(--color-surface); color: var(--color-action); box-shadow: 0 1px 5px #203d2417; }
+.viewSwitch svg { width: 16px; height: 16px; }
+.resultsHeader { margin-bottom: 1rem; }
+.resultsHeader > div > p { margin: .2rem 0 0; }

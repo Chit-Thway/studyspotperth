@@ -42,17 +42,17 @@ function useCatalogueRequest(query: string, coordinates?: Coordinates | null, en
   return { ...source, request: selection.request, rankingRequest, error: selection.error ?? source.error, loading: !enabled || source.loading };
 }
 
-export function useLibrarySearch(query: string, coordinates?: Coordinates | null, enabled = true) {
+export function useLibrarySearch(query: string, coordinates?: Coordinates | null, enabled = true, allResults = false) {
   const source = useCatalogueRequest(query, coordinates, enabled);
   const ranked = useMemo(() => source.data && source.rankingRequest ? rankLibraryCandidates(source.data.libraries, source.rankingRequest) : [],
     [source.data, source.rankingRequest]);
   const data = useMemo((): SearchResponse | null => {
     if (!source.data || !source.request) return null;
     const request = source.request;
-    const page = pageLibraryCandidates(ranked, request);
+    const page = allResults ? { results: ranked, total: ranked.length, offset: 0, limit: ranked.length, nextOffset: null, emptyReason: 'Try adjusting your filters.' } : pageLibraryCandidates(ranked, request);
     const timeline = page.results.length ? createCalendarTimelineReader(formatPerthTime(request.start).slice(0, 10)) : undefined;
     return { ...page, results: page.results.map((library) => evaluateLibrary(library, request, timeline)), request, timeZone: 'Australia/Perth' };
-  }, [source.data, source.request, ranked]);
+  }, [source.data, source.request, ranked, allResults]);
   return { ...source, data };
 }
 

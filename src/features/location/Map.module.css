@@ -1,0 +1,123 @@
+.locationCard { display: grid; gap: .45rem; }
+.locationSummary { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; color: var(--color-action); }
+.locationSummary span { min-width: 0; }
+.locationSummary small { display: block; font-size: .58rem; font-weight: 700; letter-spacing: .12em; color: var(--color-muted); }
+.locationSummary strong { display: block; font-size: .85rem; line-height: 1.35; overflow-wrap: anywhere; }
+.locationSummary > svg { flex-shrink: 0; }
+.deviceButton, .customButton { display: flex; justify-content: center; align-items: center; gap: .5rem; min-height: 2.65rem; border: 1px solid var(--color-border); border-radius: .5rem; font-size: .78rem; font-weight: 600; cursor: pointer; }
+.deviceButton { background: var(--color-action); color: white; border-color: var(--color-action); }
+.deviceButton:disabled { opacity: .6; cursor: wait; }
+.customButton { background: var(--color-surface); color: var(--color-action); }
+.customButton svg { width: 15px; height: 15px; }
+.resetLocation { justify-self: center; background: none; border: 0; font-size: .7rem; color: var(--color-muted); text-decoration: underline; cursor: pointer; }
+.locationError { font-size: .73rem; margin: .25rem 0; }
+.locationDialog { width: min(42rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 0; border: 1px solid var(--color-border); border-radius: 1.2rem; color: var(--color-text); background: var(--color-surface); box-shadow: 0 30px 100px #102d2760; }
+.locationDialog::backdrop { background: #142d2666; backdrop-filter: blur(5px); }
+.pickerBody { padding: 1.6rem; }
+.pickerHeading { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1.3rem; }
+.pickerHeading h2 { margin: 0; font: 500 1.8rem/1.15 var(--font-heading); letter-spacing: -.03em; }
+.pickerHeading p { font-size: .85rem; margin: .5rem 0 0; color: var(--color-muted); }
+.closeButton, .previewClose { display: grid; place-items: center; flex-shrink: 0; width: 2.25rem; height: 2.25rem; border: 1px solid var(--color-border); border-radius: 50%; background: var(--color-surface); color: var(--color-text); cursor: pointer; }
+.searchLabel { font-size: .78rem; font-weight: 600; display: block; }
+.searchInput { display: flex; align-items: center; gap: .6rem; margin-top: .4rem; border: 1px solid var(--color-border); background: white; border-radius: .65rem; padding: .6rem .8rem; }
+.searchInput:focus-within { border-color: var(--color-action); box-shadow: 0 0 0 3px #17634e15; }
+.searchInput svg { width: 18px; flex-shrink: 0; color: var(--color-action); }
+.searchInput input { width: 100%; border: 0; outline: none; background: transparent; font-size: .9rem; min-height: 1.75rem; color: var(--color-text); }
+.suggestions { margin-top: .5rem; border: 1px solid var(--color-border); border-radius: .65rem; overflow: hidden; max-height: 14rem; overflow-y: auto; }
+.suggestions button { width: 100%; display: flex; align-items: center; gap: .8rem; text-align: left; padding: .7rem .8rem; border: 0; border-bottom: 1px solid var(--color-border); background: white; color: var(--color-text); cursor: pointer; }
+.suggestions button:hover { background: var(--color-sage); }
+.suggestions button > span { flex: 1; }
+.suggestions strong, .suggestions small { display: block; }
+.suggestions strong { font-size: .82rem; }
+.suggestions small { font-size: .7rem; color: var(--color-muted); }
+.suggestions p { font-size: .8rem; padding: .7rem; }
+.pickerMap { height: 20rem; margin-top: 1rem; border-radius: .8rem; overflow: hidden; border: 1px solid var(--color-border); }
+.mapFrame { position: relative; height: 100%; width: 100%; isolation: isolate; background: #e2e9df; }
+.mapCanvas { height: 100%; width: 100%; font-family: var(--font-body); }
+.fitButton, .mapHint { position: absolute; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 500; background: var(--color-surface); border: 1px solid #d4dfd0; box-shadow: 0 3px 12px #243c2617; border-radius: 2rem; padding: .6rem 1rem; color: var(--color-action); font-size: .75rem; font-weight: 600; white-space: nowrap; }
+.fitButton { cursor: pointer; }
+.mapHint { pointer-events: none; }
+.mapError { position: absolute; top: 4rem; left: 1rem; right: 1rem; z-index: 500; padding: .5rem; background: #fff3de; font-size: .75rem; border-radius: .5rem; }
+.originMarker { display: grid; place-items: center; border-radius: 50%; background: #427ad12b; box-shadow: 0 0 0 9px #427ad118; }
+.originMarker span { width: 15px; height: 15px; background: #356db8; border: 3px solid white; border-radius: 50%; box-shadow: 0 1px 5px #1235; }
+.personMarker svg { display: block; width: 100%; height: 100%; fill: #ffcf39; stroke: #704710; stroke-width: 1.2; stroke-linejoin: round; filter: drop-shadow(0 2px 2px #33260966); }
+.libraryMarker > span {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 3px 3px #183e3550);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+.libraryMarker > span::before {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  top: 5px;
+  left: 3px;
+  width: 28px;
+  height: 28px;
+  border: 2px solid white;
+  border-radius: 50% 50% 50% 3px;
+  background: var(--pin-color);
+  transform: rotate(-45deg);
+}
+.libraryMarker > span::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+}
+.libraryMarker:is(:hover, :focus-visible) > span {
+  transform: translateY(-4px) scale(1.15);
+  filter: drop-shadow(0 5px 4px #183e3570);
+}
+.open { --pin-color: #17634e; }
+.closed { --pin-color: #777d78; }
+.unknown { --pin-color: #a06f32; }
+.selected > span::before { box-shadow: 0 0 0 2px #152d25; }
+.pickerFooter { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 1.2rem; }
+.pickerFooter strong { display: flex; align-items: center; gap: .4rem; font-size: .85rem; }
+.pickerFooter small { display: block; font-size: .72rem; color: var(--color-muted); margin-top: .2rem; }
+.primaryButton { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; border: 0; border-radius: .55rem; padding: .75rem 1rem; color: white; background: var(--color-action); font-size: .8rem; font-weight: 600; text-decoration: none; cursor: pointer; }
+.primaryButton:hover, .deviceButton:hover { background: #104d3c; }
+.primaryButton svg { width: 17px; height: 17px; }
+.explorer { position: relative; overflow: hidden; border: 1px solid var(--color-border); border-radius: 1rem; background: var(--color-surface); }
+.explorerMap { height: min(70vh, 43rem); min-height: 32rem; }
+.legend { position: absolute; top: 1rem; left: 1rem; z-index: 500; display: grid; gap: .35rem; background: #fffcf5f0; padding: .7rem .8rem; border: 1px solid var(--color-border); border-radius: .65rem; box-shadow: 0 2px 10px #213b2410; }
+.legend span { display: flex; align-items: center; gap: .4rem; font-size: .68rem; }
+.legend i { width: 8px; height: 8px; border-radius: 50%; }
+.openDot { background: #17634e; }
+.closedDot { background: #777d78; }
+.unknownDot { background: #a06f32; }
+.explorerHint { position: absolute; bottom: 2rem; left: 1rem; right: 4rem; z-index: 500; display: flex; align-items: center; gap: .7rem; width: fit-content; background: #fffcf5f5; border: 1px solid var(--color-border); border-radius: .7rem; padding: .7rem 1rem; font-size: .78rem; color: var(--color-muted); }
+.preview { position: absolute; left: 1rem; bottom: 2rem; width: min(21rem, calc(100% - 5rem)); max-height: calc(100% - 5rem); overflow: auto; z-index: 600; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: .9rem; box-shadow: 0 10px 35px #193c3333; }
+
+.preview img { height: 8rem; width: 100%; object-fit: cover; }
+.previewClose { position: absolute; right: .65rem; top: .65rem; z-index: 1; }
+.previewBody { padding: 1rem; }
+.previewBody h3 { font: 500 1.4rem/1.2 var(--font-heading); margin: .4rem 0; }
+.previewBody > p { font-size: .75rem; color: var(--color-muted); margin: 0 0 .7rem; }
+.previewStatus { color: var(--color-action); font-size: .7rem; font-weight: 650; }
+.previewBody > a { width: 100%; margin-top: .8rem; }
+.loading { display: grid; place-items: center; height: 100%; min-height: 15rem; background: var(--color-sage); color: var(--color-muted); }
+.missing { margin: 0; padding: .6rem 1rem; font-size: .75rem; }
+@media (max-width: 48rem) {
+  .pickerBody { padding: 1rem; }
+  .pickerHeading h2 { font-size: 1.55rem; }
+  .pickerMap { height: 35dvh; min-height: 14rem; }
+  .pickerFooter { flex-wrap: wrap; }
+  .pickerFooter .primaryButton { flex: 1; }
+  .legend { top: 4.2rem; left: .7rem; }
+  .explorerMap { height: 65dvh; min-height: 30rem; }
+  .preview { left: .7rem; bottom: 2rem; width: calc(100% - 4.5rem); max-height: 65%; }
+  .preview img { height: 5rem; }
+  .deviceButton, .customButton { min-height: 2.75rem; font-size: .85rem; }
+}
+.preview > figure { height: 8rem; margin: 0; border-radius: 0; overflow: hidden; }
+.preview > .previewBody { height: auto; padding: 1rem; }
+.centreButton { position: absolute; bottom: 1.7rem; left: 1rem; z-index: 500; padding: .5rem .8rem; border: 1px solid var(--color-border); border-radius: .5rem; background: var(--color-surface); color: var(--color-action); font-size: .75rem; cursor: pointer; }
+@media (max-width: 48rem) { .preview > figure { height: 5rem; } }
